@@ -9,9 +9,9 @@ class SpotifyDataRepository(private val spotifyDataDao: SpotifyDataDao) {
 
     val allEntries: Flow<List<SpotifyDataEntity>> = spotifyDataDao.getAll()
 
-    fun insertInputType(exerciseEntry: SpotifyDataEntity){
+    fun insert(spotifyDataEntity: SpotifyDataEntity){
         CoroutineScope(Dispatchers.IO).launch{
-            spotifyDataDao.insertExcerciseEntry(exerciseEntry)
+            spotifyDataDao.insert(spotifyDataEntity)
         }
     }
 
