@@ -1,4 +1,4 @@
-package com.example.dalveer_dosanjh_myruns4
+package com.example.spotifytracker
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface SpotifyDataDao {
     @Insert
-    fun insertExcerciseEntry(exerciseDataEntry: SpotifyDataEntity)
+    fun insert(exerciseDataEntry: SpotifyDataEntity)
 
     @Query("SELECT * FROM SpotifyDataTable")
     fun getAll() : Flow<List<SpotifyDataEntity>>

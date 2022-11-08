@@ -1,4 +1,4 @@
-package com.example.dalveer_dosanjh_myruns4
+package com.example.spotifytracker
 
 import android.icu.util.Calendar
 import androidx.room.ColumnInfo
