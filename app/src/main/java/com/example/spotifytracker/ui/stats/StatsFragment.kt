@@ -1,4 +1,4 @@
-package com.example.spotifytracker.ui.dashboard
+package com.example.spotifytracker.ui.stats
 
 import android.graphics.Color
 import android.os.Bundle
@@ -39,40 +39,48 @@ class StatsFragment : Fragment() {
         }
 
         val lineChart : LineChart = binding.statsGraph
+        setChart(lineChart)
 
-        var xPos = 0
-        for (i in (0..10)){
-            gData.add(Entry(xPos.toFloat(),i.toFloat()))
-            xPos++
-        }
+        return root
+    }
 
-        for (i in (10 downTo 0)){
-            gData.add(Entry(xPos.toFloat(),i.toFloat()))
-            xPos++
-        }
+    private fun setChart(lineChart: LineChart){
+        //Chart configurations
+
+        //Fake data to temporarily display chart
+        gData.add(Entry(1f,1.4f))
+        gData.add(Entry(2f,5.2f))
+        gData.add(Entry(3f,4.5f))
+        gData.add(Entry(4f,2.4f))
+        gData.add(Entry(5f,1.9f))
+        gData.add(Entry(6f,7.7f))
+        gData.add(Entry(7f,3.2f))
 
         val lineChartData : LineDataSet = LineDataSet(gData,"Spotify")
+        val chosenColor : Int = Color.WHITE //color of graph details
+        lineChartData.label = ""
         lineChartData.setDrawValues(false)
         lineChartData.setDrawCircles(false)
-        lineChartData.valueTextColor = Color.GREEN
-        lineChartData.color = Color.GREEN
-        lineChart.description.textColor = Color.GREEN
-        lineChart.axisLeft.textColor = Color.GREEN
-        lineChart.axisRight.textColor = Color.GREEN
-        lineChart.legend.textColor = Color.GREEN
+        lineChartData.valueTextColor = chosenColor
+        lineChartData.color = chosenColor
+        lineChart.description.textColor = chosenColor
+        lineChart.axisLeft.textColor = chosenColor
+        lineChart.xAxis.textColor = chosenColor
+        lineChart.legend.textColor = chosenColor
         lineChartData.mode = LineDataSet.Mode.CUBIC_BEZIER
         lineChart.data =  LineData(lineChartData)
-        lineChart.description.text = "Spotify"
-        lineChart.xAxis.axisMaximum= 16F
+        lineChart.description.text = ""
+        lineChart.xAxis.axisMaximum= 7F
         lineChart.xAxis.axisMinimum= 1F
-        lineChart.xAxis.labelCount = 15
+        lineChart.xAxis.labelCount = 7
+        lineChart.xAxis.granularity = 1F
+        lineChart.xAxis.setDrawLabels(true)
         lineChart.axisLeft.axisMinimum = 0F
         lineChart.axisLeft.granularity = 1F
         lineChart.axisRight.setDrawGridLines(false)
         lineChart.axisRight.setDrawLabels(false)
         lineChart.axisRight.setDrawZeroLine(true)
         lineChart.invalidate()
-        return root
     }
 
     override fun onDestroyView() {

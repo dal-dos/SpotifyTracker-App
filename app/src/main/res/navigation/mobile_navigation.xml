@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.spotifytracker.ui.dashboard.StatsFragment"
+        android:name="com.example.spotifytracker.ui.stats.StatsFragment"
         android:label="@string/title_stats"
         tools:layout="@layout/fragment_stats" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.spotifytracker.ui.notifications.SettingsFragment"
+        android:name="com.example.spotifytracker.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

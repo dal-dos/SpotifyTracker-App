@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.StatsFragment"
+    tools:context=".ui.stats.StatsFragment"
     android:orientation="vertical">
 
     <TextView
@@ -18,10 +18,69 @@
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/statsGraph"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:padding="10dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="8dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hours of music played in last 7 days: "
+                android:fontFamily="@font/comfortaabold"
+                />
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                android:backgroundTint="@color/dark_green_var">
+    <LinearLayout
+        android:id="@+id/chartLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/statsGraph"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/yTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:rotation="-90"
+            android:text="Hours"
+            android:fontFamily="@font/comfortaasemibold"/>
+
+        <LinearLayout
+            android:id="@+id/chartLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/xTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:text="# of days ago"
+                android:fontFamily="@font/comfortaasemibold"/>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/statsGraph"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

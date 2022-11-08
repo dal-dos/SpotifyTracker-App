@@ -1,4 +1,4 @@
-package com.example.spotifytracker.ui.notifications
+package com.example.spotifytracker.ui.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
