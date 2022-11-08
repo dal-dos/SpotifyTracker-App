@@ -51,7 +51,7 @@ class StatsFragment : Fragment() {
             xPos++
         }
 
-        val lineChartData : LineDataSet = LineDataSet(gData,"Stress Level")
+        val lineChartData : LineDataSet = LineDataSet(gData,"Spotify")
         lineChartData.setDrawValues(false)
         lineChartData.setDrawCircles(false)
         lineChartData.valueTextColor = Color.GREEN
@@ -62,7 +62,7 @@ class StatsFragment : Fragment() {
         lineChart.legend.textColor = Color.GREEN
         lineChartData.mode = LineDataSet.Mode.CUBIC_BEZIER
         lineChart.data =  LineData(lineChartData)
-        lineChart.description.text = "Stress Levels"
+        lineChart.description.text = "Spotify"
         lineChart.xAxis.axisMaximum= 16F
         lineChart.xAxis.axisMinimum= 1F
         lineChart.xAxis.labelCount = 15
