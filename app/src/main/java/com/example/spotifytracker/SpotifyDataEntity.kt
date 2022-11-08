@@ -4,7 +4,6 @@ import android.icu.util.Calendar
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.android.gms.maps.model.LatLng
 
 @Entity(tableName = "SpotifyDataTable")
 data class SpotifyDataEntity (
