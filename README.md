@@ -1,4 +1,7 @@
 # SpotifyTracker-App
+![image](https://user-images.githubusercontent.com/32851308/200721349-b94a7455-1c9e-460c-bf3e-82ae842791f2.png)
+
+
 
 Making use of spotify Api
 Going to track user statistics
