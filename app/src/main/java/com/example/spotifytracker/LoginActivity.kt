@@ -12,6 +12,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         title=""
+        // Test comment
     }
 
     fun onClickLogin(view: View) {
