@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private val REDIRECT_URI = "http://localhost:8888/callback"
     private val mSpotifyAppRemote: SpotifyAppRemote? = null
 
-
+    //Test
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
