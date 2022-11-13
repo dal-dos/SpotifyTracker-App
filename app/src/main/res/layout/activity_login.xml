@@ -30,7 +30,7 @@
                 android:text="Tracker"
                 android:textSize="25dp"/>
         </LinearLayout>
-        <EditText
+<!--        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"/>
@@ -38,8 +38,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"/> -->
         <Button
+            android:id="@+id/login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login"

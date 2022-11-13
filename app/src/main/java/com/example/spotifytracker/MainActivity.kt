@@ -1,19 +1,29 @@
 package com.example.spotifytracker
 
+// Spotify API
+
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.spotifytracker.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.spotify.android.appremote.api.SpotifyAppRemote
+import com.spotify.sdk.android.auth.AuthorizationClient
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val CLIENT_ID = "9609905ad0f54f66b8d574d367aee504"
+    private val REDIRECT_URI = "http://localhost:8888/callback"
+    private val mSpotifyAppRemote: SpotifyAppRemote? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +51,21 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    fun onClickLogout() {
+    fun onClickLogout(view: View) {
+        AuthorizationClient.clearCookies(this)
         finishAffinity()
         System.out.close()
+    }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
+    private fun connected(){
+
     }
 }
