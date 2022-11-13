@@ -1,7 +1,8 @@
 package com.example.spotifytracker
 
 import android.os.Bundle
-import android.view.View
+import android.view.Menu
+import android.view.MenuInflater
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -34,5 +35,14 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
-    fun onClickLogout(view: View) {}
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.settings_menu, menu)
+        return true
+    }
+
+    fun onClickLogout() {
+        finishAffinity()
+        System.out.close()
+    }
 }

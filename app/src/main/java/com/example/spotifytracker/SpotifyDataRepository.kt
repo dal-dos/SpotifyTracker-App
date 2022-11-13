@@ -22,4 +22,10 @@ class SpotifyDataRepository(private val spotifyDataDao: SpotifyDataDao) {
         }
     }
 
+    fun deleteAll(){
+        CoroutineScope(Dispatchers.IO).launch {
+            spotifyDataDao.deleteAll()
+        }
+    }
+
 }
