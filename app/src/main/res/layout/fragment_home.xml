@@ -46,16 +46,63 @@
                     android:layout_height="match_parent"
                     android:padding="10dp"
                     android:orientation="vertical">
+                    <ListView
+                        android:id="@+id/recently_played_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Temp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Song 1"
+                        android:text="Rich Flex, by Drake"
                         android:fontFamily="@font/comfortaalight"
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Song 2"
+                        android:text="Anti-Hero, by Taylor Swift"
+                        android:fontFamily="@font/comfortaalight"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bad Habit, by Steve Lacy"
+                        android:fontFamily="@font/comfortaalight"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Midnight Rain, by Taylor Swift"
+                        android:fontFamily="@font/comfortaalight"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Unholy, by Sam Smith, Kim Petras"
+                        android:fontFamily="@font/comfortaalight"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Major Distribution, by Drake, 21 Savage"
+                        android:fontFamily="@font/comfortaalight"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Miss You, by Oliver Tree, Robin Schulz"
+                        android:fontFamily="@font/comfortaalight"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2 Be Loved(Am I Ready), by Lizzo"
+                        android:fontFamily="@font/comfortaalight"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bad Habbits, by Ed Sheeran"
                         android:fontFamily="@font/comfortaalight"
                         />
                 </LinearLayout>
@@ -93,13 +140,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Song 1"
-                        android:fontFamily="@font/comfortaalight"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Song 2"
+                        android:text="Placeholder"
                         android:fontFamily="@font/comfortaalight"
                         />
                 </LinearLayout>
@@ -138,13 +179,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Song 1"
-                        android:fontFamily="@font/comfortaalight"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Song 2"
+                        android:text="Placeholder"
                         android:fontFamily="@font/comfortaalight"
                         />
                 </LinearLayout>
@@ -183,13 +218,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Song 1"
-                        android:fontFamily="@font/comfortaalight"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Song 2"
+                        android:text="Placeholder"
                         android:fontFamily="@font/comfortaalight"
                         />
                 </LinearLayout>

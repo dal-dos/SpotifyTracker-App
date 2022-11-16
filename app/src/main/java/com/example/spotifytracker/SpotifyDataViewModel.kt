@@ -7,7 +7,7 @@ import androidx.lifecycle.asLiveData
 import java.lang.IllegalArgumentException
 
 class SpotifyDataViewModel(private val repository: SpotifyDataRepository): ViewModel() {
-    val allLiveData = repository.allEntries.asLiveData()
+    private val allLiveData = repository.allEntries.asLiveData()
 
     fun insert(data: SpotifyDataEntity){
         repository.insert(data)
@@ -20,7 +20,7 @@ class SpotifyDataViewModel(private val repository: SpotifyDataRepository): ViewM
         }
     }
 
-    fun deleteEntry(){
+    fun deleteAll(){
         val dataList = allLiveData.value
         if (dataList != null && dataList.isNotEmpty()){
             repository.deleteAll()

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [SpotifyDataEntity::class], version = 1)
 abstract class SpotifyDatabase: RoomDatabase() {
-    abstract val  entryDataDao: SpotifyDataDao
+    abstract val  spotifyDataDao: SpotifyDataDao
     companion object{
         @Volatile
         private var INSTANCE: SpotifyDatabase? = null
