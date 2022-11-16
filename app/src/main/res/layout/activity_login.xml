@@ -27,6 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaaregular"
+                android:textColor="@color/white"
                 android:text="Tracker"
                 android:textSize="25dp"/>
         </LinearLayout>
@@ -44,6 +45,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login"
+            android:backgroundTint="@color/dark_green"
+            android:textColor="@android:color/black"
             android:onClick="onClickLogin"/>
+        <Button
+            android:id="@+id/signup_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SIGNUP"
+            android:backgroundTint="@color/dark_green"
+            android:textColor="@android:color/black"
+            android:onClick="onClickSignup"/>
     </LinearLayout>
 </LinearLayout>

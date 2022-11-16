@@ -1,6 +1,7 @@
 package com.example.spotifytracker
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 
@@ -34,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
         repo = SpotifyDataRepository(spotifyDataDao)
         viewModelFactory = LoginViewModelFactory(repo)
         myViewModel = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
+        supportActionBar?.hide()
 
     }
 
@@ -43,6 +45,11 @@ class LoginActivity : AppCompatActivity() {
         builder.setScopes(arrayOf("user-read-private","user-read-recently-played"))
         val request : AuthorizationRequest = builder.build()
         AuthorizationClient.openLoginActivity(this, REQUEST_CODE, request)
+    }
+
+    fun onClickSignup(view: View) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.spotify.com/us/signup"))
+        startActivity(intent)
     }
 
     private fun loginSucceeded(){
