@@ -27,7 +27,7 @@ class HomeViewModel(private val repository: SpotifyDataRepository) : ViewModel()
     }
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "Welcome, TestUser1635"
     }
 
     val text: LiveData<String> = _text

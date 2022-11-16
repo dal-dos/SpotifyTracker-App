@@ -35,7 +35,7 @@ class StatsFragment : Fragment() {
 
         val textView: TextView = binding.textStats
         statsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+           textView.text = it
         }
 
         val lineChart : LineChart = binding.statsGraph
