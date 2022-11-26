@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.spotifytracker.*
 import com.example.spotifytracker.databinding.FragmentHomeBinding
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class HomeFragment : Fragment() {
 
@@ -28,7 +30,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewModelFactory: HomeViewModelFactory
     private lateinit var myViewModel: HomeViewModel
     private lateinit var spotifyDataEntity: List<SpotifyDataEntity>
-    private lateinit var arrayList: ArrayList<SpotifyDataEntity>
+    private lateinit var songArrayList: ArrayList<Song>
     lateinit var songListAdapter: SongListAdapter
     private lateinit var recentlyPlayedList: ListView
     override fun onCreateView(
@@ -51,16 +53,17 @@ class HomeFragment : Fragment() {
         }
 
         recentlyPlayedList = binding.recentlyPlayedList
-        arrayList = ArrayList()
-        songListAdapter = SongListAdapter(requireActivity(), arrayList)
+        songArrayList = ArrayList()
+        songListAdapter = SongListAdapter(requireActivity(), songArrayList)
         recentlyPlayedList.adapter = songListAdapter
 
         myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
 
         myViewModel.allLiveData.observe(requireActivity(), Observer { it ->
-            println(it.size)
+            println("debug: DB Size: " + it.size)
             spotifyDataEntity = it
-            songListAdapter.replace(it)
+            //val myRecentlyPlayed = Gson().fromJson<List<Song>>(spotifyDataEntity[0].recentlyPlayed, object : TypeToken<List<Song?>?>() {}.type)
+            //songListAdapter.replace(myRecentlyPlayed)
             songListAdapter.notifyDataSetChanged()
         })
 

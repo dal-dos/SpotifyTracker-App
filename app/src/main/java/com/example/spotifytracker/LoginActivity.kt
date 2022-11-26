@@ -7,8 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
@@ -19,13 +18,14 @@ class LoginActivity : AppCompatActivity() {
     private val REQUEST_CODE = 1337
     private val CLIENT_ID = "9609905ad0f54f66b8d574d367aee504"
     private val REDIRECT_URI = "com.example.spotifytracker://callback"
+    private val scopes = arrayOf("user-read-recently-played","user-library-modify","user-read-email","user-read-private", "user-follow-read", "playlist-read-private", "playlist-modify-private")
     private lateinit var spotifyDatabase: SpotifyDatabase
     private lateinit var spotifyDataDao: SpotifyDataDao
     private lateinit var repo: SpotifyDataRepository
     private lateinit var viewModelFactory: LoginViewModelFactory
     private lateinit var myViewModel: LoginViewModel
-    private var scopes = arrayOf("user-read-recently-played","user-library-modify","user-read-email","user-read-private", "user-follow-read", "playlist-read-private", "playlist-modify-private")
     private lateinit var mySharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,16 +71,6 @@ class LoginActivity : AppCompatActivity() {
         // Check if result comes from the correct activity
         if (requestCode == REQUEST_CODE) {
             val response: AuthorizationResponse = AuthorizationClient.getResponse(resultCode, data)
-//            print("debug: ")
-//            println(response.code)
-//            print("debug: ")
-//            println(data?.extras?.getString("user-read-recently-played"))
-//            print("debug: ")
-//            println(data?.`package`)
-//            print("debug: ")
-//            println(data?.data)
-//            print("debug: ")
-//            println(data?.dataString)
             when (response.type) {
                 AuthorizationResponse.Type.TOKEN -> {
                     val editor = mySharedPreferences.edit()
@@ -100,11 +90,17 @@ class LoginActivity : AppCompatActivity() {
     fun insertDB(username : String, recentlyPlayed: String, suggested: String, favoriteGenre: String, favoriteArtist : String){
         val spotifyDataEntity : SpotifyDataEntity = SpotifyDataEntity()
         spotifyDataEntity.username = username
-        spotifyDataEntity.recentlyPlayed = recentlyPlayed
+
+        //recentlyPlayed data goes here
+        var mySong : Song = Song
+        mySong.title = "title"
+        var myRecentlyPlayed: ArrayList<Song> = arrayListOf(mySong)
+        spotifyDataEntity.recentlyPlayed = Gson().toJson(myRecentlyPlayed)
+
+
         spotifyDataEntity.suggested = suggested
         spotifyDataEntity.favoriteGenre = favoriteGenre
         spotifyDataEntity.favoriteArtist = favoriteArtist
-
         myViewModel.insert(spotifyDataEntity)
     }
 }

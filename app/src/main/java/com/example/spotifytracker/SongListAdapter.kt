@@ -8,22 +8,22 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 
-class SongListAdapter(private val context: Context, private var spotifyDataEntity: List<SpotifyDataEntity>) : BaseAdapter(){
+class SongListAdapter(private val context: Context, private var spotifyRecentlyPlayed: List<Song>) : BaseAdapter(){
 
     override fun getCount(): Int {
-        return spotifyDataEntity.size
+        return spotifyRecentlyPlayed.size
     }
 
     override fun getItem(position: Int): Any {
-        return spotifyDataEntity[position]
+        return spotifyRecentlyPlayed[position]
     }
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
 
-    fun replace(newSpotifyData: List<SpotifyDataEntity>){
-        spotifyDataEntity = newSpotifyData
+    fun replace(newSpotifyData: List<Song>){
+        spotifyRecentlyPlayed = newSpotifyData
     }
 
     @SuppressLint("ViewHolder")
@@ -32,8 +32,8 @@ class SongListAdapter(private val context: Context, private var spotifyDataEntit
         val songTitleTexView = view.findViewById<TextView>(R.id.songTitleText)
         val songArtistsTextView =  view.findViewById<TextView>(R.id.songArtistsText)
 
-        songTitleTexView.text = spotifyDataEntity[position].recentlyPlayed
-        //songArtistsTextView.text = spotifyDataEntity[position].recentlyPlayed
+        songTitleTexView.text = spotifyRecentlyPlayed[position].title
+        songArtistsTextView.text = spotifyRecentlyPlayed[position].artists.toString()
         return view
     }
 }

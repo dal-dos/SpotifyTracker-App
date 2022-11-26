@@ -15,7 +15,6 @@ class SpotifyDataRepository(private val spotifyDataDao: SpotifyDataDao) {
         }
     }
 
-
     fun deleteEntry(key: Long){
         CoroutineScope(Dispatchers.IO).launch {
             spotifyDataDao.deleteEntry(key)
@@ -29,3 +28,4 @@ class SpotifyDataRepository(private val spotifyDataDao: SpotifyDataDao) {
     }
 
 }
+

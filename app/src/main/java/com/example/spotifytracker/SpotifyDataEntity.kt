@@ -25,3 +25,4 @@ data class SpotifyDataEntity (
     @ColumnInfo(name = "favorite_artist_column")//Favorite artist
     var favoriteArtist: String = "[]"
 )
+

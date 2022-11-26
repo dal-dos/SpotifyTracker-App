@@ -19,3 +19,8 @@ interface SpotifyDataDao {
     @Query("DELETE FROM SpotifyDataTable")
     suspend fun deleteAll()
 }
+
+
+
+
+

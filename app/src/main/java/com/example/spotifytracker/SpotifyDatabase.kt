@@ -24,3 +24,5 @@ abstract class SpotifyDatabase: RoomDatabase() {
         }
     }
 }
+
+
