@@ -3,20 +3,16 @@ package com.example.spotifytracker
 // Spotify API
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
+import android.os.Parcelable.Creator
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.view.get
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.findFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -29,7 +25,6 @@ import com.example.spotifytracker.databinding.ActivityMainBinding
 import com.example.spotifytracker.ui.home.HomeViewModel
 import com.example.spotifytracker.ui.home.HomeViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.gson.Gson
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.sdk.android.auth.AuthorizationClient
 import kotlinx.coroutines.launch
@@ -51,9 +46,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navView: BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        apiBuilder()
-
+        if(savedInstanceState == null) {
+            apiBuilder()
+        }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -71,8 +66,6 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-
 
     }
 
@@ -98,15 +91,19 @@ class MainActivity : AppCompatActivity() {
         val type = mySharedPreferences.getString("type", "")
         val expires = mySharedPreferences.getInt("expires", 9999)
         val token: Token = Token(accessToken!!, type!!, expires)
-        apiHandler = SpotifyApiHandler(token)
-        lifecycleScope.launch(){
-            apiHandler.buildSearchApi()
-            username = apiHandler.userName().toString()
-            recentlyPlayed = apiHandler.userRecentlyPlayed()
-            suggested = arrayListOf()
-            favoriteGenre  = arrayListOf()
-            favoriteArtist = arrayListOf()
-            insertDB(username,recentlyPlayed,suggested,favoriteGenre,favoriteArtist)
+        try {
+            apiHandler = SpotifyApiHandler(token)
+            lifecycleScope.launch() {
+                apiHandler.buildSearchApi()
+                username = apiHandler.userName().toString()
+                recentlyPlayed = apiHandler.userRecentlyPlayed()
+                suggested = arrayListOf()
+                favoriteGenre = arrayListOf()
+                favoriteArtist = arrayListOf()
+                insertDB(username, recentlyPlayed, suggested, favoriteGenre, favoriteArtist)
+            }
+        }catch (e: Exception){
+            println(e)
         }
     }
 
@@ -129,7 +126,7 @@ class MainActivity : AppCompatActivity() {
 
         myViewModel.username.value = username
         myViewModel.recentlyPlayed.value = recentlyPlayed
-        navView.menu.findItem(R.id.navigation_home).title = username
+
 //        spotifyDataEntity.username = username
 //        spotifyDataEntity.recentlyPlayed = Gson().toJson(recentlyPlayed)
 //        spotifyDataEntity.suggested = Gson().toJson(suggested)
@@ -137,4 +134,14 @@ class MainActivity : AppCompatActivity() {
 //        spotifyDataEntity.favoriteArtist = Gson().toJson(favoriteArtist)
 //        myViewModel.insert(spotifyDataEntity)
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("displayName", username)
+    }
+
+    fun setMenuTitle(username: String){
+        navView.menu.findItem(R.id.navigation_home).title = username
+    }
+
 }

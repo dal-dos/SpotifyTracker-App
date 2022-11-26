@@ -8,10 +8,19 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.adamratzman.spotify.models.PlayHistory
 import com.example.spotifytracker.*
 import com.example.spotifytracker.databinding.FragmentHomeBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 
 
 class HomeFragment : Fragment() {
@@ -47,10 +56,12 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        val myActivity = requireActivity() as MainActivity
         val textView: TextView = binding.textHome
         homeViewModel.username.observe(viewLifecycleOwner) {
             textView.text = it
             (activity as AppCompatActivity?)!!.supportActionBar!!.title = it
+            myActivity.setMenuTitle(it)
         }
 
         recentlyPlayedList = binding.recentlyPlayedList
@@ -69,8 +80,8 @@ class HomeFragment : Fragment() {
 //            println("debug: DB Size: " + it.size)
 //            if(it.isNotEmpty()){
 //                spotifyDataEntity = it
-//                val myRecentlyPlayed = Gson().fromJson<List<PlayHistory>>(spotifyDataEntity.last().recentlyPlayed, object : TypeToken<List<PlayHistory?>?>() {}.type)
-//                songListAdapter.replace(myRecentlyPlayed)
+//
+//                val myRecentlyPlayed : List<PlayHistory> = Gson().fromJson(spotifyDataEntity.last().recentlyPlayed, object : TypeToken<List<PlayHistory>>() {}.type)
 //                songListAdapter.notifyDataSetChanged()
 //            }
 //        })
