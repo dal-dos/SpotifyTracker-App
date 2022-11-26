@@ -3,9 +3,8 @@ package com.example.spotifytracker
 import android.R.id
 import com.adamratzman.spotify.*
 import com.adamratzman.spotify.javainterop.SpotifyContinuation
-import com.adamratzman.spotify.models.SpotifyPublicUser
-import com.adamratzman.spotify.models.SpotifySearchResult
-import com.adamratzman.spotify.models.Token
+import com.adamratzman.spotify.models.*
+import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.utils.Market
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -26,6 +25,7 @@ class SpotifyApiHandler(val token: Token) {
         SpotifyScope.USER_READ_RECENTLY_PLAYED,
         SpotifyScope.USER_READ_EMAIL,
         SpotifyScope.USER_READ_PRIVATE,
+        SpotifyScope.USER_TOP_READ,
         clientId = clientID,
         redirectUri = REDIRECT_URI
     )
@@ -51,6 +51,7 @@ class SpotifyApiHandler(val token: Token) {
         //println("debug: " + api)
         //println("debug: Recently Played:" + api!!.player.getRecentlyPlayed(limit = 5))
 
+        api!!.spotifyApiOptions.enableDebugMode = true
     }
 
     fun getApi(): SpotifyClientApi? {
@@ -70,20 +71,59 @@ class SpotifyApiHandler(val token: Token) {
     }
 
     // Performs Spotify database query for queries related to user top tracks. Returns
-    suspend fun userTopTracks() {
-        println(api!!.personalization.getTopTracks(limit = 5).items.map { it.name })
+    suspend fun userTopTracks(): List<Track> {
+        if(api!!.spotifyApiOptions.enableDebugMode) {
+            print("DEBUG MODE: APP: userTopTracks(): ")
+            println(api!!.personalization.getTopTracks(limit = 5).items.map { it.name })
+        }
+        return api!!.personalization.getTopTracks(limit = 5).items
     }
 
-    suspend fun getUserRecentlyPlayed() {
-        println("debug: Recent: " + api!!.player.getRecentlyPlayed(limit = 1).items.map { it.track.name })
+    suspend fun userTopArtists(): List<Artist> {
+        if(api!!.spotifyApiOptions.enableDebugMode) {
+            print("DEBUG MODE: APP: userTopArtists(): ")
+            println(api!!.personalization.getTopArtists(limit = 5).items)
+        }
+        return api!!.personalization.getTopArtists(limit = 5).items
     }
 
-    suspend fun Test() = runBlocking {
-        val api = spotifyClientApi(clientID, clientSecret,url,token).build()
-        api.spotifyApiOptions.enableDebugMode = true
-        api.spotifyApiOptions.useCache = false
+    suspend fun userTopGenres(): ArrayList<List<String>> {
+        if(api!!.spotifyApiOptions.enableDebugMode) {
+            print("DEBUG MODE: APP: userTopGenres(): ")
+            println(api!!.personalization.getTopArtists(limit = 5).items.map { it.genres})
+        }
+        val myGenres : ArrayList<List<String>> = arrayListOf()
+        api!!.personalization.getTopArtists(limit = 5).items.map { myGenres.add(it.genres) }
+        return myGenres
+    }
 
-        println("debug: test" + api.player.getRecentlyPlayed(limit = 1))
+    suspend fun userRecentlyPlayed(): List<PlayHistory> {
+        if(api!!.spotifyApiOptions.enableDebugMode){
+            print("DEBUG MODE: APP: userRecentlyPlayed(): ")
+            println(api!!.player.getRecentlyPlayed(limit = 5).items)
+        }
 
+        return api!!.player.getRecentlyPlayed(limit = 5).items
+    }
+
+
+    suspend fun userName(): String? {
+        if(api!!.spotifyApiOptions.enableDebugMode){
+            print("DEBUG MODE: APP: userName(): ")
+            println(api!!.users.getClientProfile().displayName)
+        }
+
+        return api!!.users.getClientProfile().displayName
+    }
+
+    fun userSuggested(): List<Track> {
+        if(api!!.spotifyApiOptions.enableDebugMode){
+            print("DEBUG MODE: APP: userSuggested(): ")
+            //Received Status Code 400. Error cause: At least one seed (genre, artist, track) must be provided.
+            //println(api!!.browse.getRecommendations().tracks)
+            println()
+        }
+
+        return arrayListOf()
     }
 }

@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import com.adamratzman.spotify.models.PlayHistory
 
-class SongListAdapter(private val context: Context, private var spotifyRecentlyPlayed: List<Song>) : BaseAdapter(){
+class SongListAdapter(private val context: Context, private var spotifyRecentlyPlayed: List<PlayHistory>) : BaseAdapter(){
 
     override fun getCount(): Int {
         return spotifyRecentlyPlayed.size
@@ -22,7 +23,7 @@ class SongListAdapter(private val context: Context, private var spotifyRecentlyP
         return position.toLong()
     }
 
-    fun replace(newSpotifyData: List<Song>){
+    fun replace(newSpotifyData: List<PlayHistory>){
         spotifyRecentlyPlayed = newSpotifyData
     }
 
@@ -32,8 +33,16 @@ class SongListAdapter(private val context: Context, private var spotifyRecentlyP
         val songTitleTexView = view.findViewById<TextView>(R.id.songTitleText)
         val songArtistsTextView =  view.findViewById<TextView>(R.id.songArtistsText)
 
-        songTitleTexView.text = spotifyRecentlyPlayed[position].title
-        songArtistsTextView.text = spotifyRecentlyPlayed[position].artists.toString()
+        songTitleTexView.text = spotifyRecentlyPlayed[position].track.name
+        var myArtists = ""
+        spotifyRecentlyPlayed[position].track.artists.forEach { it ->
+            if(myArtists == ""){
+                myArtists = it.name
+            }else{
+                myArtists = "$myArtists, ${it.name}"
+            }
+        }
+        songArtistsTextView.text = myArtists
         return view
     }
 }

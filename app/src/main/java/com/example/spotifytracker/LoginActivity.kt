@@ -13,6 +13,7 @@ import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
 
 
+@Suppress("RedundantExplicitType")
 class LoginActivity : AppCompatActivity() {
     private val KEY: String = "KEY"
     private val REQUEST_CODE = 1337
@@ -43,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onClickLogin(view: View) {
         val builder = AuthorizationRequest.Builder(CLIENT_ID, AuthorizationResponse.Type.TOKEN, REDIRECT_URI)
 
@@ -51,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
         AuthorizationClient.openLoginActivity(this, REQUEST_CODE, request)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onClickSignup(view: View) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.spotify.com/us/signup"))
         startActivity(intent)
@@ -67,6 +70,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        @Suppress("DEPRECATION")
         super.onActivityResult(requestCode, resultCode, data)
         // Check if result comes from the correct activity
         if (requestCode == REQUEST_CODE) {
@@ -87,20 +91,5 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun insertDB(username : String, recentlyPlayed: String, suggested: String, favoriteGenre: String, favoriteArtist : String){
-        val spotifyDataEntity : SpotifyDataEntity = SpotifyDataEntity()
-        spotifyDataEntity.username = username
 
-        //recentlyPlayed data goes here
-        var mySong : Song = Song
-        mySong.title = "title"
-        var myRecentlyPlayed: ArrayList<Song> = arrayListOf(mySong)
-        spotifyDataEntity.recentlyPlayed = Gson().toJson(myRecentlyPlayed)
-
-
-        spotifyDataEntity.suggested = suggested
-        spotifyDataEntity.favoriteGenre = favoriteGenre
-        spotifyDataEntity.favoriteArtist = favoriteArtist
-        myViewModel.insert(spotifyDataEntity)
-    }
 }

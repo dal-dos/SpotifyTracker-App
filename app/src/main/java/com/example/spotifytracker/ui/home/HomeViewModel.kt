@@ -1,6 +1,7 @@
 package com.example.spotifytracker.ui.home
 
 import androidx.lifecycle.*
+import com.adamratzman.spotify.models.PlayHistory
 import com.example.spotifytracker.SpotifyDataEntity
 import com.example.spotifytracker.SpotifyDataRepository
 import java.lang.IllegalArgumentException
@@ -26,14 +27,28 @@ class HomeViewModel(private val repository: SpotifyDataRepository) : ViewModel()
         }
     }
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "Welcome, TestUser1635"
-    }
+    private var _username = MutableLiveData<String>()
+    var username : MutableLiveData<String>
+        get(){
+            return _username
+        }
+        set(value) {
+            _username = value
+        }
 
-    val text: LiveData<String> = _text
+    private var _recentlyPlayed = MutableLiveData<List<PlayHistory>>()
+    var recentlyPlayed : MutableLiveData<List<PlayHistory>>
+        get(){
+            return _recentlyPlayed
+        }
+        set(value) {
+            _recentlyPlayed = value
+        }
+
 }
 class HomeViewModelFactory(private val repository: SpotifyDataRepository) : ViewModelProvider.Factory {
     override fun<T: ViewModel> create(modelClass: Class<T>) : T{ //create() creates a new instance of the modelClass, which is CommentViewModel in this case.
+        @Suppress("UNCHECKED_CAST")
         if(modelClass.isAssignableFrom(HomeViewModel::class.java))
             return HomeViewModel(repository) as T
         throw IllegalArgumentException("Unknown ViewModel class")

@@ -5,55 +5,59 @@ package com.example.spotifytracker
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.get
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.adamratzman.spotify.models.Artist
+import com.adamratzman.spotify.models.PlayHistory
 import com.adamratzman.spotify.models.Token
+import com.adamratzman.spotify.models.Track
 import com.example.spotifytracker.databinding.ActivityMainBinding
+import com.example.spotifytracker.ui.home.HomeViewModel
+import com.example.spotifytracker.ui.home.HomeViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.spotify.android.appremote.api.ConnectionParams
-import com.spotify.android.appremote.api.Connector
+import com.google.gson.Gson
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.sdk.android.auth.AuthorizationClient
-import com.spotify.sdk.android.auth.AuthorizationRequest
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
+@Suppress("RedundantExplicitType")
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val CLIENT_ID = "9609905ad0f54f66b8d574d367aee504"
     private val REDIRECT_URI = "com.example.spotifytracker://callback"
     private var mSpotifyAppRemote: SpotifyAppRemote? = null
-    private lateinit var mySharedPreferences: SharedPreferences
     private lateinit var apiHandler: SpotifyApiHandler
-
+    private var username = ""
+    private var recentlyPlayed : List<PlayHistory> = arrayListOf()
+    private var suggested : List<Track> = arrayListOf()
+    private var favoriteGenre : ArrayList<List<String>> = arrayListOf()
+    private var favoriteArtist : List<Artist> = arrayListOf()
+    private lateinit var navView: BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        apiBuilder()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navView: BottomNavigationView = binding.navView
-        mySharedPreferences = applicationContext.getSharedPreferences("SPOTIFY", 0)
-        var accessToken = mySharedPreferences.getString("token", "")
-        var type = mySharedPreferences.getString("type", "")
-        var expires = mySharedPreferences.getInt("expires", 9999)
-        var token: Token = Token(accessToken!!, type!!, expires)
-        apiHandler = SpotifyApiHandler(token)
-        lifecycleScope.launch {
-            apiHandler.buildSearchApi()
-            apiHandler.Test()
-        }
+        navView = binding.navView
 
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
@@ -64,35 +68,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
 
-//        //Setting connection parameters
-//        val connectionParams = ConnectionParams.Builder(CLIENT_ID)
-//            .setRedirectUri(REDIRECT_URI)
-//            .showAuthView(true)
-//            .build()
-//
-//        //App Remote to interact with spotify
-//        SpotifyAppRemote.connect(this, connectionParams,
-//            object : Connector.ConnectionListener {
-//                override fun onConnected(spotifyAppRemote: SpotifyAppRemote) {
-//                    mSpotifyAppRemote = spotifyAppRemote
-//                    Log.d("MainActivity", "Connected! Yay!")
-//
-//                    connected()
-//                }
-//
-//                override fun onFailure(throwable: Throwable) {
-//                    Log.e("MainActivity", throwable.message, throwable)
-//
-//                    // Something went wrong when attempting to connect! Handle errors here
-//                }
-//            })
-       // CoroutineScope(Dispatchers.IO).launch{
-        //    apiHandler.userTopTracks()
-        //}
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -101,6 +82,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onClickLogout(view: View) {
         AuthorizationClient.clearCookies(this)
         val intent : Intent = Intent(this, LoginActivity::class.java)
@@ -110,22 +92,49 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    override fun onStart() {
-        super.onStart()
-//        val request: AuthorizationRequest = Builder()
-//            .addHeader("Authorization", "Basic : $encodedInput")
-//            .url("https://api.spotify.com/v1/artists/41X1TR6hrK8Q2ZCpp2EqCz")
-//            .addHeader("Authorization", "Bearer $token")
-//            .addHeader("Accept", "application/json")
-//            .addHeader("Content-Type", "application/json")
-//            .build()
+    private fun apiBuilder(){
+        val mySharedPreferences = applicationContext.getSharedPreferences("SPOTIFY", 0)
+        val accessToken = mySharedPreferences.getString("token", "")
+        val type = mySharedPreferences.getString("type", "")
+        val expires = mySharedPreferences.getInt("expires", 9999)
+        val token: Token = Token(accessToken!!, type!!, expires)
+        apiHandler = SpotifyApiHandler(token)
+        lifecycleScope.launch(){
+            apiHandler.buildSearchApi()
+            username = apiHandler.userName().toString()
+            recentlyPlayed = apiHandler.userRecentlyPlayed()
+            suggested = arrayListOf()
+            favoriteGenre  = arrayListOf()
+            favoriteArtist = arrayListOf()
+            insertDB(username,recentlyPlayed,suggested,favoriteGenre,favoriteArtist)
+        }
     }
 
-    override fun onStop() {
-        super.onStop()
+    fun getRecentlyPlayed(): List<PlayHistory> {
+        return recentlyPlayed
     }
 
-    private fun connected(){
+    fun getUsername(): String {
+        return username
+    }
 
+    @Suppress("UNUSED_VARIABLE","UNUSED_PARAMETER")
+    private fun insertDB(username: String, recentlyPlayed: List<PlayHistory>, suggested: List<Track>, favoriteGenre: ArrayList<List<String>>, favoriteArtist: List<Artist>){
+        val spotifyDatabase = SpotifyDatabase.getInstance(this)
+        val spotifyDataDao = spotifyDatabase.spotifyDataDao
+        val repo = SpotifyDataRepository(spotifyDataDao)
+        val viewModelFactory = HomeViewModelFactory(repo)
+        val spotifyDataEntity : SpotifyDataEntity = SpotifyDataEntity()
+        val myViewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
+
+        myViewModel.username.value = username
+        myViewModel.recentlyPlayed.value = recentlyPlayed
+        navView.menu.findItem(R.id.navigation_home).title = username
+//        spotifyDataEntity.username = username
+//        spotifyDataEntity.recentlyPlayed = Gson().toJson(recentlyPlayed)
+//        spotifyDataEntity.suggested = Gson().toJson(suggested)
+//        spotifyDataEntity.favoriteGenre = Gson().toJson(favoriteGenre)
+//        spotifyDataEntity.favoriteArtist = Gson().toJson(favoriteArtist)
+//        myViewModel.insert(spotifyDataEntity)
     }
 }

@@ -1,19 +1,18 @@
 package com.example.spotifytracker.ui.home
 
 import android.os.Bundle
-import android.text.TextUtils.replace
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.adamratzman.spotify.models.PlayHistory
 import com.example.spotifytracker.*
 import com.example.spotifytracker.databinding.FragmentHomeBinding
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+
 
 class HomeFragment : Fragment() {
 
@@ -30,7 +29,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewModelFactory: HomeViewModelFactory
     private lateinit var myViewModel: HomeViewModel
     private lateinit var spotifyDataEntity: List<SpotifyDataEntity>
-    private lateinit var songArrayList: ArrayList<Song>
+    private lateinit var songArrayList: ArrayList<PlayHistory>
     lateinit var songListAdapter: SongListAdapter
     private lateinit var recentlyPlayedList: ListView
     override fun onCreateView(
@@ -42,14 +41,16 @@ class HomeFragment : Fragment() {
         spotifyDataDao = spotifyDatabase.spotifyDataDao
         repo = SpotifyDataRepository(spotifyDataDao)
         viewModelFactory = HomeViewModelFactory(repo)
-        val homeViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
+        val homeViewModel =
+            ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
+        homeViewModel.username.observe(viewLifecycleOwner) {
             textView.text = it
+            (activity as AppCompatActivity?)!!.supportActionBar!!.title = it
         }
 
         recentlyPlayedList = binding.recentlyPlayedList
@@ -59,13 +60,20 @@ class HomeFragment : Fragment() {
 
         myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
 
-        myViewModel.allLiveData.observe(requireActivity(), Observer { it ->
-            println("debug: DB Size: " + it.size)
-            spotifyDataEntity = it
-            //val myRecentlyPlayed = Gson().fromJson<List<Song>>(spotifyDataEntity[0].recentlyPlayed, object : TypeToken<List<Song?>?>() {}.type)
-            //songListAdapter.replace(myRecentlyPlayed)
+        myViewModel.recentlyPlayed.observe(viewLifecycleOwner) { it ->
+            songListAdapter.replace(it)
             songListAdapter.notifyDataSetChanged()
-        })
+        }
+
+//        myViewModel.allLiveData.observe(requireActivity(), Observer { it ->
+//            println("debug: DB Size: " + it.size)
+//            if(it.isNotEmpty()){
+//                spotifyDataEntity = it
+//                val myRecentlyPlayed = Gson().fromJson<List<PlayHistory>>(spotifyDataEntity.last().recentlyPlayed, object : TypeToken<List<PlayHistory?>?>() {}.type)
+//                songListAdapter.replace(myRecentlyPlayed)
+//                songListAdapter.notifyDataSetChanged()
+//            }
+//        })
 
         return root
     }
