@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -23,6 +24,7 @@ import com.adamratzman.spotify.models.PlayHistory
 import com.adamratzman.spotify.models.Token
 import com.adamratzman.spotify.models.Track
 import com.example.spotifytracker.databinding.ActivityMainBinding
+import com.example.spotifytracker.ui.LoadingDialog
 import com.example.spotifytracker.ui.home.HomeViewModel
 import com.example.spotifytracker.ui.home.HomeViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -80,11 +82,19 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.option1 -> {
-                finish()
-                startActivity(intent)
+                //finish()
+                //startActivity(intent)
+                apiBuilder()
+                openDialog()
+                //Toast.makeText(baseContext, "Refreshed Spotify Data", Toast.LENGTH_SHORT).show()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun openDialog(){
+        val dialog = LoadingDialog()
+        dialog.show(supportFragmentManager, "tag")
     }
 
     @Suppress("UNUSED_PARAMETER")
