@@ -19,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
     private val REQUEST_CODE = 1337
     private val CLIENT_ID = "9609905ad0f54f66b8d574d367aee504"
     private val REDIRECT_URI = "com.example.spotifytracker://callback"
-    private val scopes = arrayOf("user-read-recently-played","user-library-modify","user-read-email","user-read-private", "user-follow-read", "playlist-read-private", "playlist-modify-private")
+    private val scopes = arrayOf("user-read-recently-played","user-library-modify","user-read-email","user-read-private", "user-follow-read", "playlist-read-private", "playlist-modify-private", "user-top-read")
     private lateinit var spotifyDatabase: SpotifyDatabase
     private lateinit var spotifyDataDao: SpotifyDataDao
     private lateinit var repo: SpotifyDataRepository

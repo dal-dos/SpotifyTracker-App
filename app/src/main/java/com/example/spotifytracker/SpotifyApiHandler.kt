@@ -74,7 +74,7 @@ class SpotifyApiHandler(val token: Token) {
     suspend fun userTopTracks(): List<Track> {
         if(api!!.spotifyApiOptions.enableDebugMode) {
             print("DEBUG MODE: APP: userTopTracks(): ")
-            println(api!!.personalization.getTopTracks(limit = 5).items.map { it.name })
+            println("debug: " + api!!.personalization.getTopTracks(limit = 5).items.map { it.name })
         }
         return api!!.personalization.getTopTracks(limit = 5).items
     }
@@ -82,25 +82,26 @@ class SpotifyApiHandler(val token: Token) {
     suspend fun userTopArtists(): List<Artist> {
         if(api!!.spotifyApiOptions.enableDebugMode) {
             print("DEBUG MODE: APP: userTopArtists(): ")
-            println(api!!.personalization.getTopArtists(limit = 5).items)
+            println("debug: " + api!!.personalization.getTopArtists(limit = 5).items)
         }
         return api!!.personalization.getTopArtists(limit = 5).items
     }
 
-    suspend fun userTopGenres(): ArrayList<List<String>> {
+    suspend fun userTopGenres(): ArrayList<String> {
         if(api!!.spotifyApiOptions.enableDebugMode) {
             print("DEBUG MODE: APP: userTopGenres(): ")
-            println(api!!.personalization.getTopArtists(limit = 5).items.map { it.genres})
+            println("debug: " + api!!.personalization.getTopArtists(limit = 5).items.map { it.genres})
         }
-        val myGenres : ArrayList<List<String>> = arrayListOf()
-        api!!.personalization.getTopArtists(limit = 5).items.map { myGenres.add(it.genres) }
+        val myGenres : ArrayList<String> = arrayListOf()
+
+        api!!.personalization.getTopArtists(limit = 5).items.map { myGenres.addAll(it.genres) }
         return myGenres
     }
 
     suspend fun userRecentlyPlayed(): List<PlayHistory> {
         if(api!!.spotifyApiOptions.enableDebugMode){
             print("DEBUG MODE: APP: userRecentlyPlayed(): ")
-            println(api!!.player.getRecentlyPlayed(limit = 5).items)
+            println("debug: " + api!!.player.getRecentlyPlayed(limit = 5).items)
         }
 
         return api!!.player.getRecentlyPlayed(limit = 5).items
@@ -110,7 +111,7 @@ class SpotifyApiHandler(val token: Token) {
     suspend fun userName(): String? {
         if(api!!.spotifyApiOptions.enableDebugMode){
             print("DEBUG MODE: APP: userName(): ")
-            println(api!!.users.getClientProfile().displayName)
+            println("debug: " + api!!.users.getClientProfile().displayName)
         }
 
         return api!!.users.getClientProfile().displayName
@@ -121,7 +122,7 @@ class SpotifyApiHandler(val token: Token) {
             print("DEBUG MODE: APP: userSuggested(): ")
             //Received Status Code 400. Error cause: At least one seed (genre, artist, track) must be provided.
             //println(api!!.browse.getRecommendations().tracks)
-            println()
+            //println()
         }
 
         return arrayListOf()

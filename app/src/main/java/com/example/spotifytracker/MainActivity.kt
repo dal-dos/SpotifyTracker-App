@@ -41,7 +41,8 @@ class MainActivity : AppCompatActivity() {
     private var username = ""
     private var recentlyPlayed : List<PlayHistory> = arrayListOf()
     private var suggested : List<Track> = arrayListOf()
-    private var favoriteGenre : ArrayList<List<String>> = arrayListOf()
+    private var favoriteGenre : ArrayList<String> = arrayListOf()
+    private var favoriteTracks : List<Track> = arrayListOf()
     private var favoriteArtist : List<Artist> = arrayListOf()
     private lateinit var navView: BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,9 +99,10 @@ class MainActivity : AppCompatActivity() {
                 username = apiHandler.userName().toString()
                 recentlyPlayed = apiHandler.userRecentlyPlayed()
                 suggested = arrayListOf()
-                favoriteGenre = arrayListOf()
+                favoriteGenre = apiHandler.userTopGenres()
                 favoriteArtist = arrayListOf()
-                insertDB(username, recentlyPlayed, suggested, favoriteGenre, favoriteArtist)
+                favoriteTracks = arrayListOf()
+                insertDB(username, recentlyPlayed, suggested, favoriteGenre, favoriteArtist, favoriteTracks)
             }
         }catch (e: Exception){
             println(e)
@@ -116,7 +118,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Suppress("UNUSED_VARIABLE","UNUSED_PARAMETER")
-    private fun insertDB(username: String, recentlyPlayed: List<PlayHistory>, suggested: List<Track>, favoriteGenre: ArrayList<List<String>>, favoriteArtist: List<Artist>){
+    private fun insertDB(username: String, recentlyPlayed: List<PlayHistory>, suggested: List<Track>, favoriteGenre: ArrayList<String>, favoriteArtist: List<Artist>, favoriteTracks: List<Track>){
         val spotifyDatabase = SpotifyDatabase.getInstance(this)
         val spotifyDataDao = spotifyDatabase.spotifyDataDao
         val repo = SpotifyDataRepository(spotifyDataDao)
@@ -126,6 +128,7 @@ class MainActivity : AppCompatActivity() {
 
         myViewModel.username.value = username
         myViewModel.recentlyPlayed.value = recentlyPlayed
+        myViewModel.favGenre.value = favoriteGenre
 
 //        spotifyDataEntity.username = username
 //        spotifyDataEntity.recentlyPlayed = Gson().toJson(recentlyPlayed)

@@ -13,21 +13,21 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import com.adamratzman.spotify.models.PlayHistory
 
-class SongListAdapter(private val context: Context, private var spotifyRecentlyPlayed: List<PlayHistory>) : BaseAdapter(){
+class GenreListAdapter(private val context: Context, private var spotifyFavGenre: ArrayList<String>) : BaseAdapter(){
     override fun getCount(): Int {
-        return spotifyRecentlyPlayed.size
+        return spotifyFavGenre.size
     }
 
     override fun getItem(position: Int): Any {
-        return spotifyRecentlyPlayed[position]
+        return spotifyFavGenre[position]
     }
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
 
-    fun replace(newSpotifyData: List<PlayHistory>){
-        spotifyRecentlyPlayed = newSpotifyData
+    fun replace(newSpotifyData: ArrayList<String>){
+        spotifyFavGenre = newSpotifyData
     }
 
     @SuppressLint("ViewHolder")
@@ -35,17 +35,9 @@ class SongListAdapter(private val context: Context, private var spotifyRecentlyP
         val view: View = View.inflate(context, R.layout.song_item,null)
         val songTitleTexView = view.findViewById<TextView>(R.id.songTitleText)
         val songArtistsTextView =  view.findViewById<TextView>(R.id.songArtistsText)
-        val layout = view.findViewById<LinearLayout>(R.id.linearlayout)
 
-        songTitleTexView.text = spotifyRecentlyPlayed[position].track.name
-        var myArtists = ""
-        spotifyRecentlyPlayed[position].track.artists.forEach { it ->
-            if(myArtists == ""){
-                myArtists = it.name
-            }else{
-                myArtists = "$myArtists, ${it.name}"
-            }
-        }
+        songTitleTexView.text = spotifyFavGenre[position]
+        val myArtists = ""
         songArtistsTextView.text = myArtists
 
         return view

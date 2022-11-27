@@ -1,9 +1,12 @@
 package com.example.spotifytracker.ui.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +26,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
     private var _binding: FragmentHomeBinding? = null
 
@@ -39,8 +42,11 @@ class HomeFragment : Fragment() {
     private lateinit var myViewModel: HomeViewModel
     private lateinit var spotifyDataEntity: List<SpotifyDataEntity>
     private lateinit var songArrayList: ArrayList<PlayHistory>
+    private lateinit var genreArrayList: ArrayList<String>
     lateinit var songListAdapter: SongListAdapter
+    lateinit var genreListAdapter: GenreListAdapter
     private lateinit var recentlyPlayedList: ListView
+    private lateinit var favGenreList: ListView
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,15 +71,28 @@ class HomeFragment : Fragment() {
         }
 
         recentlyPlayedList = binding.recentlyPlayedList
+        favGenreList = binding.favGenreList
+        genreArrayList = ArrayList()
         songArrayList = ArrayList()
         songListAdapter = SongListAdapter(requireActivity(), songArrayList)
+        genreListAdapter = GenreListAdapter(requireActivity(), genreArrayList)
         recentlyPlayedList.adapter = songListAdapter
+        favGenreList.adapter = genreListAdapter
+
+        recentlyPlayedList.onItemClickListener = this
 
         myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
 
         myViewModel.recentlyPlayed.observe(viewLifecycleOwner) { it ->
             songListAdapter.replace(it)
             songListAdapter.notifyDataSetChanged()
+            songArrayList = it as ArrayList<PlayHistory>
+        }
+
+        myViewModel.favGenre.observe(viewLifecycleOwner) {
+            genreListAdapter.replace(it)
+            genreListAdapter.notifyDataSetChanged()
+            genreArrayList = it as ArrayList<String>
         }
 
 //        myViewModel.allLiveData.observe(requireActivity(), Observer { it ->
@@ -89,8 +108,15 @@ class HomeFragment : Fragment() {
         return root
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        val hyperlink = songArrayList[p2].track.externalUrls.spotify
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
+        startActivity(intent)
     }
 }
