@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                 //finish()
                 //startActivity(intent)
                 apiBuilder()
-                openDialog()
+
                 //Toast.makeText(baseContext, "Refreshed Spotify Data", Toast.LENGTH_SHORT).show()
             }
         }
@@ -108,6 +108,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun apiBuilder(){
+        openDialog()
         val mySharedPreferences = applicationContext.getSharedPreferences("SPOTIFY", 0)
         val accessToken = mySharedPreferences.getString("token", "")
         val type = mySharedPreferences.getString("type", "")
