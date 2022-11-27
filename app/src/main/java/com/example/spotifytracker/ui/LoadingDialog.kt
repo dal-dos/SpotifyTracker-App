@@ -18,7 +18,7 @@ class LoadingDialog: DialogFragment()  {
         val dialog = builder.create()
         dialog.setOnShowListener {
             CoroutineScope(Dispatchers.Main).launch {
-                delay(2000)
+                delay(1400)
                 dialog.dismiss()
             }
         }
