@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/option1"
-        android:title="@string/settings"
-        app:showAsAction="never"/>
+        android:icon="@drawable/ic_refresh"
+        android:title="@string/refresh"
+        app:showAsAction="ifRoom"/>
 
 </menu>
