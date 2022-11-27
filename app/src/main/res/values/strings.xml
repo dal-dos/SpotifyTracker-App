@@ -12,4 +12,5 @@
     <string name="favorite_artist">Favorite Artist:</string>
     <string name="favourite_tracks">Favourite Tracks</string>
     <string name="none_found">None Found</string>
+    <string name="image">image</string>
 </resources>

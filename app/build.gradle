@@ -77,4 +77,6 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     implementation("com.adamratzman:spotify-api-kotlin-core:3.8.8")
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

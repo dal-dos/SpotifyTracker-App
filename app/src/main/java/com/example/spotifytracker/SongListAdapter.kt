@@ -8,10 +8,12 @@ import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import com.adamratzman.spotify.models.PlayHistory
+import com.squareup.picasso.Picasso
 
 class SongListAdapter(private val context: Context, private var spotifyRecentlyPlayed: List<PlayHistory>) : BaseAdapter(){
     override fun getCount(): Int {
@@ -35,6 +37,7 @@ class SongListAdapter(private val context: Context, private var spotifyRecentlyP
         val view: View = View.inflate(context, R.layout.song_item,null)
         val songTitleTexView = view.findViewById<TextView>(R.id.songTitleText)
         val songArtistsTextView =  view.findViewById<TextView>(R.id.songArtistsText)
+        val image = view.findViewById<ImageView>(R.id.imageView)
         val layout = view.findViewById<LinearLayout>(R.id.linearlayout)
 
         songTitleTexView.text = spotifyRecentlyPlayed[position].track.name
@@ -47,6 +50,9 @@ class SongListAdapter(private val context: Context, private var spotifyRecentlyP
             }
         }
         songArtistsTextView.text = myArtists
+        //println("debug: Image address is " + spotifyRecentlyPlayed[position].track.album.images[0].url)
+        //image.setImageResource(R.drawable.ic_spotify_icon)
+        Picasso.get().load(spotifyRecentlyPlayed[position].track.album.images[0].url).into(image);
 
         return view
     }
