@@ -27,6 +27,7 @@
             android:text="Song Name"
             android:fontFamily="@font/comfortaasemibold"
             android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
             android:singleLine="true"
             android:ellipsize="marquee"/>
 
@@ -38,6 +39,7 @@
                 android:text="Artist(s)"
                 android:fontFamily="@font/comfortaalight"
                 android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:ellipsize="marquee"/>
 

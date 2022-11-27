@@ -41,6 +41,7 @@ class SongListAdapter(private val context: Context, private var spotifyRecentlyP
         val layout = view.findViewById<LinearLayout>(R.id.linearlayout)
 
         songTitleTexView.text = spotifyRecentlyPlayed[position].track.name
+
         var myArtists = ""
         spotifyRecentlyPlayed[position].track.artists.forEach { it ->
             if(myArtists == ""){
@@ -50,6 +51,8 @@ class SongListAdapter(private val context: Context, private var spotifyRecentlyP
             }
         }
         songArtistsTextView.text = myArtists
+        songArtistsTextView.isSelected = true
+        songTitleTexView.isSelected = true
         //println("debug: Image address is " + spotifyRecentlyPlayed[position].track.album.images[0].url)
         //image.setImageResource(R.drawable.ic_spotify_icon)
         Picasso.get().load(spotifyRecentlyPlayed[position].track.album.images[0].url).into(image);
