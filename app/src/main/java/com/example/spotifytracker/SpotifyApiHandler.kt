@@ -2,6 +2,7 @@ package com.example.spotifytracker
 
 import android.R.id
 import com.adamratzman.spotify.*
+import com.adamratzman.spotify.endpoints.client.ClientPersonalizationApi
 import com.adamratzman.spotify.javainterop.SpotifyContinuation
 import com.adamratzman.spotify.models.*
 import com.adamratzman.spotify.models.Artist
@@ -74,27 +75,27 @@ class SpotifyApiHandler(val token: Token) {
     suspend fun userTopTracks(): List<Track> {
         if(api!!.spotifyApiOptions.enableDebugMode) {
             print("DEBUG MODE: APP: userTopTracks(): ")
-            println("debug: " + api!!.personalization.getTopTracks(limit = 5).items.map { it.name })
+            println("debug: " + api!!.personalization.getTopTracks(limit = 5, timeRange = ClientPersonalizationApi.TimeRange.LONG_TERM).items.map { it.name })
         }
-        return api!!.personalization.getTopTracks(limit = 5).items
+        return api!!.personalization.getTopTracks(limit = 5, timeRange = ClientPersonalizationApi.TimeRange.LONG_TERM).items
     }
 
     suspend fun userTopArtists(): List<Artist> {
         if(api!!.spotifyApiOptions.enableDebugMode) {
             print("DEBUG MODE: APP: userTopArtists(): ")
-            println("debug: " + api!!.personalization.getTopArtists(limit = 5).items)
+            println("debug: " + api!!.personalization.getTopArtists(limit = 5, timeRange = ClientPersonalizationApi.TimeRange.LONG_TERM).items)
         }
-        return api!!.personalization.getTopArtists(limit = 5).items
+        return api!!.personalization.getTopArtists(limit = 5, timeRange = ClientPersonalizationApi.TimeRange.LONG_TERM).items
     }
 
     suspend fun userTopGenres(): ArrayList<String> {
         if(api!!.spotifyApiOptions.enableDebugMode) {
             print("DEBUG MODE: APP: userTopGenres(): ")
-            println("debug: " + api!!.personalization.getTopArtists(limit = 5).items.map { it.genres})
+            println("debug: " + api!!.personalization.getTopArtists(limit = 5, timeRange = ClientPersonalizationApi.TimeRange.LONG_TERM).items.map { it.genres})
         }
         val myGenres : ArrayList<String> = arrayListOf()
 
-        api!!.personalization.getTopArtists(limit = 5).items.map { myGenres.addAll(it.genres) }
+        api!!.personalization.getTopArtists(limit = 5, timeRange = ClientPersonalizationApi.TimeRange.LONG_TERM).items.map { myGenres.addAll(it.genres) }
         return myGenres
     }
 

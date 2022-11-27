@@ -12,7 +12,7 @@
         android:layout_marginHorizontal="15dp"
         android:layout_marginVertical="5dp"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/ic_spotify_icon"
+        app:srcCompat="@drawable/ic_music"
         android:contentDescription="@string/image" />
     <LinearLayout
         android:layout_width="match_parent"

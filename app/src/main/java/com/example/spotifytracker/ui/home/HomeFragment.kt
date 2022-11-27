@@ -11,20 +11,11 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.findFragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.adamratzman.spotify.models.PlayHistory
 import com.example.spotifytracker.*
 import com.example.spotifytracker.databinding.FragmentHomeBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-
 
 class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
@@ -47,6 +38,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     lateinit var genreListAdapter: GenreListAdapter
     private lateinit var recentlyPlayedList: ListView
     private lateinit var favGenreList: ListView
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,9 +55,8 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         val root: View = binding.root
 
         val myActivity = requireActivity() as MainActivity
-        val textView: TextView = binding.textHome
+
         homeViewModel.username.observe(viewLifecycleOwner) {
-            textView.text = it
             (activity as AppCompatActivity?)!!.supportActionBar!!.title = it
             myActivity.setMenuTitle(it)
         }
@@ -104,6 +95,12 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 //                songListAdapter.notifyDataSetChanged()
 //            }
 //        })
+
+        val swipeLayout: SwipeRefreshLayout = root.findViewById(R.id.swipe_layout)
+        swipeLayout.setOnRefreshListener {
+            myActivity.apiBuilder()
+            swipeLayout.isRefreshing = false
+        }
 
         return root
     }

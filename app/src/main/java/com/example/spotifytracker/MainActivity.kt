@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun apiBuilder(){
+    fun apiBuilder(){
         openDialog()
         val mySharedPreferences = applicationContext.getSharedPreferences("SPOTIFY", 0)
         val accessToken = mySharedPreferences.getString("token", "")

@@ -79,4 +79,5 @@ dependencies {
     implementation("com.adamratzman:spotify-api-kotlin-core:3.8.8")
 
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 }
