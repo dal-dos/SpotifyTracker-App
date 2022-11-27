@@ -43,4 +43,13 @@ class GenreListAdapter(private val context: Context, private var spotifyFavGenre
         return view
     }
 
+    @SuppressLint("SetTextI18n")
+    fun listEmpty(): View {
+        val linearLayout : LinearLayout = LinearLayout(context)
+        val textView : TextView = TextView(context)
+        textView.text = "None Found"
+        linearLayout.addView(textView)
+        return linearLayout
+    }
+
 }

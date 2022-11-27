@@ -1,14 +1,13 @@
 package com.example.spotifytracker.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ListView
-import android.widget.TableLayout
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -36,7 +35,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     private lateinit var songArrayList: ArrayList<PlayHistory>
     private lateinit var genreArrayList: ArrayList<String>
     lateinit var songListAdapter: SongListAdapter
-    lateinit var genreListAdapter: GenreListAdapter
+    private lateinit var genreListAdapter: GenreListAdapter
     private lateinit var recentlyPlayedList: ListView
     private lateinit var favGenreList: ListView
 
@@ -75,17 +74,33 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
         myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
 
+
+        //recentlyPlayedList.emptyView = listEmpty()
         myViewModel.recentlyPlayed.observe(viewLifecycleOwner) { it ->
-            songListAdapter.replace(it)
-            songListAdapter.notifyDataSetChanged()
-            songArrayList = it as ArrayList<PlayHistory>
-            setListViewHeightBasedOnChildren(recentlyPlayedList)
+            if(it.isEmpty()){
+                val emptyListAdapter = GenreListAdapter(requireActivity(), genreArrayList)
+                recentlyPlayedList.adapter = emptyListAdapter
+                emptyListAdapter.replace(arrayListOf("None Found"))
+                emptyListAdapter.notifyDataSetChanged()
+                setListViewHeightBasedOnChildren(recentlyPlayedList)
+            }else{
+                songListAdapter.replace(it)
+                songListAdapter.notifyDataSetChanged()
+                songArrayList = it as ArrayList<PlayHistory>
+                setListViewHeightBasedOnChildren(recentlyPlayedList)
+            }
         }
 
         myViewModel.favGenre.observe(viewLifecycleOwner) {
-            genreListAdapter.replace(it)
-            genreListAdapter.notifyDataSetChanged()
-            genreArrayList = it as ArrayList<String>
+            if(it.isEmpty()){
+                genreListAdapter.replace(arrayListOf("None Found"))
+                genreListAdapter.notifyDataSetChanged()
+                genreArrayList = it as ArrayList<String>
+            }else{
+                genreListAdapter.replace(it)
+                genreListAdapter.notifyDataSetChanged()
+                genreArrayList = it as ArrayList<String>
+            }
         }
 
 //        myViewModel.allLiveData.observe(requireActivity(), Observer { it ->
@@ -136,5 +151,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         params.height = totalHeight + listView.dividerHeight * (listAdapter.count - 1)
         listView.layoutParams = params
     }
+
 
 }

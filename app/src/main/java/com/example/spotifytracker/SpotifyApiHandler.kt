@@ -96,6 +96,7 @@ class SpotifyApiHandler(val token: Token) {
         val myGenres : ArrayList<String> = arrayListOf()
 
         api!!.personalization.getTopArtists(limit = 5, timeRange = ClientPersonalizationApi.TimeRange.LONG_TERM).items.map { myGenres.addAll(it.genres) }
+
         return myGenres
     }
 
