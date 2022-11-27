@@ -85,7 +85,6 @@ class MainActivity : AppCompatActivity() {
                 //finish()
                 //startActivity(intent)
                 apiBuilder()
-
                 //Toast.makeText(baseContext, "Refreshed Spotify Data", Toast.LENGTH_SHORT).show()
             }
         }

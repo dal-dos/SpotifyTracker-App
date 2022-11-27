@@ -6,17 +6,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipe_layout">
+    android:id="@+id/swipe_layout"
+    android:paddingBottom="?attr/actionBarSize">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:paddingTop="10dp"/>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,7 +55,7 @@
                                 android:id="@+id/recently_played_list"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="@string/none_found"/>
+                                android:text="@string/none_found" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>

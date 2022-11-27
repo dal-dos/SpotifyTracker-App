@@ -5,15 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.stats.StatsFragment"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    android:paddingBottom="?attr/actionBarSize">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:paddingTop="10dp"/>
 
     <TextView
         android:id="@+id/text_stats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textSize="0dp"
+        android:textSize="0sp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
@@ -22,7 +27,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="8dp"
+        android:paddingTop="15dp" >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -31,7 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hours of music played in last 7 days: "
+                android:text="@string/hours_of_music_played_in_last_7_days"
                 android:fontFamily="@font/comfortaabold"
                 />
             <androidx.cardview.widget.CardView
@@ -52,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:rotation="-90"
-            android:text="Hours"
+            android:text="@string/hours"
             android:fontFamily="@font/comfortaasemibold"/>
 
         <LinearLayout
@@ -65,9 +71,8 @@
                 android:id="@+id/xTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:text="# of days ago"
+                android:text="@string/of_days_ago"
                 android:fontFamily="@font/comfortaasemibold"/>
 
             <com.github.mikephil.charting.charts.LineChart

@@ -16,4 +16,8 @@
     <string name="refresh">refresh</string>
     <string name="loading">Loading...</string>
     <string name="refreshing_spotify_data">Refreshing Spotify Data...</string>
+    <string name="hours_of_music_played_in_last_7_days">Hours of music played in last 7 days:</string>
+    <string name="hours">Hours</string>
+    <string name="of_days_ago"># of days ago</string>
+    <string name="logout">Logout</string>
 </resources>

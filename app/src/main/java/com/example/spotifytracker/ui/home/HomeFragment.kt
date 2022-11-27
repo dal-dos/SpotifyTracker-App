@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
-import android.widget.TextView
+import android.widget.TableLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.adamratzman.spotify.models.PlayHistory
 import com.example.spotifytracker.*
 import com.example.spotifytracker.databinding.FragmentHomeBinding
+
 
 class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
@@ -78,6 +79,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
             songListAdapter.replace(it)
             songListAdapter.notifyDataSetChanged()
             songArrayList = it as ArrayList<PlayHistory>
+            setListViewHeightBasedOnChildren(recentlyPlayedList)
         }
 
         myViewModel.favGenre.observe(viewLifecycleOwner) {
@@ -116,4 +118,23 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
         startActivity(intent)
     }
+
+
+    private fun setListViewHeightBasedOnChildren(listView: ListView) {
+        val listAdapter = listView.adapter
+            ?: // pre-condition
+            return
+        var totalHeight = listView.paddingTop + listView.paddingBottom
+        for (i in 0 until listAdapter.count) {
+            val listItem = listAdapter.getView(i, null, listView)
+            (listItem as? ViewGroup)?.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            listItem.measure(binding.root.measuredWidth, binding.root.measuredHeight)
+
+            totalHeight += listItem.measuredHeight
+        }
+        val params = listView.layoutParams
+        params.height = totalHeight + listView.dividerHeight * (listAdapter.count - 1)
+        listView.layoutParams = params
+    }
+
 }
