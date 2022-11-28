@@ -2,17 +2,23 @@ package com.example.spotifytracker
 
 // Spotify API
 
+import android.animation.LayoutTransition
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
-import android.os.Parcelable.Creator
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.view.animation.AnimationSet
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -48,6 +54,13 @@ class MainActivity : AppCompatActivity() {
     private var favoriteTracks : List<Track> = arrayListOf()
     private var favoriteArtist : List<Artist> = arrayListOf()
     private lateinit var navView: BottomNavigationView
+    private lateinit var spotifyDatabase : SpotifyDatabase
+    private lateinit var spotifyDataDao : SpotifyDataDao
+    private lateinit var repo : SpotifyDataRepository
+    private lateinit var viewModelFactory : HomeViewModelFactory
+    private lateinit var spotifyDataEntity : SpotifyDataEntity
+    private lateinit var myViewModel :HomeViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if(savedInstanceState == null) {
@@ -70,6 +83,25 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        spotifyDatabase = SpotifyDatabase.getInstance(this)
+        spotifyDataDao = spotifyDatabase.spotifyDataDao
+        repo = SpotifyDataRepository(spotifyDataDao)
+        viewModelFactory = HomeViewModelFactory(repo)
+        spotifyDataEntity = SpotifyDataEntity()
+        myViewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
+
+
+        if(savedInstanceState != null){
+            this.setMenuTitle(myViewModel.username.value.toString())
+        }
+
+        if(findViewById<LinearLayout>(R.id.home_layout) != null){
+            val layout = findViewById<LinearLayout>(R.id.home_layout)
+            layout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+            TransitionManager.beginDelayedTransition(layout, AutoTransition())
+        }
+
 
     }
 
@@ -94,6 +126,7 @@ class MainActivity : AppCompatActivity() {
     private fun openDialog(){
         val dialog = LoadingDialog()
         dialog.show(supportFragmentManager, "tag")
+
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -140,16 +173,11 @@ class MainActivity : AppCompatActivity() {
 
     @Suppress("UNUSED_VARIABLE","UNUSED_PARAMETER")
     private fun insertDB(username: String, recentlyPlayed: List<PlayHistory>, suggested: List<Track>, favoriteGenre: ArrayList<String>, favoriteArtist: List<Artist>, favoriteTracks: List<Track>){
-        val spotifyDatabase = SpotifyDatabase.getInstance(this)
-        val spotifyDataDao = spotifyDatabase.spotifyDataDao
-        val repo = SpotifyDataRepository(spotifyDataDao)
-        val viewModelFactory = HomeViewModelFactory(repo)
-        val spotifyDataEntity : SpotifyDataEntity = SpotifyDataEntity()
-        val myViewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
 
         myViewModel.username.value = username
         myViewModel.recentlyPlayed.value = recentlyPlayed
         myViewModel.favGenre.value = favoriteGenre
+
 
 //        spotifyDataEntity.username = username
 //        spotifyDataEntity.recentlyPlayed = Gson().toJson(recentlyPlayed)
@@ -166,6 +194,30 @@ class MainActivity : AppCompatActivity() {
 
     fun setMenuTitle(username: String){
         navView.menu.findItem(R.id.navigation_home).title = username
+    }
+
+    fun onClickCardViewRecentlyPlayed(view: View) {
+        val cv = findViewById<CardView>(R.id.recently_played_inner_cardview)
+        cv.isVisible = !cv.isVisible
+    }
+
+    fun onClickCardViewSuggested(view: View) {
+        val cv = findViewById<CardView>(R.id.suggested_inner_cardview)
+        cv.isVisible = !cv.isVisible
+    }
+
+    fun onClickCardViewFavoriteTracks(view: View) {
+        val cv = findViewById<CardView>(R.id.favorite_tracks_inner_cardview)
+        cv.isVisible = !cv.isVisible
+    }
+
+    fun onClickCardViewFavoriteArtists(view: View) {
+        val cv = findViewById<CardView>(R.id.favorite_artists_inner_cardview)
+        cv.isVisible = !cv.isVisible
+    }
+    fun onClickCardViewFavoriteGenres(view: View) {
+        val cv = findViewById<CardView>(R.id.favorite_genres_inner_cardview)
+        cv.isVisible = !cv.isVisible
     }
 
 }

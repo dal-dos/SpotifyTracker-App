@@ -1,9 +1,12 @@
 package com.example.spotifytracker.ui.home
 
+import android.animation.LayoutTransition
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,10 +59,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
         val myActivity = requireActivity() as MainActivity
 
-        homeViewModel.username.observe(viewLifecycleOwner) {
-            (activity as AppCompatActivity?)!!.supportActionBar!!.title = it
-            myActivity.setMenuTitle(it)
-        }
 
         recentlyPlayedList = binding.recentlyPlayedList
         favGenreList = binding.favGenreList
@@ -74,7 +73,10 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
         myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
 
-
+        myViewModel.username.observe(viewLifecycleOwner) {
+            (activity as AppCompatActivity?)!!.supportActionBar!!.title = it //top action bar
+            myActivity.setMenuTitle(it) //bottom nav bar
+        }
         //recentlyPlayedList.emptyView = listEmpty()
         myViewModel.recentlyPlayed.observe(viewLifecycleOwner) { it ->
             if(it.isEmpty()){
@@ -152,5 +154,10 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         listView.layoutParams = params
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        binding.homeLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        TransitionManager.beginDelayedTransition(binding.homeLayout, AutoTransition())
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = myViewModel.username.value
+    }
 }
