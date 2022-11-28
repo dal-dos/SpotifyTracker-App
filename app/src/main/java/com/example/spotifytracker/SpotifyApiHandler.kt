@@ -1,15 +1,11 @@
 package com.example.spotifytracker
 
-import android.R.id
 import com.adamratzman.spotify.*
 import com.adamratzman.spotify.endpoints.client.ClientPersonalizationApi
-import com.adamratzman.spotify.javainterop.SpotifyContinuation
 import com.adamratzman.spotify.models.*
 import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.utils.Market
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.runBlocking
+
 
 
 class SpotifyApiHandler(val token: Token) {
@@ -94,8 +90,12 @@ class SpotifyApiHandler(val token: Token) {
             println("debug: " + api!!.personalization.getTopArtists(limit = 5, timeRange = ClientPersonalizationApi.TimeRange.LONG_TERM).items.map { it.genres})
         }
         val myGenres : ArrayList<String> = arrayListOf()
+        val hashset: HashSet<String> = hashSetOf()
 
         api!!.personalization.getTopArtists(limit = 5, timeRange = ClientPersonalizationApi.TimeRange.LONG_TERM).items.map { myGenres.addAll(it.genres) }
+        hashset.addAll(myGenres)
+        myGenres.clear()
+        myGenres.addAll(hashset)
 
         return myGenres
     }

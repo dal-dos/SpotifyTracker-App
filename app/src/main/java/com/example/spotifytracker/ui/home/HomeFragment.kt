@@ -98,10 +98,12 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
                 genreListAdapter.replace(arrayListOf("None Found"))
                 genreListAdapter.notifyDataSetChanged()
                 genreArrayList = it as ArrayList<String>
+                setListViewHeightBasedOnChildren(favGenreList)
             }else{
                 genreListAdapter.replace(it)
                 genreListAdapter.notifyDataSetChanged()
                 genreArrayList = it as ArrayList<String>
+                setListViewHeightBasedOnChildren(favGenreList)
             }
         }
 
