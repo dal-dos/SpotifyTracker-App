@@ -5,6 +5,7 @@ package com.example.spotifytracker
 import android.animation.LayoutTransition
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.TextKeyListener.clear
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.view.Menu
@@ -139,6 +140,8 @@ class MainActivity : AppCompatActivity() {
         val bundle: Bundle = Bundle()
         bundle.putString("Temporary", "Key")
         intent.putExtras(bundle)
+        val mySharedPreferences = applicationContext.getSharedPreferences("SPOTIFY", 0)
+        mySharedPreferences.edit().clear().apply()
         startActivity(intent)
     }
 

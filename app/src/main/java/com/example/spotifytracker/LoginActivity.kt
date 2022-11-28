@@ -5,8 +5,10 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.spotify.sdk.android.auth.AuthorizationClient
@@ -27,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var viewModelFactory: LoginViewModelFactory
     private lateinit var myViewModel: LoginViewModel
     private lateinit var mySharedPreferences: SharedPreferences
+    private lateinit var loginButton: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
         title=""
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        loginButton = findViewById(R.id.login_button)
 
         spotifyDatabase = SpotifyDatabase.getInstance(this)
         spotifyDataDao = spotifyDatabase.spotifyDataDao
@@ -44,11 +48,19 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         mySharedPreferences = applicationContext.getSharedPreferences("SPOTIFY", 0)
-
+        println("shared preferences string is: " + mySharedPreferences.getString("token", null))
+        if (mySharedPreferences.getString("token", null) != null){
+            loginButton.isVisible = false
+            loginAttempt()
+        }
     }
 
     @Suppress("UNUSED_PARAMETER")
     fun onClickLogin(view: View) {
+        loginAttempt()
+    }
+
+    private fun loginAttempt(){
         val builder = AuthorizationRequest.Builder(CLIENT_ID, AuthorizationResponse.Type.TOKEN, REDIRECT_URI)
 
         builder.setScopes(scopes)
