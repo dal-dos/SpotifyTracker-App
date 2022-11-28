@@ -53,9 +53,9 @@ class ArtistListAdapter(private val context: Context, private var spotifyFavArti
         itemSubText.text = popularity + " " + followers
         itemSubText.isSelected = true
         itemTitleText.isSelected = true
-//        println("debug: Image address is " + spotifyRecentlyPlayed[position].track.album.images[0].url)
-        image.setImageResource(R.drawable.ic_spotify_icon)
-//        Picasso.get().load(spotifyFavArtist[position].images.ur);
+        //        println("debug: Image address is " + spotifyRecentlyPlayed[position].track.album.images[0].url)
+        //image.setImageResource(R.drawable.ic_spotify_icon)
+        Picasso.get().load(spotifyFavArtist[position].images[0].url)
         return view
     }
 

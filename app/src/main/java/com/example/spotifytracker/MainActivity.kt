@@ -18,6 +18,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
@@ -107,7 +108,7 @@ class MainActivity : AppCompatActivity() {
             TransitionManager.beginDelayedTransition(layout, AutoTransition())
         }
 
-        this.supportActionBar?.hide()//hides action bars
+        this.supportActionBar?.hide()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
