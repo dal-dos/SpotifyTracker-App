@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaaregular"
-                android:text="Spotify"
+                android:text="@string/spotify"
                 android:textColor="@color/title_green"
                 android:textSize="35sp" />
 
@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaaregular"
-                android:text="Tracker"
+                android:text="@string/tracker"
                 android:textColor="@color/white"
                 android:textSize="35sp" />
         </LinearLayout>

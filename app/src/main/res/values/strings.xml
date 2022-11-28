@@ -21,4 +21,6 @@
     <string name="of_days_ago"># of days ago</string>
     <string name="logout">Logout</string>
     <string name="arrow" />
+    <string name="spotify">Spotify</string>
+    <string name="tracker">Tracker</string>
 </resources>
