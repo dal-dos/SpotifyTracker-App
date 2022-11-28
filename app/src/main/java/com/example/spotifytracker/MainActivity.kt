@@ -2,7 +2,12 @@ package com.example.spotifytracker
 
 // Spotify API
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.LayoutTransition
+import android.animation.ValueAnimator
+import android.animation.ValueAnimator.AnimatorUpdateListener
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +24,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toolbar
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
@@ -28,9 +35,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.models.PlayHistory
 import com.adamratzman.spotify.models.Token
@@ -39,6 +44,7 @@ import com.example.spotifytracker.databinding.ActivityMainBinding
 import com.example.spotifytracker.ui.LoadingDialog
 import com.example.spotifytracker.ui.home.HomeViewModel
 import com.example.spotifytracker.ui.home.HomeViewModelFactory
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.sdk.android.auth.AuthorizationClient
@@ -66,7 +72,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModelFactory : HomeViewModelFactory
     private lateinit var spotifyDataEntity : SpotifyDataEntity
     private lateinit var myViewModel :HomeViewModel
-
+    private lateinit var mToolbar : androidx.appcompat.widget.Toolbar
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if(savedInstanceState == null) {
@@ -87,6 +94,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
+        mToolbar = findViewById(R.id.toolbar)
 
         setSupportActionBar(findViewById(R.id.toolbar))
         //setupActionBarWithNavController(navController, appBarConfiguration)
@@ -116,6 +124,7 @@ class MainActivity : AppCompatActivity() {
         //actionBar?.setDisplayShowCustomEnabled(true);
         //actionBar?.setDisplayShowTitleEnabled(false);
         //setActionBarTitle()
+        this.supportActionBar?.setShowHideAnimationEnabled(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -223,11 +232,13 @@ class MainActivity : AppCompatActivity() {
         if (cv.isVisible){
             arrow.animate().rotation(90f)
             cv.isVisible = false
+            supportActionBar?.customView?.animate()?.alpha(0F)
         }
         else{
             arrow.animate().rotation(0f)
             cv.isVisible = true
         }
+
     }
 
     fun onClickCardViewSuggested(view: View) {
@@ -265,12 +276,16 @@ class MainActivity : AppCompatActivity() {
         if (cv.isVisible){
             arrow.animate().rotation(90f)
             cv.isVisible = false
+
+            hideActionBar()
         }
         else{
             arrow.animate().rotation(0f)
             cv.isVisible = true
+            showActionBar()
         }
     }
+
     fun onClickCardViewFavoriteGenres(view: View) {
         val cv = findViewById<CardView>(R.id.favorite_genres_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_genre_arrow)
@@ -324,6 +339,62 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun hideActionBar() {
+        var mToolbarHeight = mToolbar.height
+        val mAnimDuration = 600 /* milliseconds */
+        var mVaActionBar: ValueAnimator  = ValueAnimator.ofInt(mToolbarHeight, 0)
+        if (mToolbarHeight === 0) {
+            mToolbarHeight = mToolbar.getHeight()
+        }
+        if (mVaActionBar.isRunning()) {
+            // we are already animating a transition - block here
+            return
+        }
 
+        // animate `Toolbar's` height to zero.
 
+        mVaActionBar.addUpdateListener(AnimatorUpdateListener { animation -> // update LayoutParams
+            (mToolbar.getLayoutParams() as AppBarLayout.LayoutParams).height =
+                (animation.animatedValue as Int)
+            mToolbar.requestLayout()
+        })
+        mVaActionBar.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                super.onAnimationEnd(animation)
+                if (supportActionBar != null) { // sanity check
+                    supportActionBar!!.hide()
+                }
+            }
+        })
+        mVaActionBar.setDuration(mAnimDuration.toLong())
+        mVaActionBar.start()
+    }
+
+    private fun showActionBar() {
+        val mToolbarHeight = mToolbar.height
+        val mAnimDuration = 600 /* milliseconds */
+        var mVaActionBar: ValueAnimator  = ValueAnimator.ofInt(mToolbarHeight, 0)
+        if (mVaActionBar != null && mVaActionBar.isRunning()) {
+            // we are already animating a transition - block here
+            return
+        }
+
+        // restore `Toolbar's` height
+        mVaActionBar = ValueAnimator.ofInt(0, mToolbarHeight)
+        mVaActionBar.addUpdateListener(AnimatorUpdateListener { animation -> // update LayoutParams
+            (mToolbar.getLayoutParams() as AppBarLayout.LayoutParams).height =
+                (animation.animatedValue as Int)
+            mToolbar.requestLayout()
+        })
+        mVaActionBar.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationStart(animation: Animator) {
+                super.onAnimationStart(animation)
+                if (supportActionBar != null) { // sanity check
+                    supportActionBar!!.show()
+                }
+            }
+        })
+        mVaActionBar.setDuration(mAnimDuration.toLong())
+        mVaActionBar.start()
+    }
 }
