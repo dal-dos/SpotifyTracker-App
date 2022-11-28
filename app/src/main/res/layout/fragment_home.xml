@@ -44,21 +44,23 @@
                         android:layout_height="match_parent"
                         android:padding="10dp"
                         android:orientation="horizontal">
+
                         <TextView
                             android:id="@+id/recently_played_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/recently_played"
                             android:fontFamily="@font/comfortaasemibold"
-                            />
+                            android:text="@string/recently_played" />
+
                         <TextView
                             android:id="@+id/recently_played_arrow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/arrow"
                             android:layout_alignParentEnd="true"
                             android:fontFamily="@font/comfortaasemibold"
-                            />
+                            android:text="@string/arrow"
+                            app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                            app:drawableTint="@color/white" />
                     </RelativeLayout>
                     <androidx.cardview.widget.CardView
                         android:id="@+id/recently_played_inner_cardview"
@@ -104,14 +106,16 @@
                             android:text="@string/suggested"
                             android:fontFamily="@font/comfortaasemibold"
                             />
+
                         <TextView
                             android:id="@+id/suggested_arrow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/arrow"
                             android:layout_alignParentEnd="true"
                             android:fontFamily="@font/comfortaasemibold"
-                            />
+                            android:text="@string/arrow"
+                            app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                            app:drawableTint="@color/white" />
                     </RelativeLayout>
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
@@ -153,19 +157,22 @@
                         android:layout_height="match_parent"
                         android:padding="10dp"
                         android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/favourite_tracks"
                             android:fontFamily="@font/comfortaasemibold"
-                            />
+                            android:text="@string/favourite_tracks" />
+
                         <TextView
                             android:id="@+id/fav_tracks_arrow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/arrow"
                             android:layout_alignParentEnd="true"
                             android:fontFamily="@font/comfortaasemibold"
+                            android:text="@string/arrow"
+                            app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                            app:drawableTint="@color/white"
                             />
                     </RelativeLayout>
                     <androidx.cardview.widget.CardView
@@ -214,14 +221,16 @@
                             android:text="@string/favorite_artist"
                             android:fontFamily="@font/comfortaasemibold"
                             />
+
                         <TextView
                             android:id="@+id/fav_artist_arrow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/arrow"
                             android:layout_alignParentEnd="true"
                             android:fontFamily="@font/comfortaasemibold"
-                            />
+                            android:text="@string/arrow"
+                            app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                            app:drawableTint="@color/white" />
                     </RelativeLayout>
 
                     <androidx.cardview.widget.CardView
@@ -270,14 +279,16 @@
                             android:text="@string/favorite_genre"
                             android:fontFamily="@font/comfortaasemibold"
                             />
+
                         <TextView
                             android:id="@+id/fav_genre_arrow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/arrow"
                             android:layout_alignParentEnd="true"
                             android:fontFamily="@font/comfortaasemibold"
-                            />
+                            android:text="@string/arrow"
+                            app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                            app:drawableTint="@color/white" />
                     </RelativeLayout>
 
                     <androidx.cardview.widget.CardView

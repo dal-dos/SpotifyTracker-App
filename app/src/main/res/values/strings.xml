@@ -20,5 +20,5 @@
     <string name="hours">Hours</string>
     <string name="of_days_ago"># of days ago</string>
     <string name="logout">Logout</string>
-    <string name="arrow">˅</string>
+    <string name="arrow" />
 </resources>
