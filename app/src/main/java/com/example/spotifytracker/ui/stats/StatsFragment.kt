@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.spotifytracker.databinding.FragmentStatsBinding
@@ -32,6 +33,7 @@ class StatsFragment : Fragment() {
 
         _binding = FragmentStatsBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
 
         val textView: TextView = binding.textStats
         statsViewModel.text.observe(viewLifecycleOwner) {

@@ -18,11 +18,9 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.TypefaceSpan
 import android.transition.AutoTransition
 import android.transition.TransitionManager
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toolbar
 import androidx.appcompat.app.ActionBar
@@ -73,6 +71,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var spotifyDataEntity : SpotifyDataEntity
     private lateinit var myViewModel :HomeViewModel
     private lateinit var mToolbar : androidx.appcompat.widget.Toolbar
+    private var mTouchPosition: Float? = null
+    private var mReleasePosition: Float? = null
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity() {
         //actionBar?.setDisplayShowCustomEnabled(true);
         //actionBar?.setDisplayShowTitleEnabled(false);
         //setActionBarTitle()
-        this.supportActionBar?.setShowHideAnimationEnabled(true)
+        //this.supportActionBar?.setShowHideAnimationEnabled(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -232,11 +232,13 @@ class MainActivity : AppCompatActivity() {
         if (cv.isVisible){
             arrow.animate().rotation(90f)
             cv.isVisible = false
-            supportActionBar?.customView?.animate()?.alpha(0F)
+            //supportActionBar?.customView?.animate()?.alpha(0F)
+            //supportActionBar?.hide()
         }
         else{
             arrow.animate().rotation(0f)
             cv.isVisible = true
+            //supportActionBar?.show()
         }
 
     }
@@ -277,12 +279,12 @@ class MainActivity : AppCompatActivity() {
             arrow.animate().rotation(90f)
             cv.isVisible = false
 
-            hideActionBar()
+            //hideActionBar()
         }
         else{
             arrow.animate().rotation(0f)
             cv.isVisible = true
-            showActionBar()
+            //showActionBar()
         }
     }
 
@@ -362,6 +364,7 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationEnd(animation: Animator) {
                 super.onAnimationEnd(animation)
                 if (supportActionBar != null) { // sanity check
+                    println("debug: In the sanity check for hide")
                     supportActionBar!!.hide()
                 }
             }
@@ -373,7 +376,7 @@ class MainActivity : AppCompatActivity() {
     private fun showActionBar() {
         val mToolbarHeight = mToolbar.height
         val mAnimDuration = 600 /* milliseconds */
-        var mVaActionBar: ValueAnimator  = ValueAnimator.ofInt(mToolbarHeight, 0)
+        var mVaActionBar: ValueAnimator  = ValueAnimator.ofInt(0, mToolbarHeight)
         if (mVaActionBar != null && mVaActionBar.isRunning()) {
             // we are already animating a transition - block here
             return
@@ -390,6 +393,7 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationStart(animation: Animator) {
                 super.onAnimationStart(animation)
                 if (supportActionBar != null) { // sanity check
+                    println("debug: In the sanity check for show")
                     supportActionBar!!.show()
                 }
             }
@@ -397,4 +401,5 @@ class MainActivity : AppCompatActivity() {
         mVaActionBar.setDuration(mAnimDuration.toLong())
         mVaActionBar.start()
     }
+
 }
