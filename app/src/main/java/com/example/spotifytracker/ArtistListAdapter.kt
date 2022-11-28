@@ -34,7 +34,6 @@ class ArtistListAdapter(private val context: Context, private var spotifyFavArti
         spotifyFavArtist = newSpotifyData
     }
 
-    @SuppressLint("ViewHolder", "SetTextI18n")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View = View.inflate(context, R.layout.song_item,null)
 
