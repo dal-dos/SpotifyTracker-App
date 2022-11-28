@@ -48,7 +48,9 @@ class ArtistListAdapter(private val context: Context, private var spotifyFavArti
         var artist : String = spotifyFavArtist[position].name
         itemTitleText.text = artist
 
-        itemSubText.text = artist
+        var popularity : String = spotifyFavArtist[position].popularity.toString()
+        var followers : String = spotifyFavArtist[position].followers.toString()
+        itemSubText.text = popularity + " " + followers
         itemSubText.isSelected = true
         itemTitleText.isSelected = true
 //        println("debug: Image address is " + spotifyRecentlyPlayed[position].track.album.images[0].url)

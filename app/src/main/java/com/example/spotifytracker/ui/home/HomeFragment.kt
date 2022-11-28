@@ -87,7 +87,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         artistArrayList = ArrayList()
         artistListAdapter = ArtistListAdapter(requireActivity(), artistArrayList)
         favTrackListAdapter = TrackListAdapter(requireActivity(), favTrackArrayList)
-        favArtistList.adapter = favTrackListAdapter
+        favArtistList.adapter = artistListAdapter
         favTrackList.adapter = favTrackListAdapter
 
 
