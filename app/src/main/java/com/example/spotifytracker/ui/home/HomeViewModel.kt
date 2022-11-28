@@ -1,7 +1,9 @@
 package com.example.spotifytracker.ui.home
 
 import androidx.lifecycle.*
+import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.models.PlayHistory
+import com.adamratzman.spotify.models.Track
 import com.example.spotifytracker.SpotifyDataEntity
 import com.example.spotifytracker.SpotifyDataRepository
 import java.lang.IllegalArgumentException
@@ -52,6 +54,24 @@ class HomeViewModel(private val repository: SpotifyDataRepository) : ViewModel()
         }
         set(value) {
             _favGenre = value
+        }
+
+    private var _favArtist = MutableLiveData<List<Artist>>()
+    var favArtist : MutableLiveData<List<Artist>>
+        get(){
+            return _favArtist
+        }
+        set(value) {
+            _favArtist = value
+        }
+
+    private var _favTrack = MutableLiveData<List<Track>>()
+    var favTrack : MutableLiveData<List<Track>>
+        get(){
+            return _favTrack
+        }
+        set(value) {
+            _favTrack = value
         }
 
 }

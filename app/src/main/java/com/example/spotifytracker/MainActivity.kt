@@ -162,8 +162,8 @@ class MainActivity : AppCompatActivity() {
                 recentlyPlayed = apiHandler.userRecentlyPlayed()
                 suggested = arrayListOf()
                 favoriteGenre = apiHandler.userTopGenres()
-                favoriteArtist = arrayListOf()
-                favoriteTracks = arrayListOf()
+                favoriteArtist = apiHandler.userTopArtists()
+                favoriteTracks = apiHandler.userTopTracks()
                 insertDB(username, recentlyPlayed, suggested, favoriteGenre, favoriteArtist, favoriteTracks)
             }
         }catch (e: Exception){
@@ -185,6 +185,8 @@ class MainActivity : AppCompatActivity() {
         myViewModel.username.value = username
         myViewModel.recentlyPlayed.value = recentlyPlayed
         myViewModel.favGenre.value = favoriteGenre
+        myViewModel.favArtist.value = favoriteArtist
+        myViewModel.favTrack.value = favoriteTracks
 
 
 //        spotifyDataEntity.username = username

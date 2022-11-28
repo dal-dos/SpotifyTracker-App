@@ -1,7 +1,6 @@
 package com.example.spotifytracker.ui.home
 
 import android.animation.LayoutTransition
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -15,7 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.models.PlayHistory
+import com.adamratzman.spotify.models.Track
 import com.example.spotifytracker.*
 import com.example.spotifytracker.databinding.FragmentHomeBinding
 
@@ -42,6 +43,14 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     private lateinit var recentlyPlayedList: ListView
     private lateinit var favGenreList: ListView
 
+    private lateinit var artistListAdapter: ArtistListAdapter
+    private lateinit var artistArrayList: ArrayList<Artist>
+    private lateinit var favArtistList: ListView
+
+    private lateinit var favTrackListAdapter: TrackListAdapter
+    private lateinit var favTrackArrayList: ArrayList<Track>
+    private lateinit var favTrackList: ListView
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,6 +60,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         spotifyDataDao = spotifyDatabase.spotifyDataDao
         repo = SpotifyDataRepository(spotifyDataDao)
         viewModelFactory = HomeViewModelFactory(repo)
+
         val homeViewModel =
             ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
 
@@ -59,14 +69,27 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
         val myActivity = requireActivity() as MainActivity
 
+
         recentlyPlayedList = binding.recentlyPlayedList
         favGenreList = binding.favGenreList
+        favTrackList = binding.favTrackList
+        favArtistList = binding.favArtistList
+
         genreArrayList = ArrayList()
         songArrayList = ArrayList()
+
         songListAdapter = SongListAdapter(requireActivity(), songArrayList)
         genreListAdapter = GenreListAdapter(requireActivity(), genreArrayList)
         recentlyPlayedList.adapter = songListAdapter
         favGenreList.adapter = genreListAdapter
+
+        favTrackArrayList = ArrayList()
+        artistArrayList = ArrayList()
+        artistListAdapter = ArtistListAdapter(requireActivity(), artistArrayList)
+        favTrackListAdapter = TrackListAdapter(requireActivity(), favTrackArrayList)
+        favArtistList.adapter = favTrackListAdapter
+        favTrackList.adapter = favTrackListAdapter
+
 
         recentlyPlayedList.onItemClickListener = this
 
@@ -104,6 +127,36 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
                 genreArrayList = it as ArrayList<String>
                 setListViewHeightBasedOnChildren(favGenreList)
             }
+        }
+
+        myViewModel.favArtist.observe(viewLifecycleOwner) {
+//            if(it.isEmpty()){
+//                val emptyListAdapter = ArtistListAdapter(requireActivity(), artistArrayList)
+//                favArtistList.adapter = emptyListAdapter
+//                emptyListAdapter.replace(arrayListOf("None Found"))
+//                emptyListAdapter.notifyDataSetChanged()
+//                setListViewHeightBasedOnChildren(favTrackList)
+//            }else{
+                artistListAdapter.replace(it)
+                artistListAdapter.notifyDataSetChanged()
+                artistArrayList = it as ArrayList<Artist>
+                setListViewHeightBasedOnChildren(favArtistList)
+//            }
+        }
+
+        myViewModel.favTrack.observe(viewLifecycleOwner) {
+//            if(it.isEmpty()){
+//                val emptyListAdapter = TrackListAdapter(requireActivity(), favTrackArrayList)
+//                recentlyPlayedList.adapter = emptyListAdapter
+//                emptyListAdapter.replace(arrayListOf("None Found"))
+//                emptyListAdapter.notifyDataSetChanged()
+//                setListViewHeightBasedOnChildren(favTrackList)
+//            }else{
+                favTrackListAdapter.replace(it)
+                favTrackListAdapter.notifyDataSetChanged()
+                favTrackArrayList = it as ArrayList<Track>
+                setListViewHeightBasedOnChildren(favTrackList)
+//            }
         }
 
 //        myViewModel.allLiveData.observe(requireActivity(), Observer { it ->

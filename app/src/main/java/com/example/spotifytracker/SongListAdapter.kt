@@ -2,16 +2,12 @@ package com.example.spotifytracker
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
-import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import com.adamratzman.spotify.models.PlayHistory
 import com.squareup.picasso.Picasso
 

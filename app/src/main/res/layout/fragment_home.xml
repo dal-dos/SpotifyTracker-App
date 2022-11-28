@@ -186,12 +186,11 @@
                             android:layout_height="match_parent"
                             android:padding="10dp"
                             android:orientation="vertical">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/none_found"
-                                android:fontFamily="@font/comfortaalight"
-                                />
+                            <ListView
+                                android:id="@+id/fav_track_list"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/none_found" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
@@ -244,12 +243,11 @@
                             android:layout_height="match_parent"
                             android:padding="10dp"
                             android:orientation="vertical">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/none_found"
-                                android:fontFamily="@font/comfortaalight"
-                                />
+                            <ListView
+                                android:id="@+id/fav_artist_list"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@string/none_found" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
