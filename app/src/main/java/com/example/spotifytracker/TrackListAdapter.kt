@@ -38,8 +38,6 @@ class TrackListAdapter(private val context: Context, private var spotifyFavTrack
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View = View.inflate(context, R.layout.song_item,null)
-        val itemTitleTextView = view.findViewById<TextView>(R.id.itemTitleText)
-        val itemSubTextView =  view.findViewById<TextView>(R.id.itemSubText)
 
         val itemTitleText = view.findViewById<TextView>(R.id.itemTitleText)
         val itemSubText =  view.findViewById<TextView>(R.id.itemSubText)

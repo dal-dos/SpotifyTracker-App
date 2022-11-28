@@ -102,7 +102,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         //recentlyPlayedList.emptyView = listEmpty()
         myViewModel.recentlyPlayed.observe(viewLifecycleOwner) { it ->
             if(it.isEmpty()){
-                val emptyListAdapter = GenreListAdapter(requireActivity(), genreArrayList)
+                val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList<String>())
                 recentlyPlayedList.adapter = emptyListAdapter
                 emptyListAdapter.replace(arrayListOf("None Found"))
                 emptyListAdapter.notifyDataSetChanged()
@@ -130,33 +130,33 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         }
 
         myViewModel.favArtist.observe(viewLifecycleOwner) {
-//            if(it.isEmpty()){
-//                val emptyListAdapter = ArtistListAdapter(requireActivity(), artistArrayList)
-//                favArtistList.adapter = emptyListAdapter
-//                emptyListAdapter.replace(arrayListOf("None Found"))
-//                emptyListAdapter.notifyDataSetChanged()
-//                setListViewHeightBasedOnChildren(favTrackList)
-//            }else{
+            if(it.isEmpty()){
+                val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList<String>())
+                favArtistList.adapter = emptyListAdapter
+                emptyListAdapter.replace(arrayListOf("None Found"))
+                emptyListAdapter.notifyDataSetChanged()
+                setListViewHeightBasedOnChildren(favTrackList)
+            }else{
                 artistListAdapter.replace(it)
                 artistListAdapter.notifyDataSetChanged()
                 artistArrayList = it as ArrayList<Artist>
                 setListViewHeightBasedOnChildren(favArtistList)
-//            }
+            }
         }
 
         myViewModel.favTrack.observe(viewLifecycleOwner) {
-//            if(it.isEmpty()){
-//                val emptyListAdapter = TrackListAdapter(requireActivity(), favTrackArrayList)
-//                recentlyPlayedList.adapter = emptyListAdapter
-//                emptyListAdapter.replace(arrayListOf("None Found"))
-//                emptyListAdapter.notifyDataSetChanged()
-//                setListViewHeightBasedOnChildren(favTrackList)
-//            }else{
+            if(it.isEmpty()){
+                val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList<String>())
+                recentlyPlayedList.adapter = emptyListAdapter
+                emptyListAdapter.replace(arrayListOf("None Found"))
+                emptyListAdapter.notifyDataSetChanged()
+                setListViewHeightBasedOnChildren(favTrackList)
+            }else{
                 favTrackListAdapter.replace(it)
                 favTrackListAdapter.notifyDataSetChanged()
                 favTrackArrayList = it as ArrayList<Track>
                 setListViewHeightBasedOnChildren(favTrackList)
-//            }
+            }
         }
 
 //        myViewModel.allLiveData.observe(requireActivity(), Observer { it ->

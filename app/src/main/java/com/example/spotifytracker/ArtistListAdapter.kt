@@ -34,11 +34,9 @@ class ArtistListAdapter(private val context: Context, private var spotifyFavArti
         spotifyFavArtist = newSpotifyData
     }
 
-    @SuppressLint("ViewHolder")
+    @SuppressLint("ViewHolder", "SetTextI18n")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View = View.inflate(context, R.layout.song_item,null)
-        val itemTitleTextView = view.findViewById<TextView>(R.id.itemTitleText)
-        val itemSubTextView =  view.findViewById<TextView>(R.id.itemSubText)
 
         val itemTitleText = view.findViewById<TextView>(R.id.itemTitleText)
         val itemSubText =  view.findViewById<TextView>(R.id.itemSubText)
@@ -50,7 +48,7 @@ class ArtistListAdapter(private val context: Context, private var spotifyFavArti
 
         var popularity : String = spotifyFavArtist[position].popularity.toString()
         var followers : String = spotifyFavArtist[position].followers.toString()
-        itemSubText.text = popularity + " " + followers
+        itemSubText.text = "$popularity $followers"
         itemSubText.isSelected = true
         itemTitleText.isSelected = true
         //        println("debug: Image address is " + spotifyRecentlyPlayed[position].track.album.images[0].url)
