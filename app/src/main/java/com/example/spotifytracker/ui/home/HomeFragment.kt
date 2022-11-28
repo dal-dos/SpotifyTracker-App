@@ -126,7 +126,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         return root
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -139,7 +138,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
             startActivity(intent)
         }
     }
-
 
     private fun setListViewHeightBasedOnChildren(listView: ListView) {
         val listAdapter = listView.adapter
