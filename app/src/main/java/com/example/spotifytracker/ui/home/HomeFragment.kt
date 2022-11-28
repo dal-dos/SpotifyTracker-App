@@ -92,6 +92,9 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
 
         recentlyPlayedList.onItemClickListener = this
+        favTrackList.onItemClickListener = this
+        favArtistList.onItemClickListener = this
+        favGenreList.onItemClickListener = this
 
         myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
 
@@ -184,11 +187,38 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     }
 
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        if (songArrayList.isNotEmpty()){
-            val hyperlink = songArrayList[p2].track.externalUrls.spotify
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
-            startActivity(intent)
+
+        when(p0?.id){
+            recentlyPlayedList.id -> {
+                if (songArrayList.isNotEmpty()){
+                    val hyperlink = songArrayList[p2].track.externalUrls.spotify
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
+                    startActivity(intent)
+                }
+            }
+            favTrackList.id -> {
+                if (favTrackArrayList.isNotEmpty()){
+                    val hyperlink = favTrackArrayList[p2].externalUrls.spotify
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
+                    startActivity(intent)
+                }
+            }
+            favArtistList.id -> {
+                if (artistArrayList.isNotEmpty()){
+                    val hyperlink = artistArrayList[p2].externalUrls.spotify
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
+                    startActivity(intent)
+                }
+            }
+            favGenreList.id -> {
+                if (genreArrayList.isNotEmpty()){
+                    val hyperlink = "https://open.spotify.com/track/" + genreArrayList[p2]
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
+                    startActivity(intent)
+                }
+            }
         }
+
     }
 
     private fun setListViewHeightBasedOnChildren(listView: ListView) {
