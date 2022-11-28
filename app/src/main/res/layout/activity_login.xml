@@ -1,37 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:gravity="center"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp">
+        android:gravity="center">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaaregular"
                 android:text="Spotify"
                 android:textColor="@color/title_green"
-                android:textSize="25dp"/>
+                android:textSize="35sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaaregular"
-                android:textColor="@color/white"
                 android:text="Tracker"
-                android:textSize="25dp"/>
+                android:textColor="@color/white"
+                android:textSize="35sp" />
         </LinearLayout>
-<!--        <EditText
+        <!--        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"/>
@@ -40,21 +44,18 @@
             android:layout_height="wrap_content"
             android:hint="Password"
             android:inputType="textPassword"/> -->
-        <Button
-            android:id="@+id/login_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            android:backgroundTint="@color/dark_green"
-            android:textColor="@android:color/black"
-            android:onClick="onClickLogin"/>
-        <Button
-            android:id="@+id/signup_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SIGNUP"
-            android:backgroundTint="@color/dark_green"
-            android:textColor="@android:color/black"
-            android:onClick="onClickSignup"/>
     </LinearLayout>
-</LinearLayout>
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/dark_green"
+        android:onClick="onClickLogin"
+        android:text="Log In"
+        android:textColor="@android:color/black"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background = "@drawable/roundedbutton"/>
+</RelativeLayout>
