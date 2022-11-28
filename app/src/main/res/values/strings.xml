@@ -4,20 +4,21 @@
     <string name="title_stats">Stats</string>
     <string name="title_settings">Settings</string>
     <string name="settings">Settings</string>
-    <string name="recently_played">Recently Played:</string>
+    <string name="recently_played">Recently Played</string>
     <string name="temp">Temp</string>
-    <string name="suggested">Suggested:</string>
+    <string name="suggested">Suggested</string>
     <string name="placeholder">Placeholder</string>
-    <string name="favorite_genre">Favorite Genre:</string>
-    <string name="favorite_artist">Favorite Artist:</string>
+    <string name="favorite_genre">Favorite Genres</string>
+    <string name="favorite_artist">Favorite Artists</string>
     <string name="favourite_tracks">Favourite Tracks</string>
     <string name="none_found">None Found</string>
     <string name="image">image</string>
     <string name="refresh">refresh</string>
     <string name="loading">Loading...</string>
-    <string name="refreshing_spotify_data">Refreshing Spotify Data...</string>
+    <string name="refreshing_spotify_data">Refreshing Spotify Data…</string>
     <string name="hours_of_music_played_in_last_7_days">Hours of music played in last 7 days:</string>
     <string name="hours">Hours</string>
     <string name="of_days_ago"># of days ago</string>
     <string name="logout">Logout</string>
+    <string name="arrow">˅</string>
 </resources>

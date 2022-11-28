@@ -133,9 +133,11 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     }
 
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        val hyperlink = songArrayList[p2].track.externalUrls.spotify
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
-        startActivity(intent)
+        if (songArrayList.isNotEmpty()){
+            val hyperlink = songArrayList[p2].track.externalUrls.spotify
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
+            startActivity(intent)
+        }
     }
 
 

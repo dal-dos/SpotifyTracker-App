@@ -16,7 +16,9 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -71,6 +73,7 @@ class MainActivity : AppCompatActivity() {
 
         navView = binding.navView
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
@@ -198,26 +201,71 @@ class MainActivity : AppCompatActivity() {
 
     fun onClickCardViewRecentlyPlayed(view: View) {
         val cv = findViewById<CardView>(R.id.recently_played_inner_cardview)
-        cv.isVisible = !cv.isVisible
+        val arrow = findViewById<TextView>(R.id.recently_played_arrow)
+        arrow.animate().rotation(90f)
+        if (cv.isVisible){
+            arrow.animate().rotation(90f)
+            cv.isVisible = false
+        }
+        else{
+            arrow.animate().rotation(0f)
+            cv.isVisible = true
+        }
     }
 
     fun onClickCardViewSuggested(view: View) {
         val cv = findViewById<CardView>(R.id.suggested_inner_cardview)
-        cv.isVisible = !cv.isVisible
+        val arrow = findViewById<TextView>(R.id.suggested_arrow)
+        arrow.animate().rotation(90f)
+        if (cv.isVisible){
+            arrow.animate().rotation(90f)
+            cv.isVisible = false
+        }
+        else{
+            arrow.animate().rotation(0f)
+            cv.isVisible = true
+        }
     }
 
     fun onClickCardViewFavoriteTracks(view: View) {
         val cv = findViewById<CardView>(R.id.favorite_tracks_inner_cardview)
-        cv.isVisible = !cv.isVisible
+        val arrow = findViewById<TextView>(R.id.fav_tracks_arrow)
+        arrow.animate().rotation(90f)
+        if (cv.isVisible){
+            arrow.animate().rotation(90f)
+            cv.isVisible = false
+        }
+        else{
+            arrow.animate().rotation(0f)
+            cv.isVisible = true
+        }
     }
 
     fun onClickCardViewFavoriteArtists(view: View) {
         val cv = findViewById<CardView>(R.id.favorite_artists_inner_cardview)
-        cv.isVisible = !cv.isVisible
+        val arrow = findViewById<TextView>(R.id.fav_artist_arrow)
+        arrow.animate().rotation(90f)
+        if (cv.isVisible){
+            arrow.animate().rotation(90f)
+            cv.isVisible = false
+        }
+        else{
+            arrow.animate().rotation(0f)
+            cv.isVisible = true
+        }
     }
     fun onClickCardViewFavoriteGenres(view: View) {
         val cv = findViewById<CardView>(R.id.favorite_genres_inner_cardview)
-        cv.isVisible = !cv.isVisible
+        val arrow = findViewById<TextView>(R.id.fav_genre_arrow)
+        arrow.animate().rotation(90f)
+        if (cv.isVisible){
+            arrow.animate().rotation(90f)
+            cv.isVisible = false
+        }
+        else{
+            arrow.animate().rotation(0f)
+            cv.isVisible = true
+        }
     }
 
 }
