@@ -33,12 +33,12 @@ class GenreListAdapter(private val context: Context, private var spotifyFavGenre
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View = View.inflate(context, R.layout.song_item,null)
-        val songTitleTexView = view.findViewById<TextView>(R.id.songTitleText)
-        val songArtistsTextView =  view.findViewById<TextView>(R.id.songArtistsText)
+        val itemTitleTextView = view.findViewById<TextView>(R.id.itemTitleText)
+        val itemSubTextView =  view.findViewById<TextView>(R.id.itemSubText)
 
-        songTitleTexView.text = spotifyFavGenre[position]
+        itemTitleTextView.text = spotifyFavGenre[position]
         val myArtists = ""
-        songArtistsTextView.text = myArtists
+        itemSubTextView.text = myArtists
 
         return view
     }

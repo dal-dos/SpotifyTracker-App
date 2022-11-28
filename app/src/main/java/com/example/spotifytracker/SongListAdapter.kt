@@ -35,12 +35,12 @@ class SongListAdapter(private val context: Context, private var spotifyRecentlyP
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View = View.inflate(context, R.layout.song_item,null)
-        val songTitleTexView = view.findViewById<TextView>(R.id.songTitleText)
-        val songArtistsTextView =  view.findViewById<TextView>(R.id.songArtistsText)
+        val itemTitleText = view.findViewById<TextView>(R.id.itemTitleText)
+        val itemSubText =  view.findViewById<TextView>(R.id.itemSubText)
         val image = view.findViewById<ImageView>(R.id.imageView)
         val layout = view.findViewById<LinearLayout>(R.id.linearlayout)
 
-        songTitleTexView.text = spotifyRecentlyPlayed[position].track.name
+        itemTitleText.text = spotifyRecentlyPlayed[position].track.name
 
         var myArtists = ""
         spotifyRecentlyPlayed[position].track.artists.forEach { it ->
@@ -50,9 +50,9 @@ class SongListAdapter(private val context: Context, private var spotifyRecentlyP
                 myArtists = "$myArtists, ${it.name}"
             }
         }
-        songArtistsTextView.text = myArtists
-        songArtistsTextView.isSelected = true
-        songTitleTexView.isSelected = true
+        itemSubText.text = myArtists
+        itemSubText.isSelected = true
+        itemTitleText.isSelected = true
         //println("debug: Image address is " + spotifyRecentlyPlayed[position].track.album.images[0].url)
         //image.setImageResource(R.drawable.ic_spotify_icon)
         Picasso.get().load(spotifyRecentlyPlayed[position].track.album.images[0].url).into(image);

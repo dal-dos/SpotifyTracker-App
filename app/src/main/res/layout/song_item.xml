@@ -21,7 +21,7 @@
         android:layout_marginVertical="5dp"
         android:id="@+id/linearlayout">
         <TextView
-            android:id="@+id/songTitleText"
+            android:id="@+id/itemTitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Song Name"
@@ -31,9 +31,8 @@
             android:singleLine="true"
             android:ellipsize="marquee"/>
 
-
             <TextView
-                android:id="@+id/songArtistsText"
+                android:id="@+id/itemSubText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Artist(s)"
