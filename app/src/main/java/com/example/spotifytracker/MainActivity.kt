@@ -98,6 +98,7 @@ class MainActivity : AppCompatActivity() {
 
         if(savedInstanceState != null){
             this.setMenuTitle(myViewModel.username.value.toString())
+
         }
 
         if(findViewById<LinearLayout>(R.id.home_layout) != null){
@@ -106,7 +107,7 @@ class MainActivity : AppCompatActivity() {
             TransitionManager.beginDelayedTransition(layout, AutoTransition())
         }
 
-
+        this.supportActionBar?.hide()//hides action bars
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -122,6 +123,7 @@ class MainActivity : AppCompatActivity() {
                 //startActivity(intent)
                 apiBuilder()
                 //Toast.makeText(baseContext, "Refreshed Spotify Data", Toast.LENGTH_SHORT).show()
+                findViewById<TextView>(R.id.option1).animate().rotationBy(360F)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -201,6 +203,7 @@ class MainActivity : AppCompatActivity() {
     fun setMenuTitle(username: String){
         navView.menu.findItem(R.id.navigation_home).title = username
     }
+
 
     fun onClickCardViewRecentlyPlayed(view: View) {
         val cv = findViewById<CardView>(R.id.recently_played_inner_cardview)

@@ -13,7 +13,7 @@
     <string name="favourite_tracks">Favourite Tracks</string>
     <string name="none_found">None Found</string>
     <string name="image">image</string>
-    <string name="refresh">refresh</string>
+    <string name="refresh">Refresh</string>
     <string name="loading">Loading...</string>
     <string name="refreshing_spotify_data">Refreshing Spotify Data…</string>
     <string name="hours_of_music_played_in_last_7_days">Hours of music played in last 7 days:</string>

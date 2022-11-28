@@ -59,7 +59,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
         val myActivity = requireActivity() as MainActivity
 
-
         recentlyPlayedList = binding.recentlyPlayedList
         favGenreList = binding.favGenreList
         genreArrayList = ArrayList()

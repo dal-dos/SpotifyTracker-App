@@ -13,6 +13,7 @@
         <entry key="..\:/Users/Prubh/AndroidStudioProjects/SpotifyTracker-App/app/src/main/res/layout/fragment_stats.xml" value="0.35052083333333334" />
         <entry key="..\:/Users/Prubh/AndroidStudioProjects/SpotifyTracker-App/app/src/main/res/layout/song_item.xml" value="0.3494791666666667" />
         <entry key="..\:/Users/Prubh/AndroidStudioProjects/SpotifyTracker-App/app/src/main/res/menu/bottom_nav_menu.xml" value="0.19895833333333332" />
+        <entry key="..\:/Users/Prubh/AndroidStudioProjects/SpotifyTracker-App/app/src/main/res/menu/settings_menu.xml" value="0.35052083333333334" />
         <entry key="..\:/Users/Prubh/AndroidStudioProjects/SpotifyTracker/app/src/main/res/drawable-anydpi/ic_settings_black.xml" value="0.3125" />
         <entry key="..\:/Users/Prubh/AndroidStudioProjects/SpotifyTracker/app/src/main/res/drawable/ic__home_black.xml" value="0.3125" />
         <entry key="..\:/Users/Prubh/AndroidStudioProjects/SpotifyTracker/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.3125" />
@@ -27,14 +28,12 @@
         <entry key="..\:/Users/Prubh/AndroidStudioProjects/SpotifyTracker/app/src/main/res/layout/fragment_stats.xml" value="0.175" />
         <entry key="..\:/Users/Prubh/AndroidStudioProjects/SpotifyTracker/app/src/main/res/menu/bottom_nav_menu.xml" value="0.35052083333333334" />
         <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/drawable/ic_music.xml" value="0.1825" />
-        <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/drawable/ic_spotify_icon.xml" value="0.108" />
         <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/layout/activity_login.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/layout/activity_main.xml" value="0.14447463768115942" />
         <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/layout/fragment_home.xml" value="0.253125" />
         <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/layout/fragment_settings.xml" value="0.253125" />
         <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/layout/song_item.xml" value="0.14447463768115942" />
         <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/menu/settings_menu.xml" value="0.371875" />
-        <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.108" />
       </map>
     </option>
   </component>
