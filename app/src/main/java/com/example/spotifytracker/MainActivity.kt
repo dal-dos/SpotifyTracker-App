@@ -4,24 +4,25 @@ package com.example.spotifytracker
 
 import android.animation.LayoutTransition
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.text.method.TextKeyListener.clear
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextUtils
+import android.text.style.ForegroundColorSpan
+import android.text.style.TypefaceSpan
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
-import android.view.animation.AnimationSet
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -29,6 +30,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.models.PlayHistory
 import com.adamratzman.spotify.models.Token
@@ -86,7 +88,8 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        setSupportActionBar(findViewById(R.id.toolbar))
+        //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         spotifyDatabase = SpotifyDatabase.getInstance(this)
@@ -99,6 +102,7 @@ class MainActivity : AppCompatActivity() {
 
         if(savedInstanceState != null){
             this.setMenuTitle(myViewModel.username.value.toString())
+
         }
 
         if(findViewById<LinearLayout>(R.id.home_layout) != null){
@@ -107,13 +111,16 @@ class MainActivity : AppCompatActivity() {
             TransitionManager.beginDelayedTransition(layout, AutoTransition())
         }
 
-        this.supportActionBar?.hide()
-        //this.supportActionBar?.isHideOnContentScrollEnabled = true
+        //this.supportActionBar?.hide()//hides action bars
+        //val actionBar = supportActionBar
+        //actionBar?.setDisplayShowCustomEnabled(true);
+        //actionBar?.setDisplayShowTitleEnabled(false);
+        //setActionBarTitle()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.settings_menu, menu)
+        inflater.inflate(R.menu.custom_actionbar, menu)
         return true
     }
 
@@ -146,6 +153,7 @@ class MainActivity : AppCompatActivity() {
         val mySharedPreferences = applicationContext.getSharedPreferences("SPOTIFY", 0)
         mySharedPreferences.edit().clear().apply()
         startActivity(intent)
+        finishAffinity()
     }
 
     fun apiBuilder(){
@@ -276,5 +284,46 @@ class MainActivity : AppCompatActivity() {
             cv.isVisible = true
         }
     }
+
+    private fun setActionBarTitle() {
+        //if API level below 18, there is a bug at Samsung and LG devices
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            supportActionBar!!.title = "SpotifyTracker"
+        } else {
+            val spotify = SpannableString("Spotify")
+            spotify.setSpan(
+                TypefaceSpan("@font/comfortaaregular"),
+                0,
+                spotify.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spotify.setSpan(
+                ForegroundColorSpan(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.title_green
+                    )
+                ), 0, spotify.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            val tracker = SpannableString("Tracker")
+            tracker.setSpan(
+                TypefaceSpan("@font/comfortaaregular"),
+                0,
+                tracker.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            tracker.setSpan(
+                ForegroundColorSpan(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.white
+                    )
+                ), 0, tracker.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            supportActionBar!!.title = TextUtils.concat(spotify, tracker)
+        }
+    }
+
+
 
 }

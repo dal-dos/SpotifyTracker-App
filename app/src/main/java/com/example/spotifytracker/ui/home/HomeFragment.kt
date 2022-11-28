@@ -99,7 +99,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
 
         myViewModel.username.observe(viewLifecycleOwner) {
-            (activity as AppCompatActivity?)!!.supportActionBar!!.title = it //top action bar
+            //(activity as AppCompatActivity?)!!.supportActionBar!!.title = it //top action bar
             myActivity.setMenuTitle(it) //bottom nav bar
         }
         //recentlyPlayedList.emptyView = listEmpty()
@@ -140,10 +140,10 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
                 emptyListAdapter.notifyDataSetChanged()
                 setListViewHeightBasedOnChildren(favTrackList)
             }else{
-                artistListAdapter.replace(it)
-                artistListAdapter.notifyDataSetChanged()
-                artistArrayList = it as ArrayList<Artist>
-                setListViewHeightBasedOnChildren(favArtistList)
+            artistListAdapter.replace(it)
+            artistListAdapter.notifyDataSetChanged()
+            artistArrayList = it as ArrayList<Artist>
+            setListViewHeightBasedOnChildren(favArtistList)
             }
         }
 
@@ -155,10 +155,10 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
                 emptyListAdapter.notifyDataSetChanged()
                 setListViewHeightBasedOnChildren(favTrackList)
             }else{
-                favTrackListAdapter.replace(it)
-                favTrackListAdapter.notifyDataSetChanged()
-                favTrackArrayList = it as ArrayList<Track>
-                setListViewHeightBasedOnChildren(favTrackList)
+            favTrackListAdapter.replace(it)
+            favTrackListAdapter.notifyDataSetChanged()
+            favTrackArrayList = it as ArrayList<Track>
+            setListViewHeightBasedOnChildren(favTrackList)
             }
         }
 
@@ -242,6 +242,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         super.onResume()
         binding.homeLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         TransitionManager.beginDelayedTransition(binding.homeLayout, AutoTransition())
-        (activity as AppCompatActivity?)!!.supportActionBar!!.title = myViewModel.username.value
+       // (activity as AppCompatActivity?)!!.supportActionBar!!.title = myViewModel.username.value
     }
 }

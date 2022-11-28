@@ -52,6 +52,8 @@ class LoginActivity : AppCompatActivity() {
         if (mySharedPreferences.getString("token", null) != null){
             loginButton.isVisible = false
             loginAttempt()
+        } else {
+            AuthorizationClient.clearCookies(this)
         }
     }
 
