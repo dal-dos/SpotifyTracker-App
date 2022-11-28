@@ -147,7 +147,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         myViewModel.favTrack.observe(viewLifecycleOwner) {
             if(it.isEmpty()){
                 val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList<String>())
-                recentlyPlayedList.adapter = emptyListAdapter
+                favTrackList.adapter = emptyListAdapter
                 emptyListAdapter.replace(arrayListOf("None Found"))
                 emptyListAdapter.notifyDataSetChanged()
                 setListViewHeightBasedOnChildren(favTrackList)
