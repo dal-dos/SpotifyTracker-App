@@ -60,7 +60,7 @@ class TrackListAdapter(private val context: Context, private var spotifyFavTrack
         itemSubText.isSelected = true
         itemTitleText.isSelected = true
 //        println("debug: Image address is " + spotifyRecentlyPlayed[position].track.album.images[0].url)
-        image.setImageResource(R.drawable.ic_spotify_icon)
+        //image.setImageResource(R.drawable.ic_spotify_icon)
         Picasso.get().load(spotifyFavTrack[position].album.images[0].url).into(image);
         return view
     }

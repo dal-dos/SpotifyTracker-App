@@ -99,7 +99,6 @@ class MainActivity : AppCompatActivity() {
 
         if(savedInstanceState != null){
             this.setMenuTitle(myViewModel.username.value.toString())
-
         }
 
         if(findViewById<LinearLayout>(R.id.home_layout) != null){
@@ -109,6 +108,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         this.supportActionBar?.hide()
+        //this.supportActionBar?.isHideOnContentScrollEnabled = true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

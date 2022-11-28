@@ -41,7 +41,6 @@ class ArtistListAdapter(private val context: Context, private var spotifyFavArti
         val itemTitleText = view.findViewById<TextView>(R.id.itemTitleText)
         val itemSubText =  view.findViewById<TextView>(R.id.itemSubText)
         val image = view.findViewById<ImageView>(R.id.imageView)
-        val layout = view.findViewById<LinearLayout>(R.id.linearlayout)
 
         var artist : String = spotifyFavArtist[position].name
         itemTitleText.text = artist
@@ -53,7 +52,7 @@ class ArtistListAdapter(private val context: Context, private var spotifyFavArti
         itemTitleText.isSelected = true
         //        println("debug: Image address is " + spotifyRecentlyPlayed[position].track.album.images[0].url)
         //image.setImageResource(R.drawable.ic_spotify_icon)
-        Picasso.get().load(spotifyFavArtist[position].images[0].url)
+        Picasso.get().load(spotifyFavArtist[position].images[0].url).into(image);
         return view
     }
 
