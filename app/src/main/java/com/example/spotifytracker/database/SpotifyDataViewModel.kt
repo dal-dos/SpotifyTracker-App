@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.lifecycle.asLiveData
+import com.example.spotifytracker.database.SpotifyDataEntity
+import com.example.spotifytracker.database.SpotifyDataRepository
 import java.lang.IllegalArgumentException
 
 class SpotifyDataViewModel(private val repository: SpotifyDataRepository): ViewModel() {

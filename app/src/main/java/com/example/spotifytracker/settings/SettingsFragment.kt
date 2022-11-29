@@ -1,14 +1,11 @@
-package com.example.spotifytracker
+package com.example.spotifytracker.settings
 
-import android.content.Intent
-import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.preference.Preference
-import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.spotifytracker.R
 
 class SettingsFragment: PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

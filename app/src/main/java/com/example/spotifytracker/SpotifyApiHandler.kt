@@ -6,7 +6,7 @@ import com.adamratzman.spotify.endpoints.client.ClientPersonalizationApi
 import com.adamratzman.spotify.models.*
 import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.utils.Market
-
+import com.example.spotifytracker.settings.SettingsActivity
 
 
 class SpotifyApiHandler(val token: Token, sharedSettings : SharedPreferences) {

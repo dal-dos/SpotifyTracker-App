@@ -9,7 +9,6 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -17,8 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.example.spotifytracker.MainActivity
-import com.example.spotifytracker.R
-import com.example.spotifytracker.SettingsActivity
+import com.example.spotifytracker.settings.SettingsActivity
 import com.example.spotifytracker.databinding.FragmentStatsBinding
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
@@ -172,7 +170,8 @@ class StatsFragment : Fragment() {
     }
 
     private fun applySettings(){
-        binding.popularityPieChartInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().popularityPieChartCollapseKey, true)
+        binding.popularityPieChartInnerCardview.isVisible = sharedSettings.getBoolean(
+            SettingsActivity().popularityPieChartCollapseKey, true)
 
         MainActivity().changeArrow(binding.popularityPieChartArrow, binding.popularityPieChartInnerCardview.isVisible)
     }

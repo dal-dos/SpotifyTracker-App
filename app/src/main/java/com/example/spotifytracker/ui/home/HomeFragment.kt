@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
@@ -24,7 +23,16 @@ import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.models.PlayHistory
 import com.adamratzman.spotify.models.Track
 import com.example.spotifytracker.*
+import com.example.spotifytracker.adapters.ArtistListAdapter
+import com.example.spotifytracker.adapters.GenreListAdapter
+import com.example.spotifytracker.adapters.SongListAdapter
+import com.example.spotifytracker.adapters.TrackListAdapter
+import com.example.spotifytracker.database.SpotifyDataDao
+import com.example.spotifytracker.database.SpotifyDataEntity
+import com.example.spotifytracker.database.SpotifyDataRepository
+import com.example.spotifytracker.database.SpotifyDatabase
 import com.example.spotifytracker.databinding.FragmentHomeBinding
+import com.example.spotifytracker.settings.SettingsActivity
 
 
 class HomeFragment : Fragment(), AdapterView.OnItemClickListener {

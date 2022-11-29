@@ -1,4 +1,4 @@
-package com.example.spotifytracker
+package com.example.spotifytracker.database
 
 import android.icu.util.Calendar
 import androidx.room.ColumnInfo

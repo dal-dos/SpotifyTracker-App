@@ -1,4 +1,4 @@
-package com.example.spotifytracker
+package com.example.spotifytracker.database
 
 import android.content.Context
 import androidx.room.Database
@@ -12,7 +12,7 @@ abstract class SpotifyDatabase: RoomDatabase() {
         @Volatile
         private var INSTANCE: SpotifyDatabase? = null
         private const val databaseName : String = "SpotifyDataDB"
-        fun getInstance(context: Context) : SpotifyDatabase{
+        fun getInstance(context: Context) : SpotifyDatabase {
             synchronized(this){
                 var instance = INSTANCE
                 if(instance == null){

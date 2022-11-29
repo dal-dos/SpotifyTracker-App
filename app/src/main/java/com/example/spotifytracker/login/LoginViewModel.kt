@@ -1,9 +1,10 @@
-package com.example.spotifytracker
+package com.example.spotifytracker.login
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import com.example.spotifytracker.database.SpotifyDataEntity
+import com.example.spotifytracker.database.SpotifyDataRepository
 import java.lang.IllegalArgumentException
 
 class LoginViewModel(private val repository: SpotifyDataRepository) : ViewModel() {

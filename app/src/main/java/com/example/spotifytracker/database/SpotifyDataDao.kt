@@ -1,4 +1,4 @@
-package com.example.spotifytracker
+package com.example.spotifytracker.database
 
 import androidx.room.Dao
 import androidx.room.Insert

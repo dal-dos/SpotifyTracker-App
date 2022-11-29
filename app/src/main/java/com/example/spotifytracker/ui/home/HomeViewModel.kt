@@ -4,8 +4,8 @@ import androidx.lifecycle.*
 import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.models.PlayHistory
 import com.adamratzman.spotify.models.Track
-import com.example.spotifytracker.SpotifyDataEntity
-import com.example.spotifytracker.SpotifyDataRepository
+import com.example.spotifytracker.database.SpotifyDataEntity
+import com.example.spotifytracker.database.SpotifyDataRepository
 import java.lang.IllegalArgumentException
 
 class HomeViewModel(private val repository: SpotifyDataRepository) : ViewModel() {

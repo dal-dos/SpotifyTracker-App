@@ -1,4 +1,4 @@
-package com.example.spotifytracker
+package com.example.spotifytracker.database
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

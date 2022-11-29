@@ -1,4 +1,4 @@
-package com.example.spotifytracker
+package com.example.spotifytracker.login
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,7 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import com.google.gson.Gson
+import com.example.spotifytracker.MainActivity
+import com.example.spotifytracker.R
+import com.example.spotifytracker.database.SpotifyDataDao
+import com.example.spotifytracker.database.SpotifyDataRepository
+import com.example.spotifytracker.database.SpotifyDatabase
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
