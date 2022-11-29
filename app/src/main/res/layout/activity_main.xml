@@ -16,7 +16,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:animateLayoutChanges="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:backgroundTint="#303030">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
