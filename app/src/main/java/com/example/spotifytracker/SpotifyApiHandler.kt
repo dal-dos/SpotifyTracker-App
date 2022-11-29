@@ -9,6 +9,7 @@ import com.adamratzman.spotify.utils.Market
 
 
 class SpotifyApiHandler(val token: Token) {
+    private val time : List<ClientPersonalizationApi.TimeRange> = arrayListOf(ClientPersonalizationApi.TimeRange.SHORT_TERM,ClientPersonalizationApi.TimeRange.MEDIUM_TERM, ClientPersonalizationApi.TimeRange.LONG_TERM)
     private val clientID = "9609905ad0f54f66b8d574d367aee504"
     private val clientSecret = "7c07ad46a3b940c48b9858688574f3b6"
     private val REDIRECT_URI = "com.example.spotifytracker://callback"
@@ -69,44 +70,52 @@ class SpotifyApiHandler(val token: Token) {
 
     // Performs Spotify database query for queries related to user top tracks. Returns
     suspend fun userTopTracks(): List<Track> {
+        val itemsToShow = 5
         if(api!!.spotifyApiOptions.enableDebugMode) {
             print("DEBUG MODE: APP: userTopTracks(): ")
-            println("debug: " + api!!.personalization.getTopTracks(limit = 5, timeRange = ClientPersonalizationApi.TimeRange.LONG_TERM).items.map { it.name })
+            println("debug: " + api!!.personalization.getTopTracks(limit = itemsToShow, timeRange = time[2]).items.map { it.name })
         }
-        return api!!.personalization.getTopTracks(limit = 5, timeRange = ClientPersonalizationApi.TimeRange.LONG_TERM).items
+        return api!!.personalization.getTopTracks(limit = itemsToShow, timeRange = time[2]).items
     }
 
     suspend fun userTopArtists(): List<Artist> {
+        val itemsToShow = 5
         if(api!!.spotifyApiOptions.enableDebugMode) {
             print("DEBUG MODE: APP: userTopArtists(): ")
-            println("debug: " + api!!.personalization.getTopArtists(limit = 5, timeRange = ClientPersonalizationApi.TimeRange.LONG_TERM).items)
+            println("debug: " + api!!.personalization.getTopArtists(limit = itemsToShow, timeRange = time[2]).items)
         }
-        return api!!.personalization.getTopArtists(limit = 5, timeRange = ClientPersonalizationApi.TimeRange.LONG_TERM).items
+        return api!!.personalization.getTopArtists(limit = itemsToShow, timeRange = time[2]).items
     }
 
     suspend fun userTopGenres(): ArrayList<String> {
+        val itemsToShow = 5
+
         if(api!!.spotifyApiOptions.enableDebugMode) {
             print("DEBUG MODE: APP: userTopGenres(): ")
-            println("debug: " + api!!.personalization.getTopArtists(limit = 5, timeRange = ClientPersonalizationApi.TimeRange.LONG_TERM).items.map { it.genres})
+            println("debug: " + api!!.personalization.getTopArtists(limit = itemsToShow, timeRange = time[2]).items.map { it.genres})
         }
         val myGenres : ArrayList<String> = arrayListOf()
         val hashset: HashSet<String> = hashSetOf()
 
-        api!!.personalization.getTopArtists(limit = 5, timeRange = ClientPersonalizationApi.TimeRange.LONG_TERM).items.map { myGenres.addAll(it.genres) }
+        api!!.personalization.getTopArtists(limit = itemsToShow, timeRange = time[2]).items.map { myGenres.addAll(it.genres) }
         hashset.addAll(myGenres)
         myGenres.clear()
         myGenres.addAll(hashset)
 
-        return myGenres
+
+        return myGenres.take(itemsToShow) as ArrayList<String>
     }
 
     suspend fun userRecentlyPlayed(): List<PlayHistory> {
+        val itemsToShow = 5
+        val beforeDate = null
+        val afterDate = null
         if(api!!.spotifyApiOptions.enableDebugMode){
             print("DEBUG MODE: APP: userRecentlyPlayed(): ")
-            println("debug: " + api!!.player.getRecentlyPlayed(limit = 5).items)
+            println("debug: " + api!!.player.getRecentlyPlayed(limit = itemsToShow, before = beforeDate, after = afterDate).items)
         }
 
-        return api!!.player.getRecentlyPlayed(limit = 5).items
+        return api!!.player.getRecentlyPlayed(limit = itemsToShow).items
     }
 
 
