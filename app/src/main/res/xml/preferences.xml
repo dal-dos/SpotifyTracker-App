@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         android:title="Recently Played"
-        app:iconSpaceReserved="false">
+        app:iconSpaceReserved="false"
+        app:initialExpandedChildrenCount="0">
         <SwitchPreference
             android:key="recently_played_visibility"
             android:title="Show"
@@ -39,7 +40,8 @@
 
     <PreferenceCategory
         android:title="Favorite Tracks"
-        app:iconSpaceReserved="false">
+        app:iconSpaceReserved="false"
+        app:initialExpandedChildrenCount="0">
         <SwitchPreference
             android:key="favorite_tracks_visibility"
             android:title="Show"
@@ -70,7 +72,8 @@
 
     <PreferenceCategory
         android:title="Favorite Artists"
-        app:iconSpaceReserved="false">
+        app:iconSpaceReserved="false"
+        app:initialExpandedChildrenCount="0">
         <SwitchPreference
             android:key="favorite_artists_visibility"
             android:title="Show"
@@ -101,7 +104,8 @@
 
     <PreferenceCategory
         android:title="Favorite Genres"
-        app:iconSpaceReserved="false">
+        app:iconSpaceReserved="false"
+        app:initialExpandedChildrenCount="0">
         <SwitchPreference
             android:key="favorite_genres_visibility"
             android:title="Show"
@@ -129,45 +133,5 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="Other Settings"
-        app:iconSpaceReserved="false">
-
-        <ListPreference
-            android:key="time_range"
-            android:title="Time Range"
-            app:iconSpaceReserved="false"
-            android:entries="@array/time_range_entries"
-            android:entryValues="@array/time_range_values"
-            app:allowDividerBelow="true"
-            android:summary="Select the time range for home page"/>
-
-        <EditTextPreference
-            android:key="comments_preference"
-            android:title="Comments"
-            app:allowDividerAbove="true"
-            app:allowDividerBelow="false"
-            app:iconSpaceReserved="false"
-            android:summary="Please enter your comments" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="misc stuff"
-        app:iconSpaceReserved="false">
-
-        <Preference
-            android:title="Webpage"
-            android:summary="https://www.sfu.ca/computing.html"
-            app:iconSpaceReserved="false">
-            <intent android:action="android.intent.action.VIEW"
-                android:data="https://www.sfu.ca/computing.html" />
-        </Preference>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title=" ">
-    </PreferenceCategory>
 
 </PreferenceScreen>
