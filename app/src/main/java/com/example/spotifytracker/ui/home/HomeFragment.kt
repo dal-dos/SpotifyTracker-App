@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.LinearLayout
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
@@ -73,6 +74,9 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
         val myActivity = requireActivity() as MainActivity
 
+        val layout = binding.homeLayout
+        layout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        TransitionManager.beginDelayedTransition(layout, AutoTransition())
 
         recentlyPlayedList = binding.recentlyPlayedList
         favGenreList = binding.favGenreList

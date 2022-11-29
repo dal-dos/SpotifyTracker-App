@@ -108,13 +108,6 @@ class MainActivity : AppCompatActivity() {
 
         if(savedInstanceState != null){
             this.setMenuTitle(myViewModel.username.value.toString())
-
-        }
-
-        if(findViewById<LinearLayout>(R.id.home_layout) != null){
-            val layout = findViewById<LinearLayout>(R.id.home_layout)
-            layout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-            TransitionManager.beginDelayedTransition(layout, AutoTransition())
         }
 
         //this.supportActionBar?.hide()//hides action bars
@@ -319,6 +312,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun onClickCardViewPopularityPieChart(view: View) {
+        val cv = findViewById<CardView>(R.id.popularity_pie_chart_inner_cardview)
+        val arrow = findViewById<TextView>(R.id.popularity_pie_chart_arrow)
+        arrow.animate().rotation(90f)
+        if (cv.isVisible){
+            arrow.animate().rotation(90f)
+            cv.isVisible = false
+        }
+        else{
+            arrow.animate().rotation(0f)
+            cv.isVisible = true
+        }
+    }
     private fun setActionBarTitle() {
         //if API level below 18, there is a bug at Samsung and LG devices
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {

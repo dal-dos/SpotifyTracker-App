@@ -1,6 +1,9 @@
 package com.example.spotifytracker.ui.settings
 
+import android.animation.LayoutTransition
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +32,10 @@ class PlaylistsFragment : Fragment() {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         val root: View = binding.root
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+
+        val layout = binding.playlistLayout
+        layout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        TransitionManager.beginDelayedTransition(layout, AutoTransition())
 
         val textView: TextView = binding.textSettings
         settingsViewModel.text.observe(viewLifecycleOwner) {

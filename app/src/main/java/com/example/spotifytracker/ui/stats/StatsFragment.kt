@@ -1,10 +1,14 @@
 package com.example.spotifytracker.ui.stats
 
+import android.animation.LayoutTransition
 import android.graphics.Color
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -46,6 +50,11 @@ class StatsFragment : Fragment() {
         val root: View = binding.root
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
 
+
+        val layout = binding.statsLayout
+        layout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        TransitionManager.beginDelayedTransition(layout, AutoTransition())
+
         val textView: TextView = binding.textStats
         statsViewModel.text.observe(viewLifecycleOwner) {
            textView.text = it
@@ -56,7 +65,7 @@ class StatsFragment : Fragment() {
         artist3 = binding.artist3Text
         artist4 = binding.artist4Text
         artist4 = binding.artist5Text
-        pc = binding.mypiechart
+        pc = binding.popularityPieChart
 
         var randomInt1 : Float = 40.0F
         var randomInt2 : Float = 40.0F
