@@ -251,7 +251,6 @@ class MainActivity : AppCompatActivity() {
         val cv = findViewById<CardView>(R.id.recently_played_inner_cardview)
         val arrow = findViewById<TextView>(R.id.recently_played_arrow)
         var bool = !cv.isVisible
-        cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         cv.isVisible = bool
         val editor = sharedSettings.edit()
@@ -263,7 +262,6 @@ class MainActivity : AppCompatActivity() {
         val cv = findViewById<CardView>(R.id.suggested_inner_cardview)
         val arrow = findViewById<TextView>(R.id.suggested_arrow)
         var bool = !cv.isVisible
-        cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         cv.isVisible = bool
         val editor = sharedSettings.edit()
@@ -275,7 +273,6 @@ class MainActivity : AppCompatActivity() {
         val cv = findViewById<CardView>(R.id.favorite_tracks_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_tracks_arrow)
         var bool = !cv.isVisible
-        cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         cv.isVisible = bool
         val editor = sharedSettings.edit()
@@ -287,7 +284,6 @@ class MainActivity : AppCompatActivity() {
         val cv = findViewById<CardView>(R.id.favorite_artists_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_artist_arrow)
         var bool = !cv.isVisible
-        cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         cv.isVisible = bool
         val editor = sharedSettings.edit()
@@ -299,8 +295,8 @@ class MainActivity : AppCompatActivity() {
         val cv = findViewById<CardView>(R.id.favorite_genres_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_genre_arrow)
         var bool = !cv.isVisible
-        cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
+        cv.isVisible = bool
         val editor = sharedSettings.edit()
         editor.putBoolean(SettingsActivity().favoriteGenresCollapseKey,bool)
         editor.apply()
