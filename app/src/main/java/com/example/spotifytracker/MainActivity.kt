@@ -45,6 +45,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.sdk.android.auth.AuthorizationClient
 import kotlinx.coroutines.launch
+import org.eazegraph.lib.charts.PieChart
 
 
 @Suppress("RedundantExplicitType")
@@ -319,6 +320,8 @@ class MainActivity : AppCompatActivity() {
         if (cv.isVisible){
             arrow.animate().rotation(90f)
             cv.isVisible = false
+            val piechart : PieChart = findViewById(R.id.myPieChart)
+            piechart.startAnimation()
         }
         else{
             arrow.animate().rotation(0f)
