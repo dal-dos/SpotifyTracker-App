@@ -75,10 +75,10 @@ class SpotifyApiHandler(val token: Token, sharedSettings : SharedPreferences) {
         if (itemsToShow == 0){
             itemsToShow = 1
         }
-        val myTimeRange = sharedSettings.getInt(SettingsActivity().favoriteTracksTimeRange, 2)
+        val myTimeRange = sharedSettings.getString(SettingsActivity().favoriteTracksTimeRange, "2")?.toInt()
         if(api!!.spotifyApiOptions.enableDebugMode) {
             print("DEBUG MODE: APP: userTopTracks(): ")
-            println("debug: " + api!!.personalization.getTopTracks(limit = itemsToShow, timeRange = time[myTimeRange]).items.map { it.name })
+            println("debug: " + api!!.personalization.getTopTracks(limit = itemsToShow, timeRange = time[myTimeRange!!]).items.map { it.name })
         }
         return api!!.personalization.getTopTracks(limit = itemsToShow, timeRange = time[2]).items
     }
@@ -88,12 +88,12 @@ class SpotifyApiHandler(val token: Token, sharedSettings : SharedPreferences) {
         if (itemsToShow == 0){
             itemsToShow = 1
         }
-        val myTimeRange = sharedSettings.getInt(SettingsActivity().favoriteArtistsTimeRange, 2)
+        val myTimeRange = sharedSettings.getString(SettingsActivity().favoriteArtistsTimeRange, "2")?.toInt()
         if(api!!.spotifyApiOptions.enableDebugMode) {
             print("DEBUG MODE: APP: userTopArtists(): ")
             println("debug: " + api!!.personalization.getTopArtists(limit = itemsToShow, timeRange = time[2]).items)
         }
-        return api!!.personalization.getTopArtists(limit = itemsToShow, timeRange = time[myTimeRange]).items
+        return api!!.personalization.getTopArtists(limit = itemsToShow, timeRange = time[myTimeRange!!]).items
     }
 
     suspend fun userTopGenres(): ArrayList<String> {
@@ -101,7 +101,7 @@ class SpotifyApiHandler(val token: Token, sharedSettings : SharedPreferences) {
         if (itemsToShow == 0){
             itemsToShow = 1
         }
-        val myTimeRange = sharedSettings.getInt(SettingsActivity().favoriteGenresTimeRange, 2)
+        val myTimeRange = sharedSettings.getString(SettingsActivity().favoriteGenresTimeRange, "2")?.toInt()
         if(api!!.spotifyApiOptions.enableDebugMode) {
             print("DEBUG MODE: APP: userTopGenres(): ")
             println("debug: " + api!!.personalization.getTopArtists(limit = itemsToShow, timeRange = time[2]).items.map { it.genres})
@@ -109,7 +109,7 @@ class SpotifyApiHandler(val token: Token, sharedSettings : SharedPreferences) {
         val myGenres : ArrayList<String> = arrayListOf()
         val hashset: HashSet<String> = hashSetOf()
 
-        api!!.personalization.getTopArtists(limit = itemsToShow, timeRange = time[myTimeRange]).items.map { myGenres.addAll(it.genres) }
+        api!!.personalization.getTopArtists(limit = itemsToShow, timeRange = time[myTimeRange!!]).items.map { myGenres.addAll(it.genres) }
         hashset.addAll(myGenres)
         myGenres.clear()
         myGenres.addAll(hashset)
