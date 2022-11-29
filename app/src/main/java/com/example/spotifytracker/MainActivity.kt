@@ -180,6 +180,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtras(bundle)
         val mySharedPreferences = applicationContext.getSharedPreferences("SPOTIFY", 0)
         mySharedPreferences.edit().clear().apply()
+        sharedSettings.edit().clear().apply()
         startActivity(intent)
         finishAffinity()
     }
@@ -323,37 +324,5 @@ class MainActivity : AppCompatActivity() {
             arrow.animate().rotation(90F)
         }
     }
-
-
-private fun showActionBar() {
-        val mToolbarHeight = mToolbar.height
-        val mAnimDuration = 600 /* milliseconds */
-        var mVaActionBar: ValueAnimator  = ValueAnimator.ofInt(0, mToolbarHeight)
-        if (mVaActionBar != null && mVaActionBar.isRunning()) {
-            // we are already animating a transition - block here
-            return
-        }
-
-        // restore `Toolbar's` height
-        mVaActionBar = ValueAnimator.ofInt(0, mToolbarHeight)
-        mVaActionBar.addUpdateListener(AnimatorUpdateListener { animation -> // update LayoutParams
-            (mToolbar.getLayoutParams() as AppBarLayout.LayoutParams).height =
-                (animation.animatedValue as Int)
-            mToolbar.requestLayout()
-        })
-        mVaActionBar.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationStart(animation: Animator) {
-                super.onAnimationStart(animation)
-                if (supportActionBar != null) { // sanity check
-                    println("debug: In the sanity check for show")
-                    supportActionBar!!.show()
-                }
-            }
-        })
-        mVaActionBar.setDuration(mAnimDuration.toLong())
-        mVaActionBar.start()
-    }
-
-
 
 }
