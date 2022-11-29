@@ -65,7 +65,7 @@ class StatsFragment : Fragment() {
         artist3 = binding.artist3Text
         artist4 = binding.artist4Text
         artist4 = binding.artist5Text
-        pc = binding.popularityPieChart
+        pc = binding.myPieChart
 
         var randomInt1 : Float = 40.0F
         var randomInt2 : Float = 40.0F
@@ -77,29 +77,31 @@ class StatsFragment : Fragment() {
 
         pc!!.addPieSlice(
              PieModel(
-                        "R",
+                        "Artist1",
                         randomInt1,
                         Color.parseColor("#FFA726")))
         pc!!.addPieSlice(
             PieModel(
-                        "Python",
+                        "Artist2",
                         randomInt2,
                         Color.parseColor("#66BB6A")))
         pc!!.addPieSlice(
                      PieModel(
-                        "C++",
+                        "Artist3",
                          randomInt3,
                         Color.parseColor("#EF5350")))
         pc!!.addPieSlice(
                      PieModel(
-                        "Java",
+                        "Artist4",
                          randomInt4,
                         Color.parseColor("#29B6F6")))
         pc!!.addPieSlice(
              PieModel(
-                    "Java",
+                    "Artist5",
                     randomInt5,
                     Color.parseColor("#29B6F6")))
+
+        pc!!.startAnimation();
 
         val lineChart : LineChart = binding.statsGraph
         setChart(lineChart)

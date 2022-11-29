@@ -150,7 +150,7 @@
 
 
                 <org.eazegraph.lib.charts.PieChart
-                android:id="@+id/popularity_pie_chart"
+                android:id="@+id/myPieChart"
                 android:layout_width="20dp"
                 android:layout_height="200dp"
                 android:padding="6dp"
