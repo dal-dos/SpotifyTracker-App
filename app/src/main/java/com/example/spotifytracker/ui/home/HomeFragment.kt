@@ -232,13 +232,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
                     startActivity(intent)
                 }
             }
-            favGenreList.id -> {
-                if (genreArrayList.isNotEmpty()){
-                    val hyperlink = "https://open.spotify.com/search/" + genreArrayList[p2] + "/" + genreArrayList[p2]
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
-                    startActivity(intent)
-                }
-            }
         }
 
     }
