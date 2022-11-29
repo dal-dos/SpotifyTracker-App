@@ -243,13 +243,10 @@ class MainActivity : AppCompatActivity() {
         if (cv.isVisible){
             arrow.animate().rotation(90f)
             cv.isVisible = false
-            //supportActionBar?.customView?.animate()?.alpha(0F)
-            //supportActionBar?.hide()
         }
         else{
             arrow.animate().rotation(0f)
             cv.isVisible = true
-            //supportActionBar?.show()
         }
 
     }
@@ -289,13 +286,10 @@ class MainActivity : AppCompatActivity() {
         if (cv.isVisible){
             arrow.animate().rotation(90f)
             cv.isVisible = false
-
-            //hideActionBar()
         }
         else{
             arrow.animate().rotation(0f)
             cv.isVisible = true
-            //showActionBar()
         }
     }
 

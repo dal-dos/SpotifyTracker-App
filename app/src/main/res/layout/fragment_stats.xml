@@ -147,8 +147,6 @@
                     android:padding="10dp"
                     android:orientation="horizontal">
 
-
-
                 <org.eazegraph.lib.charts.PieChart
                 android:id="@+id/myPieChart"
                 android:layout_width="20dp"
@@ -165,7 +163,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_marginLeft="20dp"
+                    android:paddingLeft="40dp"
                     android:orientation="vertical"
                     android:gravity="center_vertical"
                     >
