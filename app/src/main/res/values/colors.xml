@@ -13,4 +13,18 @@
     <color name="dark_green">#048204</color>
     <color name="red">#9C0700</color>
     <color name="dark_grey">#4C4E52</color>
+
+    <color name="colorPrimary">#024265</color>
+    <color name="colorPrimaryDark">#024265</color>
+    <color name="colorAccent">#05af9b</color>
+    <color name="color_one">#fb7268</color>
+    <color name="color_white">#ededf2</color>
+    <color name="color_two">#E3E0E0</color>
+    <color name="Artist1">#FFA726</color>
+    <color name="Artist2">#66BB6A</color>
+    <color name="Artist3">#EF5350</color>
+    <color name="Artist4">#29B6F6</color>
+    <color name="Artist5">#FF6200EE</color>
+
 </resources>
+

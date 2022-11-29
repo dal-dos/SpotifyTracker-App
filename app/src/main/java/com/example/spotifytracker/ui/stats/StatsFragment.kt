@@ -5,16 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.spotifytracker.R
 import com.example.spotifytracker.databinding.FragmentStatsBinding
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import org.eazegraph.lib.charts.PieChart
+import org.eazegraph.lib.models.PieModel
+
 
 class StatsFragment : Fragment() {
 
@@ -24,10 +27,17 @@ class StatsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    var artist1: TextView? = null
+    var artist2:TextView? = null
+    var artist3:TextView? = null
+    var artist4:TextView? = null
+    var artist5 :TextView? = null
+    var pc: PieChart? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val statsViewModel =
             ViewModelProvider(this).get(StatsViewModel::class.java)
@@ -40,6 +50,45 @@ class StatsFragment : Fragment() {
         statsViewModel.text.observe(viewLifecycleOwner) {
            textView.text = it
         }
+
+        artist1 = binding.artist1Text
+        artist2 = binding.artist2Text
+        artist3 = binding.artist3Text
+        artist4 = binding.artist4Text
+        artist4 = binding.artist5Text
+        pc = binding.mypiechart
+
+        var randomInt1 : Float = 40.0F
+        var randomInt2 : Float = 40.0F
+        var randomInt3 : Float = 40.0F
+        var randomInt4 : Float = 40.0F
+        var randomInt5 : Float = 40.0F
+
+        pc!!.addPieSlice(
+             PieModel(
+                        "R",
+                        randomInt1,
+                        Color.parseColor("#FFA726")))
+        pc!!.addPieSlice(
+            PieModel(
+                        "Python",
+                        randomInt2,
+                        Color.parseColor("#66BB6A")))
+        pc!!.addPieSlice(
+                     PieModel(
+                        "C++",
+                         randomInt3,
+                        Color.parseColor("#EF5350")))
+        pc!!.addPieSlice(
+                     PieModel(
+                        "Java",
+                         randomInt4,
+                        Color.parseColor("#29B6F6")))
+        pc!!.addPieSlice(
+             PieModel(
+                    "Java",
+                    randomInt5,
+                    Color.parseColor("#29B6F6")))
 
         val lineChart : LineChart = binding.statsGraph
         setChart(lineChart)
