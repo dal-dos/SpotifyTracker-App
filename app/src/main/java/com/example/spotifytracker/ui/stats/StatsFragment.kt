@@ -64,6 +64,8 @@ class StatsFragment : Fragment() {
         var randomInt4 : Float = 40.0F
         var randomInt5 : Float = 40.0F
 
+        pc!!.innerPaddingColor = Color.parseColor("#2E6943")
+
         pc!!.addPieSlice(
              PieModel(
                         "R",
