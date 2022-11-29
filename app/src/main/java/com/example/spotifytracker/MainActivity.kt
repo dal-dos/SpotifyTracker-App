@@ -251,8 +251,8 @@ class MainActivity : AppCompatActivity() {
         val cv = findViewById<CardView>(R.id.recently_played_inner_cardview)
         val arrow = findViewById<TextView>(R.id.recently_played_arrow)
         var bool = !cv.isVisible
-        changeArrow(arrow,cv.isVisible)
         cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
         editor.putBoolean(SettingsActivity().recentlyPlayedCollapseKey,bool)
         editor.apply()
@@ -262,8 +262,8 @@ class MainActivity : AppCompatActivity() {
         val cv = findViewById<CardView>(R.id.suggested_inner_cardview)
         val arrow = findViewById<TextView>(R.id.suggested_arrow)
         var bool = !cv.isVisible
-        changeArrow(arrow,cv.isVisible)
         cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
         editor.putBoolean(SettingsActivity().suggestedCollapseKey,bool)
         editor.apply()
@@ -273,8 +273,8 @@ class MainActivity : AppCompatActivity() {
         val cv = findViewById<CardView>(R.id.favorite_tracks_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_tracks_arrow)
         var bool = !cv.isVisible
-        changeArrow(arrow,cv.isVisible)
         cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
         editor.putBoolean(SettingsActivity().favoriteTracksCollapseKey,bool)
         editor.apply()
@@ -284,8 +284,8 @@ class MainActivity : AppCompatActivity() {
         val cv = findViewById<CardView>(R.id.favorite_artists_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_artist_arrow)
         var bool = !cv.isVisible
-        changeArrow(arrow,cv.isVisible)
         cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
         editor.putBoolean(SettingsActivity().favoriteArtistsCollapseKey,bool)
         editor.apply()
@@ -295,8 +295,8 @@ class MainActivity : AppCompatActivity() {
         val cv = findViewById<CardView>(R.id.favorite_genres_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_genre_arrow)
         var bool = !cv.isVisible
-        changeArrow(arrow,cv.isVisible)
         cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
         editor.putBoolean(SettingsActivity().favoriteGenresCollapseKey,bool)
         editor.apply()
@@ -305,18 +305,13 @@ class MainActivity : AppCompatActivity() {
     fun onClickCardViewPopularityPieChart(view: View) {
         val cv = findViewById<CardView>(R.id.popularity_pie_chart_inner_cardview)
         val arrow = findViewById<TextView>(R.id.popularity_pie_chart_arrow)
-        var bool = true
+        var bool = !cv.isVisible
         if (cv.isVisible){
-            bool = false
-            arrow.animate().rotation(90f)
             val piechart : PieChart = findViewById(R.id.popularity_pie_chart)
             piechart.startAnimation()
         }
-        else{
-            bool = true
-            arrow.animate().rotation(0f)
-        }
         cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
         editor.putBoolean(SettingsActivity().popularityPieChartCollapseKey,bool)
         editor.apply()

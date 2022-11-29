@@ -290,7 +290,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         binding.favoriteArtistsInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteArtistsCollapseKey, false)
         binding.favoriteGenresInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteGenresCollapseKey, false)
 
-        MainActivity().changeArrow(binding.favArtistArrow, binding.recentlyPlayedInnerCardview.isVisible)
+        MainActivity().changeArrow(binding.favArtistArrow, binding.favoriteArtistsOuterCardview.isVisible)
         MainActivity().changeArrow(binding.favGenreArrow,binding.favoriteGenresInnerCardview.isVisible)
         MainActivity().changeArrow(binding.favTracksArrow,binding.favoriteTracksInnerCardview.isVisible)
         MainActivity().changeArrow(binding.suggestedArrow,binding.suggestedInnerCardview.isVisible)
