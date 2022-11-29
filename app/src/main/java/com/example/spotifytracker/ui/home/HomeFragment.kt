@@ -65,22 +65,66 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         spotifyDatabase = SpotifyDatabase.getInstance(requireActivity())
         spotifyDataDao = spotifyDatabase.spotifyDataDao
         repo = SpotifyDataRepository(spotifyDataDao)
         viewModelFactory = HomeViewModelFactory(repo)
-
-        val homeViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
-
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
         val root: View = binding.root
         myActivity = requireActivity() as MainActivity
 
+        sharedSettings = PreferenceManager.getDefaultSharedPreferences(myActivity)
 
+        binding.recentlyPlayedList.onItemClickListener = this
+        binding.favTrackList.onItemClickListener = this
+        binding.favArtistList.onItemClickListener = this
+        binding.favGenreList.onItemClickListener = this
+
+        collapseAnimationInit()
+        homeObservers()
+        applySettings()
+        swipeRefresh()
+        scrollOnChangeListener()
+
+        return root
+    }
+
+    private fun collapseAnimationInit() {
         val layout = binding.homeLayout
         layout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         TransitionManager.beginDelayedTransition(layout, AutoTransition())
+    }
 
+    private fun swipeRefresh() {
+        scrollView = binding.nestedScrollView
+        val swipeLayout: SwipeRefreshLayout = binding.root.findViewById(R.id.swipe_layout)
+        swipeLayout.setOnRefreshListener {
+            myActivity.apiBuilder()
+            swipeLayout.isRefreshing = false
+        }
+    }
+
+    private fun scrollOnChangeListener() {
+        scrollView = binding.nestedScrollView
+        scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY + 4 <= oldScrollY ){
+                println("debug: Oldscrolly is $oldScrollY and scrolly is $scrollY")
+                //scroll up
+                //println("debug: Showing the tool bar")
+                (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+            }
+            else if (oldScrollY + 4 <= scrollY){
+                //scroll down
+                //println("debug: Hiding the tool bar")
+                if (switchingView){
+                    (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+                }
+            }
+        }
+    }
+
+    private fun homeObservers() {
         recentlyPlayedList = binding.recentlyPlayedList
         favGenreList = binding.favGenreList
         favTrackList = binding.favTrackList
@@ -88,31 +132,16 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
         genreArrayList = ArrayList()
         songArrayList = ArrayList()
-
-        scrollView = binding.nestedScrollView
-
-        sharedSettings = PreferenceManager.getDefaultSharedPreferences(myActivity)
-
-        songListAdapter = SongListAdapter(requireActivity(), songArrayList)
-        genreListAdapter = GenreListAdapter(requireActivity(), genreArrayList)
-        recentlyPlayedList.adapter = songListAdapter
-        favGenreList.adapter = genreListAdapter
-
         favTrackArrayList = ArrayList()
         artistArrayList = ArrayList()
         artistListAdapter = ArtistListAdapter(requireActivity(), artistArrayList)
         favTrackListAdapter = TrackListAdapter(requireActivity(), favTrackArrayList)
+        songListAdapter = SongListAdapter(requireActivity(), songArrayList)
+        genreListAdapter = GenreListAdapter(requireActivity(), genreArrayList)
         favArtistList.adapter = artistListAdapter
         favTrackList.adapter = favTrackListAdapter
-
-
-        recentlyPlayedList.onItemClickListener = this
-        favTrackList.onItemClickListener = this
-        favArtistList.onItemClickListener = this
-        favGenreList.onItemClickListener = this
-
-        myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
-
+        recentlyPlayedList.adapter = songListAdapter
+        favGenreList.adapter = genreListAdapter
 
         myViewModel.username.observe(viewLifecycleOwner) {
             //(activity as AppCompatActivity?)!!.supportActionBar!!.title = it //top action bar
@@ -156,10 +185,10 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
                 emptyListAdapter.notifyDataSetChanged()
                 setListViewHeightBasedOnChildren(favTrackList)
             }else{
-            artistListAdapter.replace(it)
-            artistListAdapter.notifyDataSetChanged()
-            artistArrayList = it as ArrayList<Artist>
-            setListViewHeightBasedOnChildren(favArtistList)
+                artistListAdapter.replace(it)
+                artistListAdapter.notifyDataSetChanged()
+                artistArrayList = it as ArrayList<Artist>
+                setListViewHeightBasedOnChildren(favArtistList)
             }
         }
 
@@ -171,15 +200,14 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
                 emptyListAdapter.notifyDataSetChanged()
                 setListViewHeightBasedOnChildren(favTrackList)
             }else{
-            favTrackListAdapter.replace(it)
-            favTrackListAdapter.notifyDataSetChanged()
-            favTrackArrayList = it as ArrayList<Track>
-            setListViewHeightBasedOnChildren(favTrackList)
+                favTrackListAdapter.replace(it)
+                favTrackListAdapter.notifyDataSetChanged()
+                favTrackArrayList = it as ArrayList<Track>
+                setListViewHeightBasedOnChildren(favTrackList)
             }
         }
 
-        applySettings()
-//        myViewModel.allLiveData.observe(requireActivity(), Observer { it ->
+        //        myViewModel.allLiveData.observe(requireActivity(), Observer { it ->
 //            println("debug: DB Size: " + it.size)
 //            if(it.isNotEmpty()){
 //                spotifyDataEntity = it
@@ -188,30 +216,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 //                songListAdapter.notifyDataSetChanged()
 //            }
 //        })
-
-        val swipeLayout: SwipeRefreshLayout = root.findViewById(R.id.swipe_layout)
-        swipeLayout.setOnRefreshListener {
-            myActivity.apiBuilder()
-            swipeLayout.isRefreshing = false
-        }
-
-        scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            if (scrollY + 4 <= oldScrollY ){
-                println("debug: Oldscrolly is $oldScrollY and scrolly is $scrollY")
-                //scroll up
-                //println("debug: Showing the tool bar")
-                (activity as AppCompatActivity?)!!.supportActionBar!!.show()
-            }
-            else if (oldScrollY + 4 <= scrollY){
-                //scroll down
-                //println("debug: Hiding the tool bar")
-                if (switchingView){
-                    (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
-                }
-            }
-        }
-
-        return root
     }
 
     override fun onDestroyView() {

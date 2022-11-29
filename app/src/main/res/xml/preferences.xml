@@ -10,7 +10,7 @@
             android:title="Show"
             android:summary="Show/Hide Recently Played"
             app:iconSpaceReserved="false"
-            android:defaultValue="true"/>
+            android:defaultValue="true" />
 
         <SeekBarPreference
             android:key="recently_played_number_of_items"

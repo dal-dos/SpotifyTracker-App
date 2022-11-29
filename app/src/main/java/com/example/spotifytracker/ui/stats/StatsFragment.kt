@@ -44,31 +44,41 @@ class StatsFragment : Fragment() {
     var pc: PieChart? = null
     private lateinit var sharedSettings: SharedPreferences
     private lateinit var myActivity : MainActivity
+    private lateinit var myViewModel : StatsViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val statsViewModel = ViewModelProvider(this)[StatsViewModel::class.java]
-
+        myViewModel = ViewModelProvider(this)[StatsViewModel::class.java]
         _binding = FragmentStatsBinding.inflate(inflater, container, false)
-
-        myActivity = requireActivity() as MainActivity
-
         val root: View = binding.root
+        myActivity = requireActivity() as MainActivity
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
-
 
         sharedSettings = PreferenceManager.getDefaultSharedPreferences(myActivity)
 
+        collapseAnimationInit()
+        statsObservers()
+        makePopularityPieChart()
+        applySettings()
+        return root
+    }
+
+    private fun statsObservers() {
+        val textView: TextView = binding.textStats
+        myViewModel.text.observe(viewLifecycleOwner) {
+            textView.text = it
+        }
+    }
+
+    private fun collapseAnimationInit() {
         val layout = binding.statsLayout
         layout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         TransitionManager.beginDelayedTransition(layout, AutoTransition())
+    }
 
-        val textView: TextView = binding.textStats
-        statsViewModel.text.observe(viewLifecycleOwner) {
-           textView.text = it
-        }
+    private fun makePopularityPieChart() {
 
         artist1 = binding.artist1Text
         artist2 = binding.artist2Text
@@ -86,37 +96,35 @@ class StatsFragment : Fragment() {
         pc!!.innerPaddingColor = Color.parseColor("#2E6943")
 
         pc!!.addPieSlice(
-             PieModel(
-                        "Artist1",
-                        randomInt1,
-                        Color.parseColor("#FFA726")))
+            PieModel(
+                "Artist1",
+                randomInt1,
+                Color.parseColor("#FFA726")))
         pc!!.addPieSlice(
             PieModel(
-                        "Artist2",
-                        randomInt2,
-                        Color.parseColor("#66BB6A")))
+                "Artist2",
+                randomInt2,
+                Color.parseColor("#66BB6A")))
         pc!!.addPieSlice(
-                     PieModel(
-                        "Artist3",
-                         randomInt3,
-                        Color.parseColor("#EF5350")))
+            PieModel(
+                "Artist3",
+                randomInt3,
+                Color.parseColor("#EF5350")))
         pc!!.addPieSlice(
-                     PieModel(
-                        "Artist4",
-                         randomInt4,
-                        Color.parseColor("#29B6F6")))
+            PieModel(
+                "Artist4",
+                randomInt4,
+                Color.parseColor("#29B6F6")))
         pc!!.addPieSlice(
-             PieModel(
-                    "Artist5",
-                    randomInt5,
-                    Color.parseColor("#29B6F6")))
+            PieModel(
+                "Artist5",
+                randomInt5,
+                Color.parseColor("#29B6F6")))
 
         pc!!.startAnimation();
 
         val lineChart : LineChart = binding.statsGraph
         setChart(lineChart)
-        applySettings()
-        return root
     }
 
     private fun setChart(lineChart: LineChart){

@@ -123,9 +123,14 @@ class MainActivity : AppCompatActivity() {
         //actionBar?.setDisplayShowTitleEnabled(false);
         //setActionBarTitle()
         //this.supportActionBar?.setShowHideAnimationEnabled(true)
+
+
+        onClickListeners()
+    }
+
+    private fun onClickListeners() {
         val refreshButton: ImageButton = findViewById(R.id.toolbar_button_refresh)
         val settingsButton: ImageButton = findViewById(R.id.toolbar_button_settings)
-
         refreshButton.setOnClickListener {
             //finish()
             //startActivity(intent)
