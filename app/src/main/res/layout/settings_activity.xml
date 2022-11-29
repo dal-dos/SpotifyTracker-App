@@ -1,9 +1,94 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:background="@color/background_gray">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="0dp">
 
-    <FrameLayout
-        android:id="@+id/settings"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:animateLayoutChanges="true"
+                app:layout_constraintStart_toStartOf="parent"
+                android:elevation="0dp"
+                android:backgroundTint="@color/background_gray"
+                android:outlineProvider="none"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    android:background="@color/background_gray"
+                    android:theme="@style/ThemeOverlay.AppCompat"
+                    app:title=" "
+                    app:contentInsetLeft="0dp"
+                    app:contentInsetStart="0dp"
+                    android:minHeight="?attr/actionBarSize"
+                    android:animateLayoutChanges="true">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:elevation="0dp">
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/comfortaaregular"
+                                android:text="@string/spotify"
+                                android:textColor="@color/title_green"
+                                android:textSize="20sp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/comfortaaregular"
+                                android:text="@string/tracker"
+                                android:textSize="20sp"
+                                android:textColor="@color/white" />
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <FrameLayout
+                android:paddingTop="?attr/actionBarSize"
+                android:id="@+id/settings"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="45dp">
+            </FrameLayout>
+            <Button
+                app:layout_constraintTop_toBottomOf="@id/settings"
+                android:id="@+id/save_settings_button"
+                android:layout_gravity="bottom|center_vertical|center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SAVE"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/dark_green"
+                android:background="@color/dark_green"
+                android:onClick="onClickSaveSettings"
+                android:foregroundTint="@color/dark_green" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
