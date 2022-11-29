@@ -23,4 +23,5 @@
     <string name="arrow" />
     <string name="spotify">Spotify</string>
     <string name="tracker">Tracker</string>
+    <string name="playlists">Playlists</string>
 </resources>

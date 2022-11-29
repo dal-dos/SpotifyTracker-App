@@ -5,12 +5,12 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#303030"
-    >
+    android:background="@color/background_gray">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:elevation="0dp">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -18,45 +18,75 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:animateLayoutChanges="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:backgroundTint="#303030"
             android:elevation="0dp"
-            android:outlineProvider="none">
+            android:backgroundTint="@color/background_gray"
+            android:outlineProvider="none"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 app:layout_scrollFlags="scroll|enterAlways"
-                android:background="#303030"
+                android:background="@color/background_gray"
                 android:theme="@style/ThemeOverlay.AppCompat"
                 app:title=" "
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
                 android:minHeight="?attr/actionBarSize"
-                android:animateLayoutChanges="true"
-                android:elevation="0dp">
+                android:animateLayoutChanges="true">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:elevation="0dp">
 
-                    <TextView
+                    <ImageButton
+                        android:id="@+id/toolbar_button_refresh"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/comfortaaregular"
-                        android:text="@string/spotify"
-                        android:textColor="@color/title_green"
-                        android:textSize="15sp"/>
+                        android:src="@drawable/ic_refresh"
+                        android:background="@color/background_gray"
+                        android:layout_marginEnd="320dp"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_alignParentStart="true"/>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/comfortaaregular"
-                        android:text="@string/tracker"
-                        android:textSize="15sp"
-                        android:textColor="@color/white" />
-                </LinearLayout>
+                        android:layout_gravity="center"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/comfortaaregular"
+                            android:text="@string/spotify"
+                            android:textColor="@color/title_green"
+                            android:textSize="15sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/comfortaaregular"
+                            android:text="@string/tracker"
+                            android:textSize="15sp"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/toolbar_button_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_settings_24"
+                        android:layout_marginStart="320dp"
+                        android:background="@color/background_gray"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_alignParentEnd="true"/>
+                </RelativeLayout>
+
+
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>

@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.spotifytracker.databinding.FragmentSettingsBinding
 
-class SettingsFragment : Fragment() {
+class PlaylistsFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
 

@@ -9,6 +9,7 @@ import android.animation.ValueAnimator
 import android.animation.ValueAnimator.AnimatorUpdateListener
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.media.Image
 import android.os.Build
 import android.os.Bundle
 import android.text.Spannable
@@ -19,10 +20,7 @@ import android.text.style.TypefaceSpan
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.view.*
-import android.widget.LinearLayout
-import android.widget.ScrollView
-import android.widget.TextView
-import android.widget.Toolbar
+import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -125,9 +123,28 @@ class MainActivity : AppCompatActivity() {
         //actionBar?.setDisplayShowTitleEnabled(false);
         //setActionBarTitle()
         //this.supportActionBar?.setShowHideAnimationEnabled(true)
+        val refreshButton: ImageButton = findViewById(R.id.toolbar_button_refresh)
+        val settingsButton: ImageButton = findViewById(R.id.toolbar_button_settings)
+
+        refreshButton.setOnClickListener {
+            //finish()
+            //startActivity(intent)
+            apiBuilder()
+            //Toast.makeText(baseContext, "Refreshed Spotify Data", Toast.LENGTH_SHORT).show()
+            findViewById<ImageButton>(R.id.toolbar_button_refresh).animate().rotationBy(360F)
+        }
+
+        settingsButton.setOnClickListener {
+            //finish()
+            //startActivity(intent)
+            //Toast.makeText(baseContext, "Refreshed Spotify Data", Toast.LENGTH_SHORT).show()
+            val intent: Intent = Intent(this, SettingsActivity::class.java)
+            findViewById<ImageButton>(R.id.toolbar_button_settings).animate().rotationBy(360F)
+            startActivity(intent)
+        }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+/*    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.custom_actionbar, menu)
         return true
@@ -144,7 +161,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
-    }
+    }*/
 
     private fun openDialog(){
         val dialog = LoadingDialog()

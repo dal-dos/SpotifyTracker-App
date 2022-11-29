@@ -102,6 +102,9 @@ class SpotifyApiHandler(val token: Token) {
         myGenres.clear()
         myGenres.addAll(hashset)
 
+        if (myGenres.size < itemsToShow){
+            return myGenres
+        }
 
         return myGenres.take(itemsToShow) as ArrayList<String>
     }

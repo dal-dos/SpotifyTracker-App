@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:title="Main Settings"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:key="Number_of_Items"
+            android:title="Number of Items"
+            app:iconSpaceReserved="false"
+            android:entries="@array/range_entries"
+            android:entryValues="@array/range_values"
+            app:allowDividerBelow="true"
+            android:summary="Select the number of items you want returned"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Other Settings"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:key="time_range"
+            android:title="Time Range"
+            app:iconSpaceReserved="false"
+            android:entries="@array/time_range_entries"
+            android:entryValues="@array/time_range_values"
+            app:allowDividerBelow="true"
+            android:summary="Select the time range for home page"/>
+
+        <EditTextPreference
+            android:key="comments_preference"
+            android:title="Comments"
+            app:allowDividerAbove="true"
+            app:allowDividerBelow="false"
+            app:iconSpaceReserved="false"
+            android:summary="Please enter your comments" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="misc stuff"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            android:title="Webpage"
+            android:summary="https://www.sfu.ca/computing.html"
+            app:iconSpaceReserved="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.sfu.ca/computing.html" />
+        </Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title=" ">
+    </PreferenceCategory>
+
+</PreferenceScreen>
