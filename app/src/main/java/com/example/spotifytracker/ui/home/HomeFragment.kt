@@ -11,8 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.LinearLayout
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
@@ -113,7 +113,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
         myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
 
-        applySettings()
+
         myViewModel.username.observe(viewLifecycleOwner) {
             //(activity as AppCompatActivity?)!!.supportActionBar!!.title = it //top action bar
             myActivity.setMenuTitle(it) //bottom nav bar
@@ -178,6 +178,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
             }
         }
 
+        applySettings()
 //        myViewModel.allLiveData.observe(requireActivity(), Observer { it ->
 //            println("debug: DB Size: " + it.size)
 //            if(it.isNotEmpty()){
@@ -283,5 +284,18 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         binding.favoriteTracksOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteTracksVisibilityKey, true)
         binding.favoriteArtistsOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteArtistsVisibilityKey, true)
         binding.favoriteGenresOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteGenresVisibilityKey, true)
+        binding.recentlyPlayedInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().recentlyPlayedCollapseKey, false)
+        binding.suggestedInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().suggestedCollapseKey, false)
+        binding.favoriteTracksInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteTracksCollapseKey, false)
+        binding.favoriteArtistsInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteArtistsCollapseKey, false)
+        binding.favoriteGenresInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteGenresCollapseKey, false)
+
+        MainActivity().changeArrow(binding.favArtistArrow, binding.recentlyPlayedInnerCardview.isVisible)
+        MainActivity().changeArrow(binding.favGenreArrow,binding.favoriteGenresInnerCardview.isVisible)
+        MainActivity().changeArrow(binding.favTracksArrow,binding.favoriteTracksInnerCardview.isVisible)
+        MainActivity().changeArrow(binding.suggestedArrow,binding.suggestedInnerCardview.isVisible)
+        MainActivity().changeArrow(binding.recentlyPlayedArrow,binding.recentlyPlayedInnerCardview.isVisible)
     }
+
+
 }

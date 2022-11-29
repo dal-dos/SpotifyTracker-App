@@ -9,6 +9,7 @@ import android.animation.ValueAnimator
 import android.animation.ValueAnimator.AnimatorUpdateListener
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.media.Image
 import android.os.Build
 import android.os.Bundle
@@ -75,11 +76,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mToolbar : androidx.appcompat.widget.Toolbar
     private var mTouchPosition: Float? = null
     private var mReleasePosition: Float? = null
+    private lateinit var sharedSettings : SharedPreferences
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedSettings = PreferenceManager.getDefaultSharedPreferences(this)
         if(savedInstanceState == null) {
-            apiBuilder()
+            firstTimeStart()
         }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -142,6 +145,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun firstTimeStart() {
+        apiBuilder()
+    }
+
 /*    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.custom_actionbar, menu)
@@ -187,7 +194,6 @@ class MainActivity : AppCompatActivity() {
         val type = mySharedPreferences.getString("type", "")
         val expires = mySharedPreferences.getInt("expires", 9999)
         val token: Token = Token(accessToken!!, type!!, expires)
-        val sharedSettings = PreferenceManager.getDefaultSharedPreferences(this)
         try {
             apiHandler = SpotifyApiHandler(token, sharedSettings)
             lifecycleScope.launch() {
@@ -244,161 +250,94 @@ class MainActivity : AppCompatActivity() {
     fun onClickCardViewRecentlyPlayed(view: View) {
         val cv = findViewById<CardView>(R.id.recently_played_inner_cardview)
         val arrow = findViewById<TextView>(R.id.recently_played_arrow)
-        arrow.animate().rotation(90f)
-        if (cv.isVisible){
-            arrow.animate().rotation(90f)
-            cv.isVisible = false
-        }
-        else{
-            arrow.animate().rotation(0f)
-            cv.isVisible = true
-        }
-
+        var bool = !cv.isVisible
+        cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
+        cv.isVisible = bool
+        val editor = sharedSettings.edit()
+        editor.putBoolean(SettingsActivity().recentlyPlayedCollapseKey,bool)
+        editor.apply()
     }
 
     fun onClickCardViewSuggested(view: View) {
         val cv = findViewById<CardView>(R.id.suggested_inner_cardview)
         val arrow = findViewById<TextView>(R.id.suggested_arrow)
-        arrow.animate().rotation(90f)
-        if (cv.isVisible){
-            arrow.animate().rotation(90f)
-            cv.isVisible = false
-        }
-        else{
-            arrow.animate().rotation(0f)
-            cv.isVisible = true
-        }
+        var bool = !cv.isVisible
+        cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
+        cv.isVisible = bool
+        val editor = sharedSettings.edit()
+        editor.putBoolean(SettingsActivity().suggestedCollapseKey,bool)
+        editor.apply()
     }
 
     fun onClickCardViewFavoriteTracks(view: View) {
         val cv = findViewById<CardView>(R.id.favorite_tracks_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_tracks_arrow)
-        arrow.animate().rotation(90f)
-        if (cv.isVisible){
-            arrow.animate().rotation(90f)
-            cv.isVisible = false
-        }
-        else{
-            arrow.animate().rotation(0f)
-            cv.isVisible = true
-        }
+        var bool = !cv.isVisible
+        cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
+        cv.isVisible = bool
+        val editor = sharedSettings.edit()
+        editor.putBoolean(SettingsActivity().favoriteTracksCollapseKey,bool)
+        editor.apply()
     }
 
     fun onClickCardViewFavoriteArtists(view: View) {
         val cv = findViewById<CardView>(R.id.favorite_artists_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_artist_arrow)
-        arrow.animate().rotation(90f)
-        if (cv.isVisible){
-            arrow.animate().rotation(90f)
-            cv.isVisible = false
-        }
-        else{
-            arrow.animate().rotation(0f)
-            cv.isVisible = true
-        }
+        var bool = !cv.isVisible
+        cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
+        cv.isVisible = bool
+        val editor = sharedSettings.edit()
+        editor.putBoolean(SettingsActivity().favoriteArtistsCollapseKey,bool)
+        editor.apply()
     }
 
     fun onClickCardViewFavoriteGenres(view: View) {
         val cv = findViewById<CardView>(R.id.favorite_genres_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_genre_arrow)
-        arrow.animate().rotation(90f)
-        if (cv.isVisible){
-            arrow.animate().rotation(90f)
-            cv.isVisible = false
-        }
-        else{
-            arrow.animate().rotation(0f)
-            cv.isVisible = true
-        }
+        var bool = !cv.isVisible
+        cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
+        val editor = sharedSettings.edit()
+        editor.putBoolean(SettingsActivity().favoriteGenresCollapseKey,bool)
+        editor.apply()
     }
 
     fun onClickCardViewPopularityPieChart(view: View) {
         val cv = findViewById<CardView>(R.id.popularity_pie_chart_inner_cardview)
         val arrow = findViewById<TextView>(R.id.popularity_pie_chart_arrow)
-        arrow.animate().rotation(90f)
+        var bool = true
         if (cv.isVisible){
+            bool = false
             arrow.animate().rotation(90f)
-            cv.isVisible = false
-            val piechart : PieChart = findViewById(R.id.myPieChart)
+            val piechart : PieChart = findViewById(R.id.popularity_pie_chart)
             piechart.startAnimation()
         }
         else{
+            bool = true
             arrow.animate().rotation(0f)
-            cv.isVisible = true
         }
+        cv.isVisible = bool
+        val editor = sharedSettings.edit()
+        editor.putBoolean(SettingsActivity().popularityPieChartCollapseKey,bool)
+        editor.apply()
     }
-    private fun setActionBarTitle() {
-        //if API level below 18, there is a bug at Samsung and LG devices
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            supportActionBar!!.title = "SpotifyTracker"
-        } else {
-            val spotify = SpannableString("Spotify")
-            spotify.setSpan(
-                TypefaceSpan("@font/comfortaaregular"),
-                0,
-                spotify.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            spotify.setSpan(
-                ForegroundColorSpan(
-                    ContextCompat.getColor(
-                        applicationContext,
-                        R.color.title_green
-                    )
-                ), 0, spotify.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            val tracker = SpannableString("Tracker")
-            tracker.setSpan(
-                TypefaceSpan("@font/comfortaaregular"),
-                0,
-                tracker.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            tracker.setSpan(
-                ForegroundColorSpan(
-                    ContextCompat.getColor(
-                        applicationContext,
-                        R.color.white
-                    )
-                ), 0, tracker.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            supportActionBar!!.title = TextUtils.concat(spotify, tracker)
+
+    fun changeArrow(arrow: TextView, bool: Boolean) {
+        if(bool){
+            arrow.rotation = 90F
+            arrow.animate().rotation(0F)
+        } else{
+            arrow.rotation = 0F
+            arrow.animate().rotation(90F)
         }
     }
 
-    private fun hideActionBar() {
-        var mToolbarHeight = mToolbar.height
-        val mAnimDuration = 600 /* milliseconds */
-        var mVaActionBar: ValueAnimator  = ValueAnimator.ofInt(mToolbarHeight, 0)
-        if (mToolbarHeight === 0) {
-            mToolbarHeight = mToolbar.getHeight()
-        }
-        if (mVaActionBar.isRunning()) {
-            // we are already animating a transition - block here
-            return
-        }
 
-        // animate `Toolbar's` height to zero.
-
-        mVaActionBar.addUpdateListener(AnimatorUpdateListener { animation -> // update LayoutParams
-            (mToolbar.getLayoutParams() as AppBarLayout.LayoutParams).height =
-                (animation.animatedValue as Int)
-            mToolbar.requestLayout()
-        })
-        mVaActionBar.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                super.onAnimationEnd(animation)
-                if (supportActionBar != null) { // sanity check
-                    println("debug: In the sanity check for hide")
-                    supportActionBar!!.hide()
-                }
-            }
-        })
-        mVaActionBar.setDuration(mAnimDuration.toLong())
-        mVaActionBar.start()
-    }
-
-    private fun showActionBar() {
+private fun showActionBar() {
         val mToolbarHeight = mToolbar.height
         val mAnimDuration = 600 /* milliseconds */
         var mVaActionBar: ValueAnimator  = ValueAnimator.ofInt(0, mToolbarHeight)
@@ -426,5 +365,7 @@ class MainActivity : AppCompatActivity() {
         mVaActionBar.setDuration(mAnimDuration.toLong())
         mVaActionBar.start()
     }
+
+
 
 }

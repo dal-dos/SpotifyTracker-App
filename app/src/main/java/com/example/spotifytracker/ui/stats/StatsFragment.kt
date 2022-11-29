@@ -1,6 +1,7 @@
 package com.example.spotifytracker.ui.stats
 
 import android.animation.LayoutTransition
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.transition.AutoTransition
@@ -11,9 +12,13 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
+import com.example.spotifytracker.MainActivity
 import com.example.spotifytracker.R
+import com.example.spotifytracker.SettingsActivity
 import com.example.spotifytracker.databinding.FragmentStatsBinding
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
@@ -37,19 +42,24 @@ class StatsFragment : Fragment() {
     var artist4:TextView? = null
     var artist5 :TextView? = null
     var pc: PieChart? = null
-
+    private lateinit var sharedSettings: SharedPreferences
+    private lateinit var myActivity : MainActivity
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val statsViewModel =
-            ViewModelProvider(this).get(StatsViewModel::class.java)
+        val statsViewModel = ViewModelProvider(this)[StatsViewModel::class.java]
 
         _binding = FragmentStatsBinding.inflate(inflater, container, false)
+
+        myActivity = requireActivity() as MainActivity
+
         val root: View = binding.root
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
 
+
+        sharedSettings = PreferenceManager.getDefaultSharedPreferences(myActivity)
 
         val layout = binding.statsLayout
         layout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
@@ -65,7 +75,7 @@ class StatsFragment : Fragment() {
         artist3 = binding.artist3Text
         artist4 = binding.artist4Text
         artist4 = binding.artist5Text
-        pc = binding.myPieChart
+        pc = binding.popularityPieChart
 
         var randomInt1 : Float = 40.0F
         var randomInt2 : Float = 40.0F
@@ -105,7 +115,7 @@ class StatsFragment : Fragment() {
 
         val lineChart : LineChart = binding.statsGraph
         setChart(lineChart)
-
+        applySettings()
         return root
     }
 
@@ -151,5 +161,11 @@ class StatsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun applySettings(){
+        binding.popularityPieChartInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().popularityPieChartCollapseKey, true)
+
+        MainActivity().changeArrow(binding.popularityPieChartArrow, binding.popularityPieChartInnerCardview.isVisible)
     }
 }

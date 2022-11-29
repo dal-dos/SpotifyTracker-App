@@ -148,7 +148,7 @@
                     android:orientation="horizontal">
 
                 <org.eazegraph.lib.charts.PieChart
-                android:id="@+id/myPieChart"
+                android:id="@+id/popularity_pie_chart"
                 android:layout_width="20dp"
                 android:layout_height="200dp"
                 android:padding="6dp"
