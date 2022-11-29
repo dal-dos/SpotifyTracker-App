@@ -127,8 +127,7 @@
 
 
 
-                <org.eazegraph.lib.charts.PieChart
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <org.eazegraph.lib.charts.PieChart xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/mypiechart"
                 android:layout_width="20dp"
                 android:layout_height="match_parent"
