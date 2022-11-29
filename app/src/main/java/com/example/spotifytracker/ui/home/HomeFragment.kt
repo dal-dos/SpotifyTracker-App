@@ -2,6 +2,7 @@ package com.example.spotifytracker.ui.home
 
 import android.animation.LayoutTransition
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.transition.AutoTransition
@@ -13,9 +14,11 @@ import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.models.PlayHistory
@@ -55,7 +58,8 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     private lateinit var favTrackList: ListView
     private lateinit var scrollView: NestedScrollView
     private var switchingView: Boolean = true
-
+    private lateinit var myActivity : MainActivity
+    private lateinit var sharedSettings: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,13 +70,12 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         repo = SpotifyDataRepository(spotifyDataDao)
         viewModelFactory = HomeViewModelFactory(repo)
 
-        val homeViewModel =
-            ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
+        val homeViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        myActivity = requireActivity() as MainActivity
 
-        val myActivity = requireActivity() as MainActivity
 
         val layout = binding.homeLayout
         layout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
@@ -87,6 +90,8 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         songArrayList = ArrayList()
 
         scrollView = binding.nestedScrollView
+
+        sharedSettings = PreferenceManager.getDefaultSharedPreferences(myActivity)
 
         songListAdapter = SongListAdapter(requireActivity(), songArrayList)
         genreListAdapter = GenreListAdapter(requireActivity(), genreArrayList)
@@ -108,6 +113,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
         myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
 
+        applySettings()
         myViewModel.username.observe(viewLifecycleOwner) {
             //(activity as AppCompatActivity?)!!.supportActionBar!!.title = it //top action bar
             myActivity.setMenuTitle(it) //bottom nav bar
@@ -263,11 +269,19 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         TransitionManager.beginDelayedTransition(binding.homeLayout, AutoTransition())
         switchingView = true
         //(activity as AppCompatActivity?)!!.supportActionBar!!.show()
-       // (activity as AppCompatActivity?)!!.supportActionBar!!.title = myViewModel.username.value
+        // (activity as AppCompatActivity?)!!.supportActionBar!!.title = myViewModel.username.value
     }
+
 
     override fun onPause() {
         super.onPause()
         switchingView = false
+    }
+
+    private fun applySettings(){
+        binding.recentlyPlayedOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().recentlyPlayedVisibilityKey, true)
+        binding.favoriteTracksOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteTracksVisibilityKey, true)
+        binding.favoriteArtistsOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteArtistsVisibilityKey, true)
+        binding.favoriteGenresOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteGenresVisibilityKey, true)
     }
 }

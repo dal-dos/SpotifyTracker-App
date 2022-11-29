@@ -2,17 +2,130 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
-        android:title="Main Settings"
+        android:title="Recently Played"
         app:iconSpaceReserved="false">
+        <SwitchPreference
+            android:key="recently_played_visibility"
+            android:title="Show"
+            android:summary="Show/Hide Recently Played"
+            app:iconSpaceReserved="false"
+            android:defaultValue="true"/>
 
-        <ListPreference
-            android:key="Number_of_Items"
+        <SeekBarPreference
+            android:key="recently_played_number_of_items"
             android:title="Number of Items"
             app:iconSpaceReserved="false"
-            android:entries="@array/range_entries"
-            android:entryValues="@array/range_values"
             app:allowDividerBelow="true"
-            android:summary="Select the number of items you want returned"/>
+            android:summary="Select the number of items shown in recently played"
+            app:showSeekBarValue="true"
+            app:defaultValue="5"
+            android:max="50"
+            android:min="1"/>
+
+        <Preference
+            android:key="recently_played_before"
+            android:title="Listened to before date"
+            app:iconSpaceReserved="false"
+            app:allowDividerBelow="true"
+            android:summary="Listened to before date X" />
+
+        <Preference
+            android:key="recently_played_after"
+            android:title="Listened to after date"
+            app:iconSpaceReserved="false"
+            app:allowDividerBelow="true"
+            android:summary="Listened to after date X" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Favorite Tracks"
+        app:iconSpaceReserved="false">
+        <SwitchPreference
+            android:key="favorite_tracks_visibility"
+            android:title="Show"
+            android:summary="Show/Hide Favorite Tracks"
+            app:iconSpaceReserved="false"
+            android:defaultValue="true"/>
+
+        <SeekBarPreference
+            android:key="favorite_tracks_number_of_items"
+            android:title="Number of Items"
+            app:iconSpaceReserved="false"
+            app:allowDividerBelow="true"
+            android:summary="Select the number of items shown in recently played"
+            app:showSeekBarValue="true"
+            app:defaultValue="5"
+            android:max="50"/>
+
+        <ListPreference
+            android:key="favorite_tracks_time_range"
+            android:title="Time Range"
+            android:summary="How far back do you want your data to be scanned?"
+            app:iconSpaceReserved="false"
+            android:entryValues="@array/time_range_values"
+            android:entries="@array/time_range_entries"
+            android:defaultValue="2" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Favorite Artists"
+        app:iconSpaceReserved="false">
+        <SwitchPreference
+            android:key="favorite_artists_visibility"
+            android:title="Show"
+            android:summary="Show/Hide Favorite Tracks"
+            app:iconSpaceReserved="false"
+            android:defaultValue="true"/>
+
+        <SeekBarPreference
+            android:key="favorite_artists_number_of_items"
+            android:title="Number of Items"
+            app:iconSpaceReserved="false"
+            app:allowDividerBelow="true"
+            android:summary="Select the number of items shown in recently played"
+            app:showSeekBarValue="true"
+            app:defaultValue="5"
+            android:max="50"/>
+
+        <ListPreference
+            android:key="favorite_artists_time_range"
+            android:title="Time Range"
+            android:summary="How far back do you want your data to be scanned?"
+            app:iconSpaceReserved="false"
+            android:entryValues="@array/time_range_values"
+            android:entries="@array/time_range_entries"
+            android:defaultValue="2" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Favorite Genres"
+        app:iconSpaceReserved="false">
+        <SwitchPreference
+            android:key="favorite_genres_visibility"
+            android:title="Show"
+            android:summary="Show/Hide Favorite Tracks"
+            app:iconSpaceReserved="false"
+            android:defaultValue="true"/>
+
+        <SeekBarPreference
+            android:key="favorite_genres_number_of_items"
+            android:title="Number of Items"
+            app:iconSpaceReserved="false"
+            app:allowDividerBelow="true"
+            android:summary="Select the number of items shown in recently played"
+            app:showSeekBarValue="true"
+            app:defaultValue="5"
+            android:max="50"/>
+        <ListPreference
+            android:key="favorite_genres_time_range"
+            android:title="Time Range"
+            android:summary="How far back do you want your data to be scanned?"
+            app:iconSpaceReserved="false"
+            android:entryValues="@array/time_range_values"
+            android:entries="@array/time_range_entries"
+            android:defaultValue="2" />
 
     </PreferenceCategory>
 

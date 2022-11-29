@@ -27,11 +27,14 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.findFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.preference.PreferenceManager
 import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.models.PlayHistory
 import com.adamratzman.spotify.models.Token
@@ -135,6 +138,7 @@ class MainActivity : AppCompatActivity() {
             val intent: Intent = Intent(this, SettingsActivity::class.java)
             findViewById<ImageButton>(R.id.toolbar_button_settings).animate().rotationBy(360F)
             startActivity(intent)
+            finishAffinity()
         }
     }
 
@@ -183,8 +187,9 @@ class MainActivity : AppCompatActivity() {
         val type = mySharedPreferences.getString("type", "")
         val expires = mySharedPreferences.getInt("expires", 9999)
         val token: Token = Token(accessToken!!, type!!, expires)
+        val sharedSettings = PreferenceManager.getDefaultSharedPreferences(this)
         try {
-            apiHandler = SpotifyApiHandler(token)
+            apiHandler = SpotifyApiHandler(token, sharedSettings)
             lifecycleScope.launch() {
                 apiHandler.buildSearchApi()
                 username = apiHandler.userName().toString()

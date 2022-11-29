@@ -47,6 +47,7 @@
                     android:textSize="25sp" />
             </LinearLayout>-->
             <androidx.cardview.widget.CardView
+                android:id="@+id/recently_played_outer_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -110,7 +111,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
                 app:cardCornerRadius="8dp"
-                android:onClick="onClickCardViewSuggested">
+                android:onClick="onClickCardViewSuggested"
+                android:id="@+id/suggested_outer_cardview">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -167,7 +169,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
                 app:cardCornerRadius="8dp"
-                android:onClick="onClickCardViewFavoriteTracks">
+                android:onClick="onClickCardViewFavoriteTracks"
+                android:id="@+id/favorite_tracks_outer_cardview">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -224,7 +227,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
                 app:cardCornerRadius="8dp"
-                android:onClick="onClickCardViewFavoriteArtists">
+                android:onClick="onClickCardViewFavoriteArtists"
+                android:id="@+id/favorite_artists_outer_cardview">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -280,7 +284,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
                 app:cardCornerRadius="8dp"
-                android:onClick="onClickCardViewFavoriteGenres">
+                android:onClick="onClickCardViewFavoriteGenres"
+                android:id="@+id/favorite_genres_outer_cardview">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
