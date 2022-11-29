@@ -20,6 +20,7 @@ class SettingsActivity : AppCompatActivity() {
     val favoriteTracksCollapseKey = "favorite_tracks_collapse"
     val favoriteArtistsCollapseKey = "favorite_artists_collapse"
     val favoriteGenresCollapseKey = "favorite_genres_collapse"
+    val hoursPlayedWeekCollapseKey = "hours_played_week_collapse_key"
     val popularityPieChartCollapseKey = "popularity_pie_chart_collapse"
     val favoriteTracksTimeRange = "favorite_tracks_time_range"
     val favoriteArtistsTimeRange ="favorite_artists_time_range"

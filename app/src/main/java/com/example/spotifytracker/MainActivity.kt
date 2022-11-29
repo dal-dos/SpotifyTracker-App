@@ -36,6 +36,8 @@ import com.example.spotifytracker.settings.SettingsActivity
 import com.example.spotifytracker.ui.LoadingDialog
 import com.example.spotifytracker.ui.home.HomeViewModel
 import com.example.spotifytracker.ui.home.HomeViewModelFactory
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.charts.LineChart
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.spotify.android.appremote.api.SpotifyAppRemote
@@ -248,7 +250,7 @@ class MainActivity : AppCompatActivity() {
     fun onClickCardViewRecentlyPlayed(view: View) {
         val cv = findViewById<CardView>(R.id.recently_played_inner_cardview)
         val arrow = findViewById<TextView>(R.id.recently_played_arrow)
-        var bool = !cv.isVisible
+        val bool = !cv.isVisible
         cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
@@ -259,7 +261,7 @@ class MainActivity : AppCompatActivity() {
     fun onClickCardViewSuggested(view: View) {
         val cv = findViewById<CardView>(R.id.suggested_inner_cardview)
         val arrow = findViewById<TextView>(R.id.suggested_arrow)
-        var bool = !cv.isVisible
+        val bool = !cv.isVisible
         cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
@@ -270,7 +272,7 @@ class MainActivity : AppCompatActivity() {
     fun onClickCardViewFavoriteTracks(view: View) {
         val cv = findViewById<CardView>(R.id.favorite_tracks_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_tracks_arrow)
-        var bool = !cv.isVisible
+        val bool = !cv.isVisible
         cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
@@ -281,7 +283,7 @@ class MainActivity : AppCompatActivity() {
     fun onClickCardViewFavoriteArtists(view: View) {
         val cv = findViewById<CardView>(R.id.favorite_artists_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_artist_arrow)
-        var bool = !cv.isVisible
+        val bool = !cv.isVisible
         cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
@@ -292,7 +294,7 @@ class MainActivity : AppCompatActivity() {
     fun onClickCardViewFavoriteGenres(view: View) {
         val cv = findViewById<CardView>(R.id.favorite_genres_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_genre_arrow)
-        var bool = !cv.isVisible
+        val bool = !cv.isVisible
         cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
@@ -303,15 +305,30 @@ class MainActivity : AppCompatActivity() {
     fun onClickCardViewPopularityPieChart(view: View) {
         val cv = findViewById<CardView>(R.id.popularity_pie_chart_inner_cardview)
         val arrow = findViewById<TextView>(R.id.popularity_pie_chart_arrow)
-        var bool = !cv.isVisible
         if (cv.isVisible){
             val piechart : PieChart = findViewById(R.id.popularity_pie_chart)
             piechart.startAnimation()
         }
+        val bool = !cv.isVisible
         cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
         editor.putBoolean(SettingsActivity().popularityPieChartCollapseKey,bool)
+        editor.apply()
+    }
+
+    fun onClickCardViewHoursPlayedWeekChart(view: View) {
+        val cv = findViewById<CardView>(R.id.hours_played_week_inner_cardview)
+        val arrow = findViewById<TextView>(R.id.hours_played_week_arrow)
+        if(cv.isVisible){
+            val chart = findViewById<LineChart>(R.id.statsGraph)
+            chart.animateY(1300)
+        }
+        val bool = !cv.isVisible
+        cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
+        val editor = sharedSettings.edit()
+        editor.putBoolean(SettingsActivity().hoursPlayedWeekCollapseKey,bool)
         editor.apply()
     }
 

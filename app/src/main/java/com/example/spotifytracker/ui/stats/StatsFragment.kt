@@ -52,21 +52,23 @@ class StatsFragment : Fragment() {
         _binding = FragmentStatsBinding.inflate(inflater, container, false)
         val root: View = binding.root
         myActivity = requireActivity() as MainActivity
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+        if(savedInstanceState == null){
+            (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+        }
 
         sharedSettings = PreferenceManager.getDefaultSharedPreferences(myActivity)
 
         collapseAnimationInit()
         statsObservers()
         makePopularityPieChart()
+        setChart()
         applySettings()
         return root
     }
 
     private fun statsObservers() {
-        val textView: TextView = binding.textStats
         myViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+             //
         }
     }
 
@@ -121,13 +123,11 @@ class StatsFragment : Fragment() {
 
         pc!!.startAnimation();
 
-        val lineChart : LineChart = binding.statsGraph
-        setChart(lineChart)
     }
 
-    private fun setChart(lineChart: LineChart){
+    private fun setChart(){
+        val lineChart : LineChart = binding.statsGraph
         //Chart configurations
-
         //Fake data to temporarily display chart
         gData.add(Entry(1f,1.4f))
         gData.add(Entry(2f,5.2f))
@@ -162,6 +162,8 @@ class StatsFragment : Fragment() {
         lineChart.axisRight.setDrawLabels(false)
         lineChart.axisRight.setDrawZeroLine(true)
         lineChart.invalidate()
+
+        lineChart.animateY(1300)
     }
 
     override fun onDestroyView() {
@@ -170,9 +172,10 @@ class StatsFragment : Fragment() {
     }
 
     private fun applySettings(){
-        binding.popularityPieChartInnerCardview.isVisible = sharedSettings.getBoolean(
-            SettingsActivity().popularityPieChartCollapseKey, true)
+        binding.popularityPieChartInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().popularityPieChartCollapseKey, true)
+        binding.hoursPlayedWeekInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().hoursPlayedWeekCollapseKey, true)
 
         MainActivity().changeArrow(binding.popularityPieChartArrow, binding.popularityPieChartInnerCardview.isVisible)
+        MainActivity().changeArrow(binding.hoursPlayedWeekArrow, binding.hoursPlayedWeekInnerCardview.isVisible)
     }
 }

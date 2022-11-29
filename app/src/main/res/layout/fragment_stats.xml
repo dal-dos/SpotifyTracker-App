@@ -23,38 +23,52 @@
             android:orientation="vertical"
             android:animateLayoutChanges="true"
             android:paddingTop="50dp">
-    <TextView
-        android:id="@+id/text_stats"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="0sp"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        app:cardCornerRadius="8dp"
-        android:paddingTop="15dp" >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hours_of_music_played_in_last_7_days"
-                android:fontFamily="@font/comfortaabold"
-                />
+
             <androidx.cardview.widget.CardView
+                android:id="@+id/hours_played_week_outer_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
                 app:cardCornerRadius="8dp"
-                android:backgroundTint="@color/dark_green_var">
+                android:onClick="onClickCardViewHoursPlayedWeekChart">
+                <LinearLayout
+                    android:id="@+id/hours_played_week_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/hours_played_week_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/comfortaasemibold"
+                            android:text="@string/hours_of_music_played_in_last_7_days" />
+
+                        <TextView
+                            android:id="@+id/hours_played_week_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/comfortaasemibold"
+                            android:text="@string/arrow"
+                            app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                            app:drawableTint="@color/white" />
+                    </RelativeLayout>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/hours_played_week_inner_cardview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="8dp"
+                        android:backgroundTint="@color/dark_green_var">
                 <LinearLayout
                     android:id="@+id/chartLayout"
                     android:layout_width="match_parent"
@@ -99,6 +113,7 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/popularity_pie_chart_outer_cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
