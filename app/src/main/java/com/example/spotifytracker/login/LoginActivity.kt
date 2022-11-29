@@ -55,7 +55,8 @@ class LoginActivity : AppCompatActivity() {
         println("shared preferences string is: " + mySharedPreferences.getString("token", null))
         if (mySharedPreferences.getString("token", null) != null){
             loginButton.isVisible = false
-            loginAttempt()
+            //loginAttempt()
+            loginSucceeded()
         } else {
             AuthorizationClient.clearCookies(this)
         }
