@@ -30,14 +30,14 @@
             android:title="Listened to before date"
             app:iconSpaceReserved="false"
             app:allowDividerBelow="true"
-            android:summary="Listened to before date X" />
+            android:summary="Music that you listened to before X" />
 
         <Preference
             android:key="recently_played_after"
             android:title="Listened to after date"
             app:iconSpaceReserved="false"
             app:allowDividerBelow="true"
-            android:summary="Listened to after date X" />
+            android:summary="Music that you listened to after X" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -56,7 +56,7 @@
             android:title="Number of Items"
             app:iconSpaceReserved="false"
             app:allowDividerBelow="true"
-            android:summary="Select the number of items shown in recently played"
+            android:summary="Select the number of items shown in favorite tracks"
             app:showSeekBarValue="true"
             app:defaultValue="5"
             android:max="50"/>
@@ -79,7 +79,7 @@
         <SwitchPreference
             android:key="favorite_artists_visibility"
             android:title="Show"
-            android:summary="Show/Hide Favorite Tracks"
+            android:summary="Show/Hide Favorite Artists"
             app:iconSpaceReserved="false"
             android:defaultValue="true"/>
 
@@ -88,7 +88,7 @@
             android:title="Number of Items"
             app:iconSpaceReserved="false"
             app:allowDividerBelow="true"
-            android:summary="Select the number of items shown in recently played"
+            android:summary="Select the number of items shown in favorite artists"
             app:showSeekBarValue="true"
             app:defaultValue="5"
             android:max="50"/>
@@ -111,7 +111,7 @@
         <SwitchPreference
             android:key="favorite_genres_visibility"
             android:title="Show"
-            android:summary="Show/Hide Favorite Tracks"
+            android:summary="Show/Hide Favorite Genres"
             app:iconSpaceReserved="false"
             android:defaultValue="true"/>
 
@@ -120,7 +120,7 @@
             android:title="Number of Items"
             app:iconSpaceReserved="false"
             app:allowDividerBelow="true"
-            android:summary="Select the number of items shown in recently played"
+            android:summary="Select the number of items shown in favorite genres"
             app:showSeekBarValue="true"
             app:defaultValue="5"
             android:max="50"/>
@@ -135,5 +135,19 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="Other"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            android:key="logout"
+            android:title="Log Out"
+            android:summary="Logout of your account"
+            app:iconSpaceReserved="true"
+            app:icon="@drawable/ic_baseline_login_24"
+            app:allowDividerBelow="true"
+            >
+        </Preference>
+    </PreferenceCategory>
 
 </PreferenceScreen>

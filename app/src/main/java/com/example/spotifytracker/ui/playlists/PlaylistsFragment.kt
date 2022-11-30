@@ -12,7 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.spotifytracker.MainActivity
+import com.example.spotifytracker.R
 import com.example.spotifytracker.databinding.FragmentPlaylistsBinding
 
 class PlaylistsFragment : Fragment() {
@@ -44,11 +46,8 @@ class PlaylistsFragment : Fragment() {
 
         myActivity = requireActivity() as MainActivity
 
-        val textView: TextView = binding.textSettings
-        settingsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
         //scrollOnChangeListener()
+        swipeRefresh()
         return root
     }
 
@@ -91,5 +90,13 @@ class PlaylistsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         myActivity.showActionBar(true)
+    }
+
+    private fun swipeRefresh() {
+        val swipeLayout: SwipeRefreshLayout = binding.root.findViewById(R.id.swipe_layout)
+        swipeLayout.setOnRefreshListener {
+            myActivity.apiBuilder()
+            swipeLayout.isRefreshing = false
+        }
     }
 }

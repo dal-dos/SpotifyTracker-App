@@ -10,7 +10,7 @@
     <string name="placeholder">Placeholder</string>
     <string name="favorite_genre">Favorite Genres</string>
     <string name="favorite_artist">Favorite Artists</string>
-    <string name="favourite_tracks">Favourite Tracks</string>
+    <string name="favourite_tracks">Favorite Tracks</string>
     <string name="none_found">None Found</string>
     <string name="image">image</string>
     <string name="refresh">Refresh</string>
@@ -24,4 +24,5 @@
     <string name="spotify">Spotify</string>
     <string name="tracker">Tracker</string>
     <string name="playlists">Playlists</string>
+    <string name="play_time_past_week">Play time past week</string>
 </resources>

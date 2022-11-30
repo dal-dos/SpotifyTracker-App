@@ -16,7 +16,9 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.spotifytracker.MainActivity
+import com.example.spotifytracker.R
 import com.example.spotifytracker.settings.SettingsActivity
 import com.example.spotifytracker.databinding.FragmentStatsBinding
 import com.github.mikephil.charting.charts.LineChart
@@ -69,6 +71,7 @@ class StatsFragment : Fragment() {
         setChart()
         //scrollOnChangeListener()
         applySettings()
+        swipeRefresh()
         return root
     }
 
@@ -217,5 +220,13 @@ class StatsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         myActivity.showActionBar(true)
+    }
+
+    private fun swipeRefresh() {
+        val swipeLayout: SwipeRefreshLayout = binding.root.findViewById(R.id.swipe_layout)
+        swipeLayout.setOnRefreshListener {
+            myActivity.apiBuilder()
+            swipeLayout.isRefreshing = false
+        }
     }
 }

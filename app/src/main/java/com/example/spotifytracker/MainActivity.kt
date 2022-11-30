@@ -354,4 +354,27 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun onClickCardViewRecommendToday(view: View) {
+        val cv = findViewById<CardView>(R.id.recommmended_today_inner_cardview)
+        val arrow = findViewById<TextView>(R.id.rec_today_arrow)
+        val bool = !cv.isVisible
+        cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
+    }
+    fun onClickCardViewRecommendTomorrow(view: View) {
+        val cv = findViewById<CardView>(R.id.recommended_tomorrow_inner_cardview)
+        val arrow = findViewById<TextView>(R.id.rec_tomorrow_arrow)
+        val bool = !cv.isVisible
+        cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
+    }
+
+    fun onClickCardViewAllPlaylists(view: View) {
+        val cv = findViewById<CardView>(R.id.all_playlists_inner_cardview)
+        val arrow = findViewById<TextView>(R.id.all_playlists_arrow)
+        val bool = !cv.isVisible
+        cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
+    }
+
 }
