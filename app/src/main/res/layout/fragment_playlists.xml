@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.settings.PlaylistsFragment"
+    tools:context=".ui.playlists.PlaylistsFragment"
     android:orientation="vertical"
-    android:paddingBottom="?attr/actionBarSize"
-    android:paddingTop="50dp">
+    android:paddingBottom="?attr/actionBarSize">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

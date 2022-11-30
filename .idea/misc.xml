@@ -37,11 +37,13 @@
         <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/layout/activity_login.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/layout/fragment_home.xml" value="0.253125" />
+        <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/layout/fragment_playlists.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/layout/fragment_settings.xml" value="0.253125" />
         <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/layout/fragment_stats.xml" value="0.1" />
         <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/layout/song_item.xml" value="0.14447463768115942" />
         <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/menu/custom_actionbar.xml" value="0.2640625" />
         <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/menu/settings_menu.xml" value="0.371875" />
+        <entry key="..\:/Users/daven/OneDrive/Documents/School work/SFU/CMPT 362/SpotifyTracker-App/app/src/main/res/xml/preferences.xml" value="0.128419452887538" />
       </map>
     </option>
   </component>

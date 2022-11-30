@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.stats.StatsFragment"
     android:orientation="vertical"
-    android:paddingBottom="?attr/actionBarSize"
-    android:paddingTop="50dp">
+    android:paddingBottom="?attr/actionBarSize">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

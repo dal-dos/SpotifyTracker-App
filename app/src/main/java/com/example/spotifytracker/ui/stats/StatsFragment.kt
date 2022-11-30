@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
@@ -29,6 +30,7 @@ import org.eazegraph.lib.models.PieModel
 class StatsFragment : Fragment() {
 
     private var _binding: FragmentStatsBinding? = null
+    private lateinit var scrollView: NestedScrollView
     var gData : MutableList<Entry> = mutableListOf()
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -43,6 +45,7 @@ class StatsFragment : Fragment() {
     private lateinit var sharedSettings: SharedPreferences
     private lateinit var myActivity : MainActivity
     private lateinit var myViewModel : StatsViewModel
+    private var switchingView: Boolean = true
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,9 +55,11 @@ class StatsFragment : Fragment() {
         _binding = FragmentStatsBinding.inflate(inflater, container, false)
         val root: View = binding.root
         myActivity = requireActivity() as MainActivity
-        if(savedInstanceState == null){
-            (activity as AppCompatActivity?)!!.supportActionBar!!.show()
-        }
+
+        //if (savedInstanceState == null){
+        //    myActivity.supportActionBar!!.show()
+        //}
+        //myActivity.showActionBar(true)
 
         sharedSettings = PreferenceManager.getDefaultSharedPreferences(myActivity)
 
@@ -62,6 +67,7 @@ class StatsFragment : Fragment() {
         statsObservers()
         makePopularityPieChart()
         setChart()
+        //scrollOnChangeListener()
         applySettings()
         return root
     }
@@ -177,5 +183,39 @@ class StatsFragment : Fragment() {
 
         MainActivity().changeArrow(binding.popularityPieChartArrow, binding.popularityPieChartInnerCardview.isVisible)
         MainActivity().changeArrow(binding.hoursPlayedWeekArrow, binding.hoursPlayedWeekInnerCardview.isVisible)
+    }
+
+/*    private fun scrollOnChangeListener() {
+        scrollView = binding.statsNestedScrollView
+        scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY + 4 <= oldScrollY ){
+                println("debug: Oldscrolly is $oldScrollY and scrolly is $scrollY")
+                //scroll up
+                //println("debug: Showing the tool bar")
+                (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+            }
+            else if (oldScrollY + 4 <= scrollY){
+                //scroll down
+                //println("debug: Hiding the tool bar")
+                if (switchingView){
+                    (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        switchingView = true
+    }
+
+    override fun onPause() {
+        super.onPause()
+        switchingView = false
+    }*/
+
+    override fun onResume() {
+        super.onResume()
+        myActivity.showActionBar(true)
     }
 }

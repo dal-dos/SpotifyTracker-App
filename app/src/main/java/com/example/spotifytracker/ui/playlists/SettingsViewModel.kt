@@ -1,4 +1,4 @@
-package com.example.spotifytracker.ui.settings
+package com.example.spotifytracker.ui.playlists
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
@@ -47,16 +48,17 @@ class LoginActivity : AppCompatActivity() {
         spotifyDatabase = SpotifyDatabase.getInstance(this)
         spotifyDataDao = spotifyDatabase.spotifyDataDao
         repo = SpotifyDataRepository(spotifyDataDao)
+        println("debug: login activity called")
         viewModelFactory = LoginViewModelFactory(repo)
         myViewModel = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
         supportActionBar?.hide()
 
         mySharedPreferences = applicationContext.getSharedPreferences("SPOTIFY", 0)
-        println("shared preferences string is: " + mySharedPreferences.getString("token", null))
+        println("debug: shared preferences string is: " + mySharedPreferences.getString("token", null))
         if (mySharedPreferences.getString("token", null) != null){
             loginButton.isVisible = false
-            //loginAttempt()
-            loginSucceeded()
+            loginAttempt()
+            //loginSucceeded()
         } else {
             AuthorizationClient.clearCookies(this)
         }
@@ -107,8 +109,13 @@ class LoginActivity : AppCompatActivity() {
                     editor.apply()
                     loginSucceeded()}
                 AuthorizationResponse.Type.ERROR -> {
-                    println("debug: Error with logging in")}
-                else -> {println("debug: Timeout or decline with logging in, response type is: ${response.type}")}
+                    println("debug: Error with logging in")
+                    Toast.makeText(baseContext, "Error with logging in", Toast.LENGTH_SHORT).show()
+                    loginButton.isVisible = true}
+                else -> {println("debug: Timeout or decline with logging in, response type is: ${response.type}")
+                    //Toast.makeText(baseContext, "Error with logging in", Toast.LENGTH_SHORT).show()
+                    //loginButton.isVisible = true
+                        }
             }
         }
     }

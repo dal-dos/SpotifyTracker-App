@@ -111,6 +111,10 @@ class MainActivity : AppCompatActivity() {
             this.setMenuTitle(myViewModel.username.value.toString())
         }
 
+        if(savedInstanceState != null){
+            this.supportActionBar!!.show()
+        }
+
         //this.supportActionBar?.hide()//hides action bars
         //val actionBar = supportActionBar
         //actionBar?.setDisplayShowCustomEnabled(true);
@@ -120,6 +124,14 @@ class MainActivity : AppCompatActivity() {
 
 
         onClickListeners()
+    }
+
+    fun showActionBar(showing: Boolean){
+        if (showing){
+            this.supportActionBar!!.show()
+        } else {
+            this.supportActionBar!!.hide()
+        }
     }
 
     private fun onClickListeners() {
@@ -245,7 +257,6 @@ class MainActivity : AppCompatActivity() {
     fun setMenuTitle(username: String){
         navView.menu.findItem(R.id.navigation_home).title = username
     }
-
 
     fun onClickCardViewRecentlyPlayed(view: View) {
         val cv = findViewById<CardView>(R.id.recently_played_inner_cardview)

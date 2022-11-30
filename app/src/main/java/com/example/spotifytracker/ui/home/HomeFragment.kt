@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
+import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
@@ -22,7 +23,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.models.PlayHistory
 import com.adamratzman.spotify.models.Track
-import com.example.spotifytracker.*
+import com.example.spotifytracker.MainActivity
+import com.example.spotifytracker.R
 import com.example.spotifytracker.adapters.ArtistListAdapter
 import com.example.spotifytracker.adapters.GenreListAdapter
 import com.example.spotifytracker.adapters.SongListAdapter
@@ -65,7 +67,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     private lateinit var favTrackArrayList: ArrayList<Track>
     private lateinit var favTrackList: ListView
     private lateinit var scrollView: NestedScrollView
-    private var switchingView: Boolean = true
     private lateinit var myActivity : MainActivity
     private lateinit var sharedSettings: SharedPreferences
     override fun onCreateView(
@@ -89,6 +90,9 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         binding.favArtistList.onItemClickListener = this
         binding.favGenreList.onItemClickListener = this
 
+        scrollView = binding.nestedScrollView
+        //val runnable = Runnable { scrollView.fullScroll(ScrollView.FOCUS_UP) }
+        //scrollView.post(runnable)
         collapseAnimationInit()
         homeObservers()
         applySettings()
@@ -105,7 +109,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     }
 
     private fun swipeRefresh() {
-        scrollView = binding.nestedScrollView
         val swipeLayout: SwipeRefreshLayout = binding.root.findViewById(R.id.swipe_layout)
         swipeLayout.setOnRefreshListener {
             myActivity.apiBuilder()
@@ -114,20 +117,17 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     }
 
     private fun scrollOnChangeListener() {
-        scrollView = binding.nestedScrollView
         scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY + 4 <= oldScrollY ){
-                println("debug: Oldscrolly is $oldScrollY and scrolly is $scrollY")
+                //println("debug: Oldscrolly is $oldScrollY and scrolly is $scrollY")
                 //scroll up
-                //println("debug: Showing the tool bar")
+                println("debug: Showing the tool bar")
                 (activity as AppCompatActivity?)!!.supportActionBar!!.show()
             }
             else if (oldScrollY + 4 <= scrollY){
                 //scroll down
-                //println("debug: Hiding the tool bar")
-                if (switchingView){
-                    (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
-                }
+                println("debug: Hiding the tool bar")
+                (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
             }
         }
     }
@@ -278,18 +278,14 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
     override fun onResume() {
         super.onResume()
+        //println("debug: called on resume")
+        myActivity.showActionBar(true)
         binding.homeLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         TransitionManager.beginDelayedTransition(binding.homeLayout, AutoTransition())
-        switchingView = true
         //(activity as AppCompatActivity?)!!.supportActionBar!!.show()
         // (activity as AppCompatActivity?)!!.supportActionBar!!.title = myViewModel.username.value
     }
 
-
-    override fun onPause() {
-        super.onPause()
-        switchingView = false
-    }
 
     private fun applySettings(){
         binding.recentlyPlayedOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().recentlyPlayedVisibilityKey, true)
