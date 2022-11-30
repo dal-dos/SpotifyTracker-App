@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.adamratzman.spotify.utils.Language
 import com.example.spotifytracker.R
 
 class GenreListAdapter(private val context: Context, private var spotifyFavGenre: ArrayList<String>) : BaseAdapter(){
@@ -15,6 +16,7 @@ class GenreListAdapter(private val context: Context, private var spotifyFavGenre
     }
 
     override fun getItem(position: Int): Any {
+
         return spotifyFavGenre[position]
     }
 
@@ -23,7 +25,39 @@ class GenreListAdapter(private val context: Context, private var spotifyFavGenre
     }
 
     fun replace(newSpotifyData: ArrayList<String>){
+//        newSpotifyData.forEach {
+//                   it.replaceFirstChar { it.uppercase()
+//
+//                   }
+//            println(newSpotifyData)
+//
+//                println("DEBUG: NEWSPOTIFY DATA for each  ")
+//              //  it.uppercase()
+//
+//        }
+//        println("DEBUG: NEWSPOTIFY DATA FOR no each 11 ")
+//        val temp: String
+//       temp = newSpotifyData.joinToString(separator = ", ", prefix = "[", postfix = "]", limit = -1
+//        , truncated = "...", transform = {
+//           it.uppercase()
+//        })
+////
+//        newSpotifyData.toString().uppercase()
+//        println(temp)
+//        temp.toList()
+//        newSpotifyData = temp.toList()
+//        println(newSpotifyData)
+
         spotifyFavGenre = newSpotifyData
+
+//        spotifyFavGenre.forEach{
+//            it.replaceFirstChar {
+//                it.uppercase()
+//
+//            }
+//            it.uppercase()
+//            println("DEBUG: SPOTIFY FAV GENRE REPLACE")
+//        }
     }
 
     @SuppressLint("ViewHolder")
@@ -32,8 +66,24 @@ class GenreListAdapter(private val context: Context, private var spotifyFavGenre
         val itemTitleTextView = view.findViewById<TextView>(R.id.itemTitleText)
         val itemSubTextView =  view.findViewById<TextView>(R.id.itemSubText)
 
-        itemTitleTextView.text = spotifyFavGenre[position]
+//        spotifyFavGenre.forEach{
+//            it.replaceFirstChar {
+//                it.uppercase()
+//
+//            }
+//          //  it.uppercase()
+//            println("DEBUG: SPOTIFY FAV GENRE  GETVIEW")
+//        }
+
+
+        itemTitleTextView.text = spotifyFavGenre[position].split(' ').joinToString(" ") {
+            it.replaceFirstChar {
+                it.uppercase()
+
+            }
+        }
         val myArtists = ""
+
         itemSubTextView.text = myArtists
 
         return view

@@ -11,6 +11,8 @@ import android.widget.TextView
 import com.adamratzman.spotify.models.Artist
 import com.example.spotifytracker.R
 import com.squareup.picasso.Picasso
+import java.text.NumberFormat
+import java.util.*
 
 class ArtistListAdapter(private val context: Context, private var spotifyFavArtist: List<Artist>) : BaseAdapter(){
     override fun getCount(): Int {
@@ -39,8 +41,10 @@ class ArtistListAdapter(private val context: Context, private var spotifyFavArti
         var artist : String = spotifyFavArtist[position].name
         itemTitleText.text = artist
 
+
         var popularity : String = spotifyFavArtist[position].popularity.toString()
-        var followers : String = spotifyFavArtist[position].followers.total.toString()
+        var followers : String? = getFormatedAmount(spotifyFavArtist[position].followers.total?.toInt()!!)
+
         itemSubText.text = "$followers followers"
         itemSubText.isSelected = true
         itemTitleText.isSelected = true
@@ -50,6 +54,9 @@ class ArtistListAdapter(private val context: Context, private var spotifyFavArti
         return view
     }
 
+    fun getFormatedAmount(amount: Int): String? {
+        return NumberFormat.getNumberInstance(Locale.US).format(amount);
+    }
     @SuppressLint("SetTextI18n")
     fun listEmpty(): View {
         val linearLayout : LinearLayout = LinearLayout(context)

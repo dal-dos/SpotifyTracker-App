@@ -41,6 +41,7 @@ import com.github.mikephil.charting.charts.LineChart
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.spotify.android.appremote.api.SpotifyAppRemote
+
 import com.spotify.sdk.android.auth.AuthorizationClient
 import kotlinx.coroutines.launch
 import org.eazegraph.lib.charts.PieChart
