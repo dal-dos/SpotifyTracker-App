@@ -22,6 +22,31 @@
             android:orientation="vertical"
             android:animateLayoutChanges="true"
             android:paddingTop="50dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaaregular"
+                    android:text="Weather"
+                    android:textColor="@color/weather_blue"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaaregular"
+                    android:text="Playlists"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/recommmended_today_outer_cardview"
                 android:layout_width="match_parent"
@@ -47,7 +72,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/comfortaasemibold"
-                            android:text="Recommended based on today's weather" />
+                            android:text="What to listen to today" />
 
                         <TextView
                             android:id="@+id/rec_today_arrow"

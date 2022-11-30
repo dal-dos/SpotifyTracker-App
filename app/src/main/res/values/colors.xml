@@ -13,7 +13,7 @@
     <color name="dark_green">#048204</color>
     <color name="red">#9C0700</color>
     <color name="dark_grey">#4C4E52</color>
-
+    <color name="weather_blue">#0096FF</color>
     <color name="colorPrimary">#024265</color>
     <color name="colorPrimaryDark">#024265</color>
     <color name="colorAccent">#05af9b</color>
