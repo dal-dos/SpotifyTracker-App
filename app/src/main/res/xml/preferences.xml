@@ -41,6 +41,29 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="Suggested by Spotify"
+        app:iconSpaceReserved="false"
+        app:initialExpandedChildrenCount="0">
+        <SwitchPreference
+            android:key="suggested_visibility"
+            android:title="Show"
+            android:summary="Show/Hide Suggested by Spotify Tracks"
+            app:iconSpaceReserved="false"
+            android:defaultValue="true"/>
+
+        <SeekBarPreference
+            android:key="suggested_number_of_items"
+            android:title="Number of Items"
+            app:iconSpaceReserved="false"
+            app:allowDividerBelow="true"
+            android:summary="Select the number of items shown in suggested tracks"
+            app:showSeekBarValue="true"
+            app:defaultValue="5"
+            android:max="50"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="Favorite Tracks"
         app:iconSpaceReserved="false"
         app:initialExpandedChildrenCount="0">

@@ -147,15 +147,26 @@ class SpotifyApiHandler(val token: Token, sharedSettings : SharedPreferences) {
         return api!!.users.getClientProfile().displayName
     }
 
-    fun userSuggested(): List<Track> {
+    suspend fun userSuggested(): List<Track> {
+        val artistIDs: ArrayList<String> = arrayListOf()
+        for (artist in userTopArtists()){
+            if (artistIDs.size < 5){
+                artistIDs.add(artist.id)
+            }
+        }
+        if (artistIDs.size < 1){
+            return api!!.personalization.getTopTracks(limit = 0).items
+        }
+        var itemsToShow = sharedSettings.getInt(SettingsActivity().suggestedNumberOfItemsKey, 5)
+        if (itemsToShow == 0){
+            itemsToShow = 1
+        }
         if(api!!.spotifyApiOptions.enableDebugMode){
             print("DEBUG MODE: APP: userSuggested(): ")
             //Received Status Code 400. Error cause: At least one seed (genre, artist, track) must be provided.
-            //println(api!!.browse.getRecommendations().tracks)
-            //println()
+            println(api!!.browse.getRecommendations(seedArtists = artistIDs.toList(), limit = itemsToShow).tracks)
         }
 
-
-        return arrayListOf()
+        return api!!.browse.getRecommendations(seedArtists = artistIDs.toList(), limit = itemsToShow).tracks
     }
 }

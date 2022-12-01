@@ -213,7 +213,7 @@ class MainActivity : AppCompatActivity() {
                 apiHandler.buildSearchApi()
                 username = apiHandler.userName().toString()
                 recentlyPlayed = apiHandler.userRecentlyPlayed()
-                suggested = arrayListOf()
+                suggested = apiHandler.userSuggested()
                 favoriteGenre = apiHandler.userTopGenres()
                 favoriteArtist = apiHandler.userTopArtists()
                 favoriteTracks = apiHandler.userTopTracks()
@@ -240,6 +240,7 @@ class MainActivity : AppCompatActivity() {
         myViewModel.favGenre.value = favoriteGenre
         myViewModel.favArtist.value = favoriteArtist
         myViewModel.favTrack.value = favoriteTracks
+        myViewModel.suggested.value = suggested
 
 
 //        spotifyDataEntity.username = username

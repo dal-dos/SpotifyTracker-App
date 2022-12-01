@@ -25,10 +25,7 @@ import com.adamratzman.spotify.models.PlayHistory
 import com.adamratzman.spotify.models.Track
 import com.example.spotifytracker.MainActivity
 import com.example.spotifytracker.R
-import com.example.spotifytracker.adapters.ArtistListAdapter
-import com.example.spotifytracker.adapters.GenreListAdapter
-import com.example.spotifytracker.adapters.SongListAdapter
-import com.example.spotifytracker.adapters.TrackListAdapter
+import com.example.spotifytracker.adapters.*
 import com.example.spotifytracker.database.SpotifyDataDao
 import com.example.spotifytracker.database.SpotifyDataEntity
 import com.example.spotifytracker.database.SpotifyDataRepository
@@ -66,6 +63,11 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     private lateinit var favTrackListAdapter: TrackListAdapter
     private lateinit var favTrackArrayList: ArrayList<Track>
     private lateinit var favTrackList: ListView
+
+    private lateinit var suggestedListAdapter: TrackListAdapter
+    private lateinit var suggestedArrayList: ArrayList<Track>
+    private lateinit var suggestTrackList: ListView
+
     private lateinit var scrollView: NestedScrollView
     private lateinit var myActivity : MainActivity
     private lateinit var sharedSettings: SharedPreferences
@@ -89,6 +91,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         binding.favTrackList.onItemClickListener = this
         binding.favArtistList.onItemClickListener = this
         binding.favGenreList.onItemClickListener = this
+        binding.suggestedList.onItemClickListener = this
 
         scrollView = binding.nestedScrollView
         //val runnable = Runnable { scrollView.fullScroll(ScrollView.FOCUS_UP) }
@@ -137,19 +140,23 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         favGenreList = binding.favGenreList
         favTrackList = binding.favTrackList
         favArtistList = binding.favArtistList
+        suggestTrackList = binding.suggestedList
 
         genreArrayList = ArrayList()
         songArrayList = ArrayList()
         favTrackArrayList = ArrayList()
         artistArrayList = ArrayList()
+        suggestedArrayList = ArrayList()
         artistListAdapter = ArtistListAdapter(requireActivity(), artistArrayList)
         favTrackListAdapter = TrackListAdapter(requireActivity(), favTrackArrayList)
         songListAdapter = SongListAdapter(requireActivity(), songArrayList)
         genreListAdapter = GenreListAdapter(requireActivity(), genreArrayList)
+        suggestedListAdapter = TrackListAdapter(requireActivity(),suggestedArrayList)
         favArtistList.adapter = artistListAdapter
         favTrackList.adapter = favTrackListAdapter
         recentlyPlayedList.adapter = songListAdapter
         favGenreList.adapter = genreListAdapter
+        suggestTrackList.adapter = suggestedListAdapter
 
         myViewModel.username.observe(viewLifecycleOwner) {
             //(activity as AppCompatActivity?)!!.supportActionBar!!.title = it //top action bar
@@ -191,7 +198,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
                 favArtistList.adapter = emptyListAdapter
                 emptyListAdapter.replace(arrayListOf("None Found"))
                 emptyListAdapter.notifyDataSetChanged()
-                setListViewHeightBasedOnChildren(favTrackList)
+                setListViewHeightBasedOnChildren(favArtistList)
             }else{
                 artistListAdapter.replace(it)
                 artistListAdapter.notifyDataSetChanged()
@@ -212,6 +219,21 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
                 favTrackListAdapter.notifyDataSetChanged()
                 favTrackArrayList = it as ArrayList<Track>
                 setListViewHeightBasedOnChildren(favTrackList)
+            }
+        }
+
+        myViewModel.suggested.observe(viewLifecycleOwner) {
+            if(it.isEmpty()){
+                val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList<String>())
+                suggestTrackList.adapter = emptyListAdapter
+                emptyListAdapter.replace(arrayListOf("None Found"))
+                emptyListAdapter.notifyDataSetChanged()
+                setListViewHeightBasedOnChildren(suggestTrackList)
+            }else{
+                suggestedListAdapter.replace(it)
+                suggestedListAdapter.notifyDataSetChanged()
+                suggestedArrayList = it as ArrayList<Track>
+                setListViewHeightBasedOnChildren(suggestTrackList)
             }
         }
 
@@ -255,6 +277,13 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
                     startActivity(intent)
                 }
             }
+            suggestTrackList.id -> {
+                if (suggestedArrayList.isNotEmpty()){
+                    val hyperlink = suggestedArrayList[p2].externalUrls.spotify
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
+                    startActivity(intent)
+                }
+            }
         }
 
     }
@@ -291,6 +320,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         binding.recentlyPlayedOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().recentlyPlayedVisibilityKey, true)
         binding.favoriteTracksOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteTracksVisibilityKey, true)
         binding.favoriteArtistsOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteArtistsVisibilityKey, true)
+        binding.suggestedOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().suggestedVisibilityKey, true)
         binding.favoriteGenresOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteGenresVisibilityKey, true)
         binding.recentlyPlayedInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().recentlyPlayedCollapseKey, true)
         binding.suggestedInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().suggestedCollapseKey, true)
