@@ -182,6 +182,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun openDialog(){
         val dialog = LoadingDialog()
+        dialog.isCancelable = false
         dialog.show(supportFragmentManager, "tag")
 
     }

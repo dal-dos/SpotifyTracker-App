@@ -71,7 +71,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loginAttempt(){
         val builder = AuthorizationRequest.Builder(CLIENT_ID, AuthorizationResponse.Type.TOKEN, REDIRECT_URI)
-
         builder.setScopes(scopes)
         val request : AuthorizationRequest = builder.build()
         AuthorizationClient.openLoginActivity(this, REQUEST_CODE, request)
