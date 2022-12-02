@@ -25,4 +25,5 @@
     <string name="tracker">Tracker</string>
     <string name="playlists">Playlists</string>
     <string name="play_time_past_week">Play time past week</string>
+    <string name="title_activity_weather_api_handler">WeatherApiHandler</string>
 </resources>

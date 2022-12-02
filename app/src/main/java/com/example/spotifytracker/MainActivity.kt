@@ -34,6 +34,7 @@ import com.example.spotifytracker.databinding.ActivityMainBinding
 import com.example.spotifytracker.login.LoginActivity
 import com.example.spotifytracker.settings.SettingsActivity
 import com.example.spotifytracker.ui.LoadingDialog
+import com.example.spotifytracker.ui.Weather.WeatherApiHandler
 import com.example.spotifytracker.ui.home.HomeViewModel
 import com.example.spotifytracker.ui.home.HomeViewModelFactory
 import com.github.mikephil.charting.animation.Easing
@@ -54,7 +55,10 @@ class MainActivity : AppCompatActivity() {
     private val CLIENT_ID = "9609905ad0f54f66b8d574d367aee504"
     private val REDIRECT_URI = "com.example.spotifytracker://callback"
     private var mSpotifyAppRemote: SpotifyAppRemote? = null
+
     private lateinit var apiHandler: SpotifyApiHandler
+    private lateinit var weatherApiHandler: WeatherApiHandler
+
     private var username = ""
     private var recentlyPlayed : List<PlayHistory> = arrayListOf()
     private var suggested : List<Track> = arrayListOf()
@@ -210,8 +214,12 @@ class MainActivity : AppCompatActivity() {
         val token: Token = Token(accessToken!!, type!!, expires)
         try {
             apiHandler = SpotifyApiHandler(token, sharedSettings)
+
+            weatherApiHandler = WeatherApiHandler()
+
             lifecycleScope.launch() {
                 apiHandler.buildSearchApi()
+                weatherApiHandler
                 username = apiHandler.userName().toString()
                 recentlyPlayed = apiHandler.userRecentlyPlayed()
                 suggested = apiHandler.userSuggested()
@@ -220,6 +228,7 @@ class MainActivity : AppCompatActivity() {
                 favoriteTracks = apiHandler.userTopTracks()
                 insertDB(username, recentlyPlayed, suggested, favoriteGenre, favoriteArtist, favoriteTracks)
             }
+
         }catch (e: Exception){
             println(e)
         }
