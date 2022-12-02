@@ -5,6 +5,7 @@ package com.example.spotifytracker
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.*
 import android.widget.*
@@ -176,7 +177,9 @@ class MainActivity : AppCompatActivity() {
     }*/
 
     private fun openDialog(apiBuilderLoad: Job) {
-        val dialog = LoadingDialog(apiBuilderLoad)
+        val myOrientation = requestedOrientation
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_NOSENSOR
+        val dialog = LoadingDialog(apiBuilderLoad,this,myOrientation)
         dialog.isCancelable = false
         dialog.show(supportFragmentManager, "tag")
     }
