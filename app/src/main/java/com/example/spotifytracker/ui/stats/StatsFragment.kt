@@ -17,10 +17,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.adamratzman.spotify.models.Artist
 import com.example.spotifytracker.MainActivity
 import com.example.spotifytracker.R
+import com.example.spotifytracker.database.SpotifyDataDao
+import com.example.spotifytracker.database.SpotifyDataRepository
+import com.example.spotifytracker.database.SpotifyDatabase
 import com.example.spotifytracker.settings.SettingsActivity
 import com.example.spotifytracker.databinding.FragmentStatsBinding
+import com.example.spotifytracker.ui.home.HomeViewModel
+import com.example.spotifytracker.ui.home.HomeViewModelFactory
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -46,14 +52,24 @@ class StatsFragment : Fragment() {
     var pc: PieChart? = null
     private lateinit var sharedSettings: SharedPreferences
     private lateinit var myActivity : MainActivity
-    private lateinit var myViewModel : StatsViewModel
     private var switchingView: Boolean = true
+    //database stuff(expletive)
+    private lateinit var spotifyDatabase: SpotifyDatabase
+    private lateinit var spotifyDataDao: SpotifyDataDao
+    private lateinit var repo: SpotifyDataRepository
+    private lateinit var viewModelFactory: HomeViewModelFactory
+    private lateinit var myViewModel: HomeViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        myViewModel = ViewModelProvider(this)[StatsViewModel::class.java]
+        spotifyDatabase = SpotifyDatabase.getInstance(requireActivity())
+        spotifyDataDao = spotifyDatabase.spotifyDataDao
+        repo = SpotifyDataRepository(spotifyDataDao)
+        viewModelFactory = HomeViewModelFactory(repo)
+        myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
         _binding = FragmentStatsBinding.inflate(inflater, container, false)
         val root: View = binding.root
         myActivity = requireActivity() as MainActivity
@@ -67,7 +83,8 @@ class StatsFragment : Fragment() {
 
         collapseAnimationInit()
         statsObservers()
-        makePopularityPieChart()
+        //    makePopularityPieChart()
+
         setChart()
         //scrollOnChangeListener()
         applySettings()
@@ -76,9 +93,17 @@ class StatsFragment : Fragment() {
     }
 
     private fun statsObservers() {
-        myViewModel.text.observe(viewLifecycleOwner) {
-             //
+
+        myViewModel.favStatArtist.observe(viewLifecycleOwner) {
+            makePopularityPieChart(it)
         }
+
+//        myViewModel.favStatTrack.observe(viewLifecycleOwner) {
+//             for(i in it.indices) {
+//                trackArrayList.add(it.get(i))
+//            }
+//        }
+
     }
 
     private fun collapseAnimationInit() {
@@ -87,48 +112,33 @@ class StatsFragment : Fragment() {
         TransitionManager.beginDelayedTransition(layout, AutoTransition())
     }
 
-    private fun makePopularityPieChart() {
-
-        artist1 = binding.artist1Text
-        artist2 = binding.artist2Text
-        artist3 = binding.artist3Text
-        artist4 = binding.artist4Text
-        artist4 = binding.artist5Text
+    private fun makePopularityPieChart(arrayList : List<Artist>) {
         pc = binding.popularityPieChart
+        pc?.clearChart()
+        var colors : ArrayList<String> = arrayListOf("#FFA726", "#66BB6A", "#EF5350","#29B6F6", "#FF6200EE")
+        var artists : ArrayList<TextView> = arrayListOf()
+        var artistViews : ArrayList<View> = arrayListOf(binding.artistColorView1,binding.artistColorView2,binding.artistColorView3,binding.artistColorView4,binding.artistColorView5)
+        artists.add(binding.artist1Text)
+        artists.add(binding.artist2Text)
+        artists.add(binding.artist3Text)
+        artists.add(binding.artist4Text)
+        artists.add(binding.artist5Text)
 
-        var randomInt1 : Float = 40.0F
-        var randomInt2 : Float = 40.0F
-        var randomInt3 : Float = 40.0F
-        var randomInt4 : Float = 40.0F
-        var randomInt5 : Float = 40.0F
+
+        artists.map { it.isVisible = false }
+        artistViews.map { it.isVisible = false}
+        for (i in arrayList.indices) {
+            artists[i].text = arrayList[i].name
+            artists[i].isVisible = true
+            artistViews[i].isVisible = true
+            pc!!.addPieSlice(
+                PieModel(
+                    arrayList[i].name,
+                    arrayList[i].popularity.toFloat(),
+                    Color.parseColor(colors[i])))
+        }
 
         pc!!.innerPaddingColor = Color.parseColor("#2E6943")
-
-        pc!!.addPieSlice(
-            PieModel(
-                "Artist1",
-                randomInt1,
-                Color.parseColor("#FFA726")))
-        pc!!.addPieSlice(
-            PieModel(
-                "Artist2",
-                randomInt2,
-                Color.parseColor("#66BB6A")))
-        pc!!.addPieSlice(
-            PieModel(
-                "Artist3",
-                randomInt3,
-                Color.parseColor("#EF5350")))
-        pc!!.addPieSlice(
-            PieModel(
-                "Artist4",
-                randomInt4,
-                Color.parseColor("#29B6F6")))
-        pc!!.addPieSlice(
-            PieModel(
-                "Artist5",
-                randomInt5,
-                Color.parseColor("#29B6F6")))
 
         pc!!.startAnimation();
 
@@ -206,12 +216,10 @@ class StatsFragment : Fragment() {
             }
         }
     }
-
     override fun onResume() {
         super.onResume()
         switchingView = true
     }
-
     override fun onPause() {
         super.onPause()
         switchingView = false

@@ -189,6 +189,7 @@
                         android:layout_gravity="center_vertical">
 
                         <View
+                            android:id="@+id/artistColorView1"
                             android:layout_width="15dp"
                             android:layout_height="match_parent"
                             android:background="@color/Artist1"
@@ -213,6 +214,7 @@
                             android:layout_width="15dp"
                             android:layout_height="match_parent"
                             android:background="@color/Artist2"
+                            android:id="@+id/artistColorView2"
                             />
 
                         <TextView
@@ -234,7 +236,9 @@
                         <View
                             android:layout_width="15dp"
                             android:layout_height="match_parent"
-                            android:background="@color/Artist3"/>
+                            android:background="@color/Artist3"
+                            android:id="@+id/artistColorView3"
+                            />
 
                         <!--Text view to display C++ text -->
                         <TextView
@@ -256,7 +260,9 @@
                         <View
                             android:layout_width="15dp"
                             android:layout_height="match_parent"
-                            android:background="@color/Artist4"/>
+                            android:background="@color/Artist4"
+                            android:id="@+id/artistColorView4"
+                            />
 
                         <!--Text view to display Java text -->
                         <TextView
@@ -277,7 +283,9 @@
                         <View
                             android:layout_width="15dp"
                             android:layout_height="match_parent"
-                            android:background="@color/Artist5"/>
+                            android:background="@color/Artist5"
+                            android:id="@+id/artistColorView5"
+                            />
 
                         <TextView
                             android:layout_width="wrap_content"
