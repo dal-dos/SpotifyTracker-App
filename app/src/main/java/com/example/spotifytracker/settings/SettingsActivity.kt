@@ -33,12 +33,14 @@ class SettingsActivity : AppCompatActivity() {
         const val hoursPlayedWeekCollapseKey = "hours_played_week_collapse_key"
         const val popularityPieChartCollapseKey = "popularity_pie_chart_collapse"
 
-        const val favoriteTracksTimeRange = "favorite_tracks_time_range"
-        const val favoriteArtistsTimeRange ="favorite_artists_time_range"
-        const val favoriteGenresTimeRange ="favorite_genres_time_range"
+        const val favoriteTracksTimeRangeKey = "favorite_tracks_time_range"
+        const val favoriteArtistsTimeRangeKey ="favorite_artists_time_range"
+        const val favoriteGenresTimeRangeKey ="favorite_genres_time_range"
 
-        const val recentlyPlayedBefore = "recently_played_before"
-        const val recentlyPlayedAfter = "recently_played_after"
+        const val recentlyPlayedBeforeKey = "recently_played_before"
+        const val recentlyPlayedAfterKey = "recently_played_after"
+        const val logoutKey = "logout"
+        const val resetKey = "reset"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,10 +1,12 @@
 package com.example.spotifytracker.settings
 
 import android.app.DatePickerDialog
-import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.icu.util.Calendar
 import android.os.Bundle
+import android.os.Message
 import android.view.View
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.preference.Preference
@@ -14,9 +16,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifytracker.R
 import com.example.spotifytracker.login.LoginActivity
 import com.spotify.sdk.android.auth.AuthorizationClient
-import java.util.*
+
 
 class SettingsFragment: PreferenceFragmentCompat() {
+
+    companion object {
+
+    }
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
     }
@@ -29,22 +36,22 @@ class SettingsFragment: PreferenceFragmentCompat() {
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
-            "recently_played_before" -> {
+            SettingsActivity.recentlyPlayedBeforeKey -> {
                 //do something
                 //date dialog
-                showDateDialog("recently_played_before")
+                showDateDialog(SettingsActivity.recentlyPlayedBeforeKey)
             }
-            "recently_played_after" -> {
+            SettingsActivity.recentlyPlayedAfterKey -> {
                 //do something
                 //date dialog
-                showDateDialog("recently_played_after")
+                showDateDialog(SettingsActivity.recentlyPlayedAfterKey)
             }
-            "logout" -> {
+            SettingsActivity.logoutKey -> {
                 AuthorizationClient.clearCookies(requireActivity())
                 val intent : Intent = Intent(requireActivity(), LoginActivity::class.java)
                 val bundle: Bundle = Bundle()
-                bundle.putString("Temporary", "Key")
-                intent.putExtras(bundle)
+                //bundle.putString("Temporary", "Key")
+                //intent.putExtras(bundle)
                 val mySharedPreferences = requireActivity().getSharedPreferences(LoginActivity().spotifyKey, 0)
                 val sharedSettings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity())
                 mySharedPreferences.edit().clear().apply()
@@ -52,7 +59,7 @@ class SettingsFragment: PreferenceFragmentCompat() {
                 startActivity(intent)
                 finishAffinity(requireActivity())
             }
-            "reset" -> {
+            SettingsActivity.resetKey -> {
                 val sharedSettings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity())
                 sharedSettings.edit().clear().apply()
                 requireActivity().onBackPressed()
@@ -63,30 +70,51 @@ class SettingsFragment: PreferenceFragmentCompat() {
 
     private fun showDateDialog(timeContext: String){
         val calendar = Calendar.getInstance()
+        val sharedSettings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity())
+        val initDate = Calendar.getInstance()
+        initDate.timeInMillis = sharedSettings.getString(timeContext, Calendar.getInstance().timeInMillis.toString())?.toLong()!!
+
         val datePickerDialog: DatePickerDialog = DatePickerDialog(requireActivity(), DatePickerDialog.OnDateSetListener{ view2, year, month, day ->
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, day)
 
-            val sharedSettings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity())
+
             val editor = sharedSettings.edit()
-            if (timeContext == SettingsActivity.recentlyPlayedBefore){
-                val afterPreference = findPreference<Preference>(SettingsActivity.recentlyPlayedAfter)
+            if (timeContext == SettingsActivity.recentlyPlayedBeforeKey){
+                val afterPreference = findPreference<Preference>(SettingsActivity.recentlyPlayedAfterKey)
                 afterPreference?.shouldDisableView = true
                 afterPreference?.isEnabled = false
-                editor.remove(SettingsActivity.recentlyPlayedAfter)
+                editor.remove(SettingsActivity.recentlyPlayedAfterKey)
             } else {
-                val beforePreference = findPreference<Preference>(SettingsActivity.recentlyPlayedBefore)
+                val beforePreference = findPreference<Preference>(SettingsActivity.recentlyPlayedBeforeKey)
                 beforePreference?.shouldDisableView = true
                 beforePreference?.isEnabled = false
-                editor.remove(SettingsActivity.recentlyPlayedBefore)
+                editor.remove(SettingsActivity.recentlyPlayedBeforeKey)
             }
 
             editor.putString(timeContext, calendar.timeInMillis.toString())
             editor.apply()
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
+        }, initDate.get(Calendar.YEAR), initDate.get(Calendar.MONTH), initDate.get(Calendar.DAY_OF_MONTH))
+
+        datePickerDialog.datePicker.maxDate = Calendar.getInstance().timeInMillis
+
+        datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, "RESET", DialogInterface.OnClickListener() { dialogInterface: DialogInterface, i: Int ->
+            val editor = sharedSettings.edit()
+            val afterPreference = findPreference<Preference>(SettingsActivity.recentlyPlayedAfterKey)
+            afterPreference?.shouldDisableView = false
+            afterPreference?.isEnabled = true
+            val beforePreference = findPreference<Preference>(SettingsActivity.recentlyPlayedBeforeKey)
+            beforePreference?.shouldDisableView = false
+            beforePreference?.isEnabled = true
+            editor.remove(SettingsActivity.recentlyPlayedBeforeKey)
+            editor.remove(SettingsActivity.recentlyPlayedAfterKey)
+            editor.apply()
+        })
+
         datePickerDialog.show()
     }
+
 
 
 }

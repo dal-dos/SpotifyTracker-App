@@ -74,7 +74,7 @@ class SpotifyApiHandler(val token: Token, private val sharedSettings: SharedPref
         if (itemsToShow == 0){
             itemsToShow = 1
         }
-        val myTimeRange = sharedSettings.getString(SettingsActivity.favoriteTracksTimeRange, "2")?.toInt()
+        val myTimeRange = sharedSettings.getString(SettingsActivity.favoriteTracksTimeRangeKey, "2")?.toInt()
         if(api!!.spotifyApiOptions.enableDebugMode) {
             print("DEBUG MODE: APP: userTopTracks(): ")
             println("debug: " + api!!.personalization.getTopTracks(limit = itemsToShow, timeRange = time[myTimeRange!!]).items.map { it.name })
@@ -87,7 +87,7 @@ class SpotifyApiHandler(val token: Token, private val sharedSettings: SharedPref
         if (itemsToShow == 0){
             itemsToShow = 1
         }
-        val myTimeRange = sharedSettings.getString(SettingsActivity.favoriteArtistsTimeRange, "2")?.toInt()
+        val myTimeRange = sharedSettings.getString(SettingsActivity.favoriteArtistsTimeRangeKey, "2")?.toInt()
         if(api!!.spotifyApiOptions.enableDebugMode) {
             print("DEBUG MODE: APP: userTopArtists(): " + myTimeRange)
             println("debug: " + api!!.personalization.getTopArtists(limit = itemsToShow, timeRange = time[myTimeRange!!]).items)
@@ -101,7 +101,7 @@ class SpotifyApiHandler(val token: Token, private val sharedSettings: SharedPref
         if (itemsToShow == 0){
             itemsToShow = 1
         }
-        val myTimeRange = sharedSettings.getString(SettingsActivity.favoriteGenresTimeRange, "2")?.toInt()
+        val myTimeRange = sharedSettings.getString(SettingsActivity.favoriteGenresTimeRangeKey, "2")?.toInt()
         if(api!!.spotifyApiOptions.enableDebugMode) {
             print("DEBUG MODE: APP: userTopGenres(): ")
             println("debug: " + api!!.personalization.getTopArtists(limit = itemsToShow, timeRange = time[myTimeRange!!]).items.map { it.genres})
@@ -126,8 +126,8 @@ class SpotifyApiHandler(val token: Token, private val sharedSettings: SharedPref
         if (itemsToShow == 0){
             itemsToShow = 1
         }
-        val beforeDate =  sharedSettings.getString(SettingsActivity.recentlyPlayedBefore, null)
-        val afterDate = sharedSettings.getString(SettingsActivity.recentlyPlayedAfter,null)
+        val beforeDate =  sharedSettings.getString(SettingsActivity.recentlyPlayedBeforeKey, null)
+        val afterDate = sharedSettings.getString(SettingsActivity.recentlyPlayedAfterKey,null)
         if(api!!.spotifyApiOptions.enableDebugMode){
             print("DEBUG MODE: APP: userRecentlyPlayed(): ")
             println("debug: " + api!!.player.getRecentlyPlayed(limit = itemsToShow, before = beforeDate, after = afterDate).items)
