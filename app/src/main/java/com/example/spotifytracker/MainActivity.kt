@@ -251,7 +251,7 @@ class MainActivity : AppCompatActivity() {
         cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
-        editor.putBoolean(SettingsActivity().recentlyPlayedCollapseKey,bool)
+        editor.putBoolean(SettingsActivity.recentlyPlayedCollapseKey,bool)
         editor.apply()
     }
 
@@ -263,7 +263,7 @@ class MainActivity : AppCompatActivity() {
         cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
-        editor.putBoolean(SettingsActivity().suggestedCollapseKey,bool)
+        editor.putBoolean(SettingsActivity.suggestedCollapseKey,bool)
         editor.apply()
     }
 
@@ -275,7 +275,7 @@ class MainActivity : AppCompatActivity() {
         cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
-        editor.putBoolean(SettingsActivity().favoriteTracksCollapseKey,bool)
+        editor.putBoolean(SettingsActivity.favoriteTracksCollapseKey,bool)
         editor.apply()
     }
 
@@ -287,7 +287,7 @@ class MainActivity : AppCompatActivity() {
         cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
-        editor.putBoolean(SettingsActivity().favoriteArtistsCollapseKey,bool)
+        editor.putBoolean(SettingsActivity.favoriteArtistsCollapseKey,bool)
         editor.apply()
     }
 
@@ -299,7 +299,7 @@ class MainActivity : AppCompatActivity() {
         cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
-        editor.putBoolean(SettingsActivity().favoriteGenresCollapseKey,bool)
+        editor.putBoolean(SettingsActivity.favoriteGenresCollapseKey,bool)
         editor.apply()
     }
 
@@ -315,7 +315,7 @@ class MainActivity : AppCompatActivity() {
         cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
-        editor.putBoolean(SettingsActivity().popularityPieChartCollapseKey,bool)
+        editor.putBoolean(SettingsActivity.popularityPieChartCollapseKey,bool)
         editor.apply()
     }
 
@@ -331,7 +331,7 @@ class MainActivity : AppCompatActivity() {
         cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
         val editor = sharedSettings.edit()
-        editor.putBoolean(SettingsActivity().hoursPlayedWeekCollapseKey,bool)
+        editor.putBoolean(SettingsActivity.hoursPlayedWeekCollapseKey,bool)
         editor.apply()
     }
 

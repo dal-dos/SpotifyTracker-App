@@ -189,10 +189,10 @@ class StatsFragment : Fragment() {
     }
 
     private fun applySettings(){
-        binding.hoursPlayedWeekOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().hoursPlayedWeekVisibilityKey, true)
-        binding.popularityPieChartOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().popularityPieChartVisibilityKey, true)
-        binding.popularityPieChartInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().popularityPieChartCollapseKey, true)
-        binding.hoursPlayedWeekInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().hoursPlayedWeekCollapseKey, true)
+        binding.hoursPlayedWeekOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.hoursPlayedWeekVisibilityKey, true)
+        binding.popularityPieChartOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.popularityPieChartVisibilityKey, true)
+        binding.popularityPieChartInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.popularityPieChartCollapseKey, true)
+        binding.hoursPlayedWeekInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.hoursPlayedWeekCollapseKey, true)
 
         MainActivity().changeArrow(binding.popularityPieChartArrow, binding.popularityPieChartInnerCardview.isVisible)
         MainActivity().changeArrow(binding.hoursPlayedWeekArrow, binding.hoursPlayedWeekInnerCardview.isVisible)

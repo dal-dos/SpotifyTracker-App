@@ -330,17 +330,17 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
 
     private fun applySettings(){
-        binding.recentlyPlayedOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().hoursPlayedWeekVisibilityKey, true)
-        binding.favoriteTracksOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteTracksVisibilityKey, true)
-        binding.favoriteArtistsOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteArtistsVisibilityKey, true)
-        binding.suggestedOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().suggestedVisibilityKey, true)
-        binding.favoriteGenresOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteGenresVisibilityKey, true)
+        binding.recentlyPlayedOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.hoursPlayedWeekVisibilityKey, true)
+        binding.favoriteTracksOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.favoriteTracksVisibilityKey, true)
+        binding.favoriteArtistsOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.favoriteArtistsVisibilityKey, true)
+        binding.suggestedOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.suggestedVisibilityKey, true)
+        binding.favoriteGenresOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.favoriteGenresVisibilityKey, true)
 
-        binding.recentlyPlayedInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().recentlyPlayedCollapseKey, true)
-        binding.suggestedInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().suggestedCollapseKey, true)
-        binding.favoriteTracksInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteTracksCollapseKey, true)
-        binding.favoriteArtistsInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteArtistsCollapseKey, true)
-        binding.favoriteGenresInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteGenresCollapseKey, true)
+        binding.recentlyPlayedInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.recentlyPlayedCollapseKey, true)
+        binding.suggestedInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.suggestedCollapseKey, true)
+        binding.favoriteTracksInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.favoriteTracksCollapseKey, true)
+        binding.favoriteArtistsInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.favoriteArtistsCollapseKey, true)
+        binding.favoriteGenresInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.favoriteGenresCollapseKey, true)
 
         MainActivity().changeArrow(binding.favArtistArrow, binding.favoriteArtistsInnerCardview.isVisible)
         MainActivity().changeArrow(binding.favGenreArrow,binding.favoriteGenresInnerCardview.isVisible)

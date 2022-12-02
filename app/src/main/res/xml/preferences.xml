@@ -193,6 +193,16 @@
             app:allowDividerBelow="true"
             >
         </Preference>
+
+        <Preference
+            android:key="reset"
+            android:title="Reset Settings"
+            android:summary="Make all settings go back to default"
+            app:iconSpaceReserved="true"
+            app:icon="@drawable/ic_baseline_refresh_24"
+            app:allowDividerBelow="true"
+            >
+        </Preference>
     </PreferenceCategory>
 
 </PreferenceScreen>

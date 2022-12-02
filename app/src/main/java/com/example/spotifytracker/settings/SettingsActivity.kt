@@ -10,31 +10,36 @@ import com.example.spotifytracker.MainActivity
 import com.example.spotifytracker.R
 
 class SettingsActivity : AppCompatActivity() {
-    val recentlyPlayedNumberOfItemsKey = "recently_played_number_of_items"
-    val favoriteTracksNumberOfItemsKey = "favorite_tracks_number_of_items"
-    val favoriteArtistsNumberOfItemsKey = "favorite_artists_number_of_items"
-    val favoriteGenresNumberOfItemsKey = "favorite_genres_number_of_items"
-    val suggestedNumberOfItemsKey = "suggested_number_of_items"
+    companion object{
+        const val recentlyPlayedNumberOfItemsKey = "recently_played_number_of_items"
+        const val favoriteTracksNumberOfItemsKey = "favorite_tracks_number_of_items"
+        const val favoriteArtistsNumberOfItemsKey = "favorite_artists_number_of_items"
+        const val favoriteGenresNumberOfItemsKey = "favorite_genres_number_of_items"
+        const val suggestedNumberOfItemsKey = "suggested_number_of_items"
 
-    val recentlyPlayedVisibilityKey = "recently_played_visibility"
-    val favoriteTracksVisibilityKey = "favorite_tracks_visibility"
-    val favoriteArtistsVisibilityKey = "favorite_artists_visibility"
-    val favoriteGenresVisibilityKey = "favorite_genres_visibility"
-    val suggestedVisibilityKey = "suggested_visibility"
-    val hoursPlayedWeekVisibilityKey = "hours_played_week_visibility"
-    val popularityPieChartVisibilityKey = "popularity_pie_chart_visibility"
+        const val recentlyPlayedVisibilityKey = "recently_played_visibility"
+        const val favoriteTracksVisibilityKey = "favorite_tracks_visibility"
+        const val favoriteArtistsVisibilityKey = "favorite_artists_visibility"
+        const val favoriteGenresVisibilityKey = "favorite_genres_visibility"
+        const val suggestedVisibilityKey = "suggested_visibility"
+        const val hoursPlayedWeekVisibilityKey = "hours_played_week_visibility"
+        const val popularityPieChartVisibilityKey = "popularity_pie_chart_visibility"
 
-    val recentlyPlayedCollapseKey = "recently_played_collapse"
-    val suggestedCollapseKey = "suggested_collapse"
-    val favoriteTracksCollapseKey = "favorite_tracks_collapse"
-    val favoriteArtistsCollapseKey = "favorite_artists_collapse"
-    val favoriteGenresCollapseKey = "favorite_genres_collapse"
-    val hoursPlayedWeekCollapseKey = "hours_played_week_collapse_key"
-    val popularityPieChartCollapseKey = "popularity_pie_chart_collapse"
+        const val recentlyPlayedCollapseKey = "recently_played_collapse"
+        const val suggestedCollapseKey = "suggested_collapse"
+        const val favoriteTracksCollapseKey = "favorite_tracks_collapse"
+        const val favoriteArtistsCollapseKey = "favorite_artists_collapse"
+        const val favoriteGenresCollapseKey = "favorite_genres_collapse"
+        const val hoursPlayedWeekCollapseKey = "hours_played_week_collapse_key"
+        const val popularityPieChartCollapseKey = "popularity_pie_chart_collapse"
 
-    val favoriteTracksTimeRange = "favorite_tracks_time_range"
-    val favoriteArtistsTimeRange ="favorite_artists_time_range"
-    val favoriteGenresTimeRange ="favorite_genres_time_range"
+        const val favoriteTracksTimeRange = "favorite_tracks_time_range"
+        const val favoriteArtistsTimeRange ="favorite_artists_time_range"
+        const val favoriteGenresTimeRange ="favorite_genres_time_range"
+
+        const val recentlyPlayedBefore = "recently_played_before"
+        const val recentlyPlayedAfter = "recently_played_after"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
