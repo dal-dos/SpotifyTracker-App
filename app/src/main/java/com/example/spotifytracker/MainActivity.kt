@@ -2,10 +2,6 @@ package com.example.spotifytracker
 
 // Spotify API
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.ValueAnimator
-import android.animation.ValueAnimator.AnimatorUpdateListener
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
@@ -36,13 +32,12 @@ import com.example.spotifytracker.settings.SettingsActivity
 import com.example.spotifytracker.ui.LoadingDialog
 import com.example.spotifytracker.ui.home.HomeViewModel
 import com.example.spotifytracker.ui.home.HomeViewModelFactory
-import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.spotify.android.appremote.api.SpotifyAppRemote
 
 import com.spotify.sdk.android.auth.AuthorizationClient
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.eazegraph.lib.charts.PieChart
 
@@ -180,11 +175,10 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }*/
 
-    private fun openDialog(){
-        val dialog = LoadingDialog()
+    private fun openDialog(apiBuilderLoad: Job) {
+        val dialog = LoadingDialog(apiBuilderLoad)
         dialog.isCancelable = false
         dialog.show(supportFragmentManager, "tag")
-
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -202,7 +196,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun apiBuilder(){
-        openDialog()
         val mySharedPreferences = applicationContext.getSharedPreferences("SPOTIFY", 0)
         val accessToken = mySharedPreferences.getString("token", "")
         val type = mySharedPreferences.getString("type", "")
@@ -210,7 +203,7 @@ class MainActivity : AppCompatActivity() {
         val token: Token = Token(accessToken!!, type!!, expires)
         try {
             apiHandler = SpotifyApiHandler(token, sharedSettings)
-            lifecycleScope.launch() {
+            val apiBuilderLoad = lifecycleScope.launch() {
                 apiHandler.buildSearchApi()
                 username = apiHandler.userName().toString()
                 recentlyPlayed = apiHandler.userRecentlyPlayed()
@@ -220,6 +213,7 @@ class MainActivity : AppCompatActivity() {
                 favoriteTracks = apiHandler.userTopTracks()
                 insertDB(username, recentlyPlayed, suggested, favoriteGenre, favoriteArtist, favoriteTracks)
             }
+            openDialog(apiBuilderLoad)
         }catch (e: Exception){
             println(e)
         }

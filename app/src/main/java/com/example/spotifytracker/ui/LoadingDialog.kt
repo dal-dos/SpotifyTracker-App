@@ -5,12 +5,10 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.example.spotifytracker.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
-class LoadingDialog: DialogFragment()  {
+class LoadingDialog(apiBuilderLoad: Job) : DialogFragment()  {
+    private val apiBuilderLoad = apiBuilderLoad
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireActivity())
         val view = requireActivity().layoutInflater.inflate(R.layout.loading_screen, null)
@@ -18,7 +16,9 @@ class LoadingDialog: DialogFragment()  {
         val dialog = builder.create()
         dialog.setOnShowListener {
             CoroutineScope(Dispatchers.Default).launch {
-                delay(2000)
+                while(apiBuilderLoad.isActive){
+                    //nothing
+                }
                 dialog.dismiss()
             }
         }
