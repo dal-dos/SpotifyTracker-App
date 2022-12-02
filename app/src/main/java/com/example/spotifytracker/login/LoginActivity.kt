@@ -23,6 +23,10 @@ import com.spotify.sdk.android.auth.AuthorizationResponse
 
 @Suppress("RedundantExplicitType")
 class LoginActivity : AppCompatActivity() {
+    val tokenKey = "token"
+    val typeKey = "type"
+    val expiresKey = "expires"
+    val spotifyKey = "SPOTIFY"
     private val KEY: String = "KEY"
     private val REQUEST_CODE = 1337
     private val CLIENT_ID = "9609905ad0f54f66b8d574d367aee504"
@@ -53,9 +57,9 @@ class LoginActivity : AppCompatActivity() {
         myViewModel = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
         supportActionBar?.hide()
 
-        mySharedPreferences = applicationContext.getSharedPreferences("SPOTIFY", 0)
-        println("debug: shared preferences string is: " + mySharedPreferences.getString("token", null))
-        if (mySharedPreferences.getString("token", null) != null){
+        mySharedPreferences = applicationContext.getSharedPreferences(spotifyKey, 0)
+        println("debug: shared preferences string is: " + mySharedPreferences.getString(tokenKey, null))
+        if (mySharedPreferences.getString(tokenKey, null) != null){
             loginButton.isVisible = false
             loginAttempt()
             //loginSucceeded()
@@ -101,9 +105,9 @@ class LoginActivity : AppCompatActivity() {
             when (response.type) {
                 AuthorizationResponse.Type.TOKEN -> {
                     val editor = mySharedPreferences.edit()
-                    editor.putString("token", response.accessToken)
-                    editor.putString("type", response.type.name)
-                    editor.putInt("expires", response.expiresIn)
+                    editor.putString(tokenKey, response.accessToken)
+                    editor.putString(typeKey, response.type.name)
+                    editor.putInt(expiresKey, response.expiresIn)
                     println("debug: Authentication succeeded with token ${response.accessToken}")
                     editor.apply()
                     loginSucceeded()}

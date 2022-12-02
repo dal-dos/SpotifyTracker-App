@@ -159,6 +159,28 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="Play time past week Chart"
+        app:iconSpaceReserved="false">
+        <SwitchPreference
+            android:key="hours_played_week_visibility"
+            android:title="Show"
+            android:summary="Show/Hide Chart"
+            app:iconSpaceReserved="false"
+            android:defaultValue="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Popularity Pie Chart"
+        app:iconSpaceReserved="false">
+        <SwitchPreference
+            android:key="popularity_pie_chart_visibility"
+            android:title="Show"
+            android:summary="Show/Hide Chart"
+            app:iconSpaceReserved="false"
+            android:defaultValue="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="Other"
         app:iconSpaceReserved="false">
 

@@ -15,11 +15,15 @@ class SettingsActivity : AppCompatActivity() {
     val favoriteArtistsNumberOfItemsKey = "favorite_artists_number_of_items"
     val favoriteGenresNumberOfItemsKey = "favorite_genres_number_of_items"
     val suggestedNumberOfItemsKey = "suggested_number_of_items"
+
     val recentlyPlayedVisibilityKey = "recently_played_visibility"
     val favoriteTracksVisibilityKey = "favorite_tracks_visibility"
     val favoriteArtistsVisibilityKey = "favorite_artists_visibility"
     val favoriteGenresVisibilityKey = "favorite_genres_visibility"
     val suggestedVisibilityKey = "suggested_visibility"
+    val hoursPlayedWeekVisibilityKey = "hours_played_week_visibility"
+    val popularityPieChartVisibilityKey = "popularity_pie_chart_visibility"
+
     val recentlyPlayedCollapseKey = "recently_played_collapse"
     val suggestedCollapseKey = "suggested_collapse"
     val favoriteTracksCollapseKey = "favorite_tracks_collapse"
@@ -27,6 +31,7 @@ class SettingsActivity : AppCompatActivity() {
     val favoriteGenresCollapseKey = "favorite_genres_collapse"
     val hoursPlayedWeekCollapseKey = "hours_played_week_collapse_key"
     val popularityPieChartCollapseKey = "popularity_pie_chart_collapse"
+
     val favoriteTracksTimeRange = "favorite_tracks_time_range"
     val favoriteArtistsTimeRange ="favorite_artists_time_range"
     val favoriteGenresTimeRange ="favorite_genres_time_range"

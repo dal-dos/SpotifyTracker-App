@@ -35,14 +35,12 @@ class SettingsFragment: PreferenceFragmentCompat() {
                 //date dialog
             }
             "logout" -> {
-                //do something
-                //date dialog
                 AuthorizationClient.clearCookies(requireActivity())
                 val intent : Intent = Intent(requireActivity(), LoginActivity::class.java)
                 val bundle: Bundle = Bundle()
                 bundle.putString("Temporary", "Key")
                 intent.putExtras(bundle)
-                val mySharedPreferences = requireActivity().getSharedPreferences("SPOTIFY", 0)
+                val mySharedPreferences = requireActivity().getSharedPreferences(LoginActivity().spotifyKey, 0)
                 val sharedSettings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity())
                 mySharedPreferences.edit().clear().apply()
                 sharedSettings.edit().clear().apply()

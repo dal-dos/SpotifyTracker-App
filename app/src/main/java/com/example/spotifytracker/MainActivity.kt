@@ -16,7 +16,6 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import com.adamratzman.spotify.models.Artist
@@ -35,9 +34,6 @@ import com.example.spotifytracker.ui.home.HomeViewModel
 import com.example.spotifytracker.ui.home.HomeViewModelFactory
 import com.github.mikephil.charting.charts.LineChart
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.spotify.android.appremote.api.SpotifyAppRemote
-
-import com.spotify.sdk.android.auth.AuthorizationClient
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.eazegraph.lib.charts.PieChart
@@ -47,9 +43,6 @@ import org.eazegraph.lib.charts.PieChart
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val CLIENT_ID = "9609905ad0f54f66b8d574d367aee504"
-    private val REDIRECT_URI = "com.example.spotifytracker://callback"
-    private var mSpotifyAppRemote: SpotifyAppRemote? = null
     private lateinit var apiHandler: SpotifyApiHandler
     private var username = ""
     private var recentlyPlayed : List<PlayHistory> = arrayListOf()
@@ -85,11 +78,11 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
-            )
-        )
+        //        val appBarConfiguration = AppBarConfiguration(
+        //            setOf(
+        //                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+        //            )
+        //        )
         mToolbar = findViewById(R.id.toolbar)
 
         setSupportActionBar(findViewById(R.id.toolbar))
@@ -178,31 +171,31 @@ class MainActivity : AppCompatActivity() {
 
     private fun openDialog(apiBuilderLoad: Job) {
         val myOrientation = requestedOrientation
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_NOSENSOR
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
         val dialog = LoadingDialog(apiBuilderLoad,this,myOrientation)
         dialog.isCancelable = false
         dialog.show(supportFragmentManager, "tag")
     }
 
-    @Suppress("UNUSED_PARAMETER")
-    fun onClickLogout(view: View) {
-        AuthorizationClient.clearCookies(this)
-        val intent : Intent = Intent(this, LoginActivity::class.java)
-        val bundle: Bundle = Bundle()
-        bundle.putString("Temporary", "Key")
-        intent.putExtras(bundle)
-        val mySharedPreferences = applicationContext.getSharedPreferences("SPOTIFY", 0)
-        mySharedPreferences.edit().clear().apply()
-        sharedSettings.edit().clear().apply()
-        startActivity(intent)
-        finishAffinity()
-    }
+//    @Suppress("UNUSED_PARAMETER")
+//    fun onClickLogout(view: View) {
+//        AuthorizationClient.clearCookies(this)
+//        val intent : Intent = Intent(this, LoginActivity::class.java)
+//        val bundle: Bundle = Bundle()
+//        bundle.putString("Temporary", "Key")
+//        intent.putExtras(bundle)
+//        val mySharedPreferences = applicationContext.getSharedPreferences("SPOTIFY", 0)
+//        mySharedPreferences.edit().clear().apply()
+//        sharedSettings.edit().clear().apply()
+//        startActivity(intent)
+//        finishAffinity()
+//    }
 
     fun apiBuilder(){
-        val mySharedPreferences = applicationContext.getSharedPreferences("SPOTIFY", 0)
-        val accessToken = mySharedPreferences.getString("token", "")
-        val type = mySharedPreferences.getString("type", "")
-        val expires = mySharedPreferences.getInt("expires", 9999)
+        val mySharedPreferences = applicationContext.getSharedPreferences(LoginActivity().spotifyKey, 0)
+        val accessToken = mySharedPreferences.getString(LoginActivity().tokenKey, "")
+        val type = mySharedPreferences.getString(LoginActivity().typeKey, "")
+        val expires = mySharedPreferences.getInt(LoginActivity().expiresKey, 9999)
         val token: Token = Token(accessToken!!, type!!, expires)
         try {
             apiHandler = SpotifyApiHandler(token, sharedSettings)
@@ -220,14 +213,6 @@ class MainActivity : AppCompatActivity() {
         }catch (e: Exception){
             println(e)
         }
-    }
-
-    fun getRecentlyPlayed(): List<PlayHistory> {
-        return recentlyPlayed
-    }
-
-    fun getUsername(): String {
-        return username
     }
 
     @Suppress("UNUSED_VARIABLE","UNUSED_PARAMETER")
@@ -260,6 +245,7 @@ class MainActivity : AppCompatActivity() {
         navView.menu.findItem(R.id.navigation_home).title = username
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onClickCardViewRecentlyPlayed(view: View) {
         val cv = findViewById<CardView>(R.id.recently_played_inner_cardview)
         val arrow = findViewById<TextView>(R.id.recently_played_arrow)
@@ -271,6 +257,7 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onClickCardViewSuggested(view: View) {
         val cv = findViewById<CardView>(R.id.suggested_inner_cardview)
         val arrow = findViewById<TextView>(R.id.suggested_arrow)
@@ -282,6 +269,7 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onClickCardViewFavoriteTracks(view: View) {
         val cv = findViewById<CardView>(R.id.favorite_tracks_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_tracks_arrow)
@@ -293,6 +281,7 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onClickCardViewFavoriteArtists(view: View) {
         val cv = findViewById<CardView>(R.id.favorite_artists_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_artist_arrow)
@@ -304,6 +293,7 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onClickCardViewFavoriteGenres(view: View) {
         val cv = findViewById<CardView>(R.id.favorite_genres_inner_cardview)
         val arrow = findViewById<TextView>(R.id.fav_genre_arrow)
@@ -315,6 +305,7 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onClickCardViewPopularityPieChart(view: View) {
         val cv = findViewById<CardView>(R.id.popularity_pie_chart_inner_cardview)
         val arrow = findViewById<TextView>(R.id.popularity_pie_chart_arrow)
@@ -330,6 +321,7 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onClickCardViewHoursPlayedWeekChart(view: View) {
         val cv = findViewById<CardView>(R.id.hours_played_week_inner_cardview)
         val arrow = findViewById<TextView>(R.id.hours_played_week_arrow)
@@ -345,6 +337,33 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    @Suppress("UNUSED_PARAMETER")
+    fun onClickCardViewRecommendToday(view: View) {
+        val cv = findViewById<CardView>(R.id.recommmended_today_inner_cardview)
+        val arrow = findViewById<TextView>(R.id.rec_today_arrow)
+        val bool = !cv.isVisible
+        cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
+    }
+
+    @Suppress("UNUSED_PARAMETER")
+    fun onClickCardViewRecommendTomorrow(view: View) {
+        val cv = findViewById<CardView>(R.id.recommended_tomorrow_inner_cardview)
+        val arrow = findViewById<TextView>(R.id.rec_tomorrow_arrow)
+        val bool = !cv.isVisible
+        cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
+    }
+
+    @Suppress("UNUSED_PARAMETER")
+    fun onClickCardViewAllPlaylists(view: View) {
+        val cv = findViewById<CardView>(R.id.all_playlists_inner_cardview)
+        val arrow = findViewById<TextView>(R.id.all_playlists_arrow)
+        val bool = !cv.isVisible
+        cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
+    }
+
     fun changeArrow(arrow: TextView, bool: Boolean) {
         if(bool){
             arrow.rotation = 90F
@@ -355,27 +374,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onClickCardViewRecommendToday(view: View) {
-        val cv = findViewById<CardView>(R.id.recommmended_today_inner_cardview)
-        val arrow = findViewById<TextView>(R.id.rec_today_arrow)
-        val bool = !cv.isVisible
-        cv.isVisible = bool
-        changeArrow(arrow,cv.isVisible)
-    }
-    fun onClickCardViewRecommendTomorrow(view: View) {
-        val cv = findViewById<CardView>(R.id.recommended_tomorrow_inner_cardview)
-        val arrow = findViewById<TextView>(R.id.rec_tomorrow_arrow)
-        val bool = !cv.isVisible
-        cv.isVisible = bool
-        changeArrow(arrow,cv.isVisible)
-    }
-
-    fun onClickCardViewAllPlaylists(view: View) {
-        val cv = findViewById<CardView>(R.id.all_playlists_inner_cardview)
-        val arrow = findViewById<TextView>(R.id.all_playlists_arrow)
-        val bool = !cv.isVisible
-        cv.isVisible = bool
-        changeArrow(arrow,cv.isVisible)
-    }
 
 }

@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -39,17 +38,11 @@ class StatsFragment : Fragment() {
 
     private var _binding: FragmentStatsBinding? = null
     private lateinit var scrollView: NestedScrollView
-    var gData : MutableList<Entry> = mutableListOf()
+    private var gData : MutableList<Entry> = mutableListOf()
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
-    var artist1: TextView? = null
-    var artist2:TextView? = null
-    var artist3:TextView? = null
-    var artist4:TextView? = null
-    var artist5 :TextView? = null
-    var pc: PieChart? = null
+    private var pc: PieChart? = null
     private lateinit var sharedSettings: SharedPreferences
     private lateinit var myActivity : MainActivity
     private var switchingView: Boolean = true
@@ -65,31 +58,36 @@ class StatsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        val root = startFunction(inflater,container)
+
+        collapseAnimationInit()
+
+        statsObservers()
+
+        setChart()
+        //scrollOnChangeListener()
+        applySettings()
+
+        swipeRefresh()
+
+        return root
+    }
+
+    private fun startFunction(inflater: LayoutInflater, container: ViewGroup?): View {
+        initViemodel()
+        _binding = FragmentStatsBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+        myActivity = requireActivity() as MainActivity
+        sharedSettings = PreferenceManager.getDefaultSharedPreferences(myActivity)
+        return root
+    }
+
+    private fun initViemodel() {
         spotifyDatabase = SpotifyDatabase.getInstance(requireActivity())
         spotifyDataDao = spotifyDatabase.spotifyDataDao
         repo = SpotifyDataRepository(spotifyDataDao)
         viewModelFactory = HomeViewModelFactory(repo)
         myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
-        _binding = FragmentStatsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-        myActivity = requireActivity() as MainActivity
-
-        //if (savedInstanceState == null){
-        //    myActivity.supportActionBar!!.show()
-        //}
-        //myActivity.showActionBar(true)
-
-        sharedSettings = PreferenceManager.getDefaultSharedPreferences(myActivity)
-
-        collapseAnimationInit()
-        statsObservers()
-        //    makePopularityPieChart()
-
-        setChart()
-        //scrollOnChangeListener()
-        applySettings()
-        swipeRefresh()
-        return root
     }
 
     private fun statsObservers() {
@@ -130,8 +128,7 @@ class StatsFragment : Fragment() {
 
         pc!!.innerPaddingColor = Color.parseColor("#2E6943")
 
-        pc!!.startAnimation();
-
+        pc!!.startAnimation()
     }
 
     private fun setChart(){
@@ -181,6 +178,8 @@ class StatsFragment : Fragment() {
     }
 
     private fun applySettings(){
+        binding.hoursPlayedWeekOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().hoursPlayedWeekVisibilityKey, true)
+        binding.popularityPieChartOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().popularityPieChartVisibilityKey, true)
         binding.popularityPieChartInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().popularityPieChartCollapseKey, true)
         binding.hoursPlayedWeekInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().hoursPlayedWeekCollapseKey, true)
 

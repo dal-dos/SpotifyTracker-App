@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
-import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
@@ -27,7 +26,6 @@ import com.example.spotifytracker.MainActivity
 import com.example.spotifytracker.R
 import com.example.spotifytracker.adapters.*
 import com.example.spotifytracker.database.SpotifyDataDao
-import com.example.spotifytracker.database.SpotifyDataEntity
 import com.example.spotifytracker.database.SpotifyDataRepository
 import com.example.spotifytracker.database.SpotifyDatabase
 import com.example.spotifytracker.databinding.FragmentHomeBinding
@@ -48,10 +46,10 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     private lateinit var repo: SpotifyDataRepository
     private lateinit var viewModelFactory: HomeViewModelFactory
     private lateinit var myViewModel: HomeViewModel
-    private lateinit var spotifyDataEntity: List<SpotifyDataEntity>
+
     private lateinit var songArrayList: ArrayList<PlayHistory>
     private lateinit var genreArrayList: ArrayList<String>
-    lateinit var songListAdapter: SongListAdapter
+    private lateinit var songListAdapter: SongListAdapter
     private lateinit var genreListAdapter: GenreListAdapter
     private lateinit var recentlyPlayedList: ListView
     private lateinit var favGenreList: ListView
@@ -76,31 +74,47 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        spotifyDatabase = SpotifyDatabase.getInstance(requireActivity())
-        spotifyDataDao = spotifyDatabase.spotifyDataDao
-        repo = SpotifyDataRepository(spotifyDataDao)
-        viewModelFactory = HomeViewModelFactory(repo)
-        myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
-        val root: View = binding.root
-        myActivity = requireActivity() as MainActivity
+        val root = startFunction(inflater,container)
 
-        sharedSettings = PreferenceManager.getDefaultSharedPreferences(myActivity)
+        initializeOnItemClickListeners()
 
+        initializeVariables()
+
+        collapseAnimationInit()
+
+        homeObservers()
+
+        applySettings()
+
+        swipeRefresh()
+
+        scrollOnChangeListener()
+
+        return root
+    }
+
+    private fun initializeOnItemClickListeners() {
         binding.recentlyPlayedList.onItemClickListener = this
         binding.favTrackList.onItemClickListener = this
         binding.favArtistList.onItemClickListener = this
         binding.favGenreList.onItemClickListener = this
         binding.suggestedList.onItemClickListener = this
+    }
 
+    private fun initializeVariables() {
         scrollView = binding.nestedScrollView
-        //val runnable = Runnable { scrollView.fullScroll(ScrollView.FOCUS_UP) }
-        //scrollView.post(runnable)
-        collapseAnimationInit()
-        homeObservers()
-        applySettings()
-        swipeRefresh()
-        scrollOnChangeListener()
+    }
+
+    private fun startFunction(inflater: LayoutInflater, container: ViewGroup?): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+        spotifyDatabase = SpotifyDatabase.getInstance(requireActivity())
+        spotifyDataDao = spotifyDatabase.spotifyDataDao
+        repo = SpotifyDataRepository(spotifyDataDao)
+        viewModelFactory = HomeViewModelFactory(repo)
+        myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
+        myActivity = requireActivity() as MainActivity
+        sharedSettings = PreferenceManager.getDefaultSharedPreferences(myActivity)
 
         return root
     }
@@ -120,7 +134,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     }
 
     private fun scrollOnChangeListener() {
-        scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+        scrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (scrollY + 4 <= oldScrollY ){
                 //println("debug: Oldscrolly is $oldScrollY and scrolly is $scrollY")
                 //scroll up
@@ -163,9 +177,9 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
             myActivity.setMenuTitle(it) //bottom nav bar
         }
         //recentlyPlayedList.emptyView = listEmpty()
-        myViewModel.recentlyPlayed.observe(viewLifecycleOwner) { it ->
+        myViewModel.recentlyPlayed.observe(viewLifecycleOwner) {
             if(it.isEmpty()){
-                val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList<String>())
+                val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList())
                 recentlyPlayedList.adapter = emptyListAdapter
                 emptyListAdapter.replace(arrayListOf("None Found"))
                 emptyListAdapter.notifyDataSetChanged()
@@ -194,7 +208,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
         myViewModel.favArtist.observe(viewLifecycleOwner) {
             if(it.isEmpty()){
-                val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList<String>())
+                val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList())
                 favArtistList.adapter = emptyListAdapter
                 emptyListAdapter.replace(arrayListOf("None Found"))
                 emptyListAdapter.notifyDataSetChanged()
@@ -209,7 +223,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
         myViewModel.favTrack.observe(viewLifecycleOwner) {
             if(it.isEmpty()){
-                val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList<String>())
+                val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList())
                 favTrackList.adapter = emptyListAdapter
                 emptyListAdapter.replace(arrayListOf("None Found"))
                 emptyListAdapter.notifyDataSetChanged()
@@ -224,7 +238,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
         myViewModel.suggested.observe(viewLifecycleOwner) {
             if(it.isEmpty()){
-                val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList<String>())
+                val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList())
                 suggestTrackList.adapter = emptyListAdapter
                 emptyListAdapter.replace(arrayListOf("None Found"))
                 emptyListAdapter.notifyDataSetChanged()
@@ -285,7 +299,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
                 }
             }
         }
-
     }
 
     private fun setListViewHeightBasedOnChildren(listView: ListView) {
@@ -317,11 +330,12 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
 
     private fun applySettings(){
-        binding.recentlyPlayedOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().recentlyPlayedVisibilityKey, true)
+        binding.recentlyPlayedOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().hoursPlayedWeekVisibilityKey, true)
         binding.favoriteTracksOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteTracksVisibilityKey, true)
         binding.favoriteArtistsOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteArtistsVisibilityKey, true)
         binding.suggestedOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().suggestedVisibilityKey, true)
         binding.favoriteGenresOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteGenresVisibilityKey, true)
+
         binding.recentlyPlayedInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().recentlyPlayedCollapseKey, true)
         binding.suggestedInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().suggestedCollapseKey, true)
         binding.favoriteTracksInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity().favoriteTracksCollapseKey, true)
