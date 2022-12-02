@@ -4,9 +4,9 @@ import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.os.Message
 import android.view.View
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.preference.Preference
@@ -32,6 +32,24 @@ class SettingsFragment: PreferenceFragmentCompat() {
         super.onViewCreated(view, savedInstanceState)
         val myRecycleView: RecyclerView = listView
         myRecycleView.setPadding(0,0,0,-10)
+
+        loadSettings()
+    }
+
+    private fun loadSettings() {
+        val sharedSettings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity())
+        val afterPreference = findPreference<Preference>(SettingsActivity.recentlyPlayedAfterKey)
+        val beforePreference = findPreference<Preference>(SettingsActivity.recentlyPlayedBeforeKey)
+        if(sharedSettings.getString(SettingsActivity.recentlyPlayedAfterKey, null) != null){
+            beforePreference?.shouldDisableView = true
+            beforePreference?.isEnabled = false
+        }
+        if(sharedSettings.getString(SettingsActivity.recentlyPlayedBeforeKey, null) != null){
+            afterPreference?.shouldDisableView = true
+            afterPreference?.isEnabled = false
+        }
+
+
     }
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
@@ -72,25 +90,29 @@ class SettingsFragment: PreferenceFragmentCompat() {
         val calendar = Calendar.getInstance()
         val sharedSettings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity())
         val initDate = Calendar.getInstance()
+        val afterPreference = findPreference<Preference>(SettingsActivity.recentlyPlayedAfterKey)
+        val beforePreference = findPreference<Preference>(SettingsActivity.recentlyPlayedBeforeKey)
         initDate.timeInMillis = sharedSettings.getString(timeContext, Calendar.getInstance().timeInMillis.toString())?.toLong()!!
 
         val datePickerDialog: DatePickerDialog = DatePickerDialog(requireActivity(), DatePickerDialog.OnDateSetListener{ view2, year, month, day ->
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, day)
-
-
+            val dateForm : SimpleDateFormat = SimpleDateFormat("MMM dd yyyy")
+            val timeOf : String = dateForm.format(calendar)
             val editor = sharedSettings.edit()
             if (timeContext == SettingsActivity.recentlyPlayedBeforeKey){
-                val afterPreference = findPreference<Preference>(SettingsActivity.recentlyPlayedAfterKey)
                 afterPreference?.shouldDisableView = true
                 afterPreference?.isEnabled = false
                 editor.remove(SettingsActivity.recentlyPlayedAfterKey)
+                beforePreference?.title = "Listened to before $timeOf"
+                beforePreference?.summary = "Music that you listened to before $timeOf"
             } else {
-                val beforePreference = findPreference<Preference>(SettingsActivity.recentlyPlayedBeforeKey)
                 beforePreference?.shouldDisableView = true
                 beforePreference?.isEnabled = false
                 editor.remove(SettingsActivity.recentlyPlayedBeforeKey)
+                afterPreference?.title = "Listened to after $timeOf"
+                afterPreference?.summary = "Music that you listened to after $timeOf"
             }
 
             editor.putString(timeContext, calendar.timeInMillis.toString())
@@ -99,22 +121,28 @@ class SettingsFragment: PreferenceFragmentCompat() {
 
         datePickerDialog.datePicker.maxDate = Calendar.getInstance().timeInMillis
 
+        datePickerDialogResetButton(datePickerDialog, sharedSettings, afterPreference, beforePreference)
+
+
+        datePickerDialog.show()
+    }
+
+    fun datePickerDialogResetButton(
+        datePickerDialog: DatePickerDialog,
+        sharedSettings: SharedPreferences,
+        afterPreference: Preference?,
+        beforePreference: Preference?
+    ) {
         datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, "RESET", DialogInterface.OnClickListener() { dialogInterface: DialogInterface, i: Int ->
             val editor = sharedSettings.edit()
-            val afterPreference = findPreference<Preference>(SettingsActivity.recentlyPlayedAfterKey)
             afterPreference?.shouldDisableView = false
             afterPreference?.isEnabled = true
-            val beforePreference = findPreference<Preference>(SettingsActivity.recentlyPlayedBeforeKey)
             beforePreference?.shouldDisableView = false
             beforePreference?.isEnabled = true
             editor.remove(SettingsActivity.recentlyPlayedBeforeKey)
             editor.remove(SettingsActivity.recentlyPlayedAfterKey)
             editor.apply()
         })
-
-        datePickerDialog.show()
     }
-
-
 
 }

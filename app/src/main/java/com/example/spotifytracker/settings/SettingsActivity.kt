@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.Preference
 import com.example.spotifytracker.MainActivity
 import com.example.spotifytracker.R
 
@@ -53,8 +54,11 @@ class SettingsActivity : AppCompatActivity() {
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+
         onClickListeners()
     }
+
+
 
     private fun onClickListeners() {
         val saveSettingsButton = findViewById<Button>(R.id.save_settings_button)
@@ -71,7 +75,6 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     fun onClickSaveSettings(view: View) {
-        println("HELLO")
         val intent: Intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
