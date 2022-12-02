@@ -25,39 +25,10 @@ class GenreListAdapter(private val context: Context, private var spotifyFavGenre
     }
 
     fun replace(newSpotifyData: ArrayList<String>){
-//        newSpotifyData.forEach {
-//                   it.replaceFirstChar { it.uppercase()
-//
-//                   }
-//            println(newSpotifyData)
-//
-//                println("DEBUG: NEWSPOTIFY DATA for each  ")
-//              //  it.uppercase()
-//
-//        }
-//        println("DEBUG: NEWSPOTIFY DATA FOR no each 11 ")
-//        val temp: String
-//       temp = newSpotifyData.joinToString(separator = ", ", prefix = "[", postfix = "]", limit = -1
-//        , truncated = "...", transform = {
-//           it.uppercase()
-//        })
-////
-//        newSpotifyData.toString().uppercase()
-//        println(temp)
-//        temp.toList()
-//        newSpotifyData = temp.toList()
-//        println(newSpotifyData)
 
         spotifyFavGenre = newSpotifyData
 
-//        spotifyFavGenre.forEach{
-//            it.replaceFirstChar {
-//                it.uppercase()
-//
-//            }
-//            it.uppercase()
-//            println("DEBUG: SPOTIFY FAV GENRE REPLACE")
-//        }
+
     }
 
     @SuppressLint("ViewHolder")
@@ -66,14 +37,6 @@ class GenreListAdapter(private val context: Context, private var spotifyFavGenre
         val itemTitleTextView = view.findViewById<TextView>(R.id.itemTitleText)
         val itemSubTextView =  view.findViewById<TextView>(R.id.itemSubText)
 
-//        spotifyFavGenre.forEach{
-//            it.replaceFirstChar {
-//                it.uppercase()
-//
-//            }
-//          //  it.uppercase()
-//            println("DEBUG: SPOTIFY FAV GENRE  GETVIEW")
-//        }
 
 
         itemTitleTextView.text = spotifyFavGenre[position].split(' ').joinToString(" ") {
