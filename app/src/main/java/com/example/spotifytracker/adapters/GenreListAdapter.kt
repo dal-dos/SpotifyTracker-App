@@ -35,15 +35,6 @@ class GenreListAdapter(private val context: Context, private var spotifyFavGenre
         val itemTitleTextView = view.findViewById<TextView>(R.id.itemTitleText)
         val itemSubTextView =  view.findViewById<TextView>(R.id.itemSubText)
 
-        spotifyFavGenre.forEach{
-            it.replaceFirstChar {
-                it.uppercase()
-
-            }
-          //  it.uppercase()
-            println("DEBUG: SPOTIFY FAV GENRE  GETVIEW")
-        }
-
 
         itemTitleTextView.text = spotifyFavGenre[position].split(' ').joinToString(" ") {
             it.replaceFirstChar {

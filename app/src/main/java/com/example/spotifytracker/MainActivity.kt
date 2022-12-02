@@ -225,8 +225,6 @@ class MainActivity : AppCompatActivity() {
         myViewModel.favTrack.value = favoriteTracks
         myViewModel.suggested.value = suggested
 
-        myViewModel.favStatArtist.value = favoriteArtist
-
 
 //        spotifyDataEntity.username = username
 //        spotifyDataEntity.recentlyPlayed = Gson().toJson(recentlyPlayed)
