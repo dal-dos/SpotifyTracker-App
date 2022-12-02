@@ -122,10 +122,19 @@ class StatsFragment : Fragment() {
         artists.map { it.isVisible = false }
         artistViews.map { it.isVisible = false}
         for (i in arrayList.indices) {
+            if (i == 5){
+                break
+            }
             artists[i].text = arrayList[i].name
             artists[i].isVisible = true
             artistViews[i].isVisible = true
             pc!!.addPieSlice(PieModel(arrayList[i].name, arrayList[i].popularity.toFloat(), Color.parseColor(colors[i])))
+        }
+        if (arrayList.isEmpty()) {
+            artists[0].text = getString(R.string.noData)
+            artists[0].isVisible = true
+            artistViews[0].isVisible = true
+            pc!!.addPieSlice(PieModel("No Data Available", 100f, Color.parseColor(colors[0])))
         }
 
         pc!!.innerPaddingColor = Color.parseColor("#2E6943")
