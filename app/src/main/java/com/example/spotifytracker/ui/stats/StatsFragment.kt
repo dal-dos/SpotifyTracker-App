@@ -1,3 +1,5 @@
+@file:Suppress("RedundantExplicitType")
+
 package com.example.spotifytracker.ui.stats
 
 import android.animation.LayoutTransition
@@ -92,11 +94,11 @@ class StatsFragment : Fragment() {
 
     private fun statsObservers() {
 
-        myViewModel.favStatArtist.observe(viewLifecycleOwner) {
+        myViewModel.favArtist.observe(viewLifecycleOwner) {
             makePopularityPieChart(it)
         }
 
-//        myViewModel.favStatTrack.observe(viewLifecycleOwner) {
+//        myViewModel.favTrack.observe(viewLifecycleOwner) {
 //             for(i in it.indices) {
 //                trackArrayList.add(it.get(i))
 //            }
