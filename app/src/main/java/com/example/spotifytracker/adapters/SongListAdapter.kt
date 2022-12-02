@@ -53,7 +53,6 @@ class SongListAdapter(private val context: Context, private var spotifyRecentlyP
         //println("debug: Image address is " + spotifyRecentlyPlayed[position].track.album.images[0].url)
         //image.setImageResource(R.drawable.ic_spotify_icon)
         Picasso.get().load(spotifyRecentlyPlayed[position].track.album.images[0].url).into(image);
-
         return view
     }
 

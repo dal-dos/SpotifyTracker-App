@@ -115,15 +115,9 @@ class StatsFragment : Fragment() {
     private fun makePopularityPieChart(arrayList : List<Artist>) {
         pc = binding.popularityPieChart
         pc?.clearChart()
-        var colors : ArrayList<String> = arrayListOf("#FFA726", "#66BB6A", "#EF5350","#29B6F6", "#FF6200EE")
-        var artists : ArrayList<TextView> = arrayListOf()
-        var artistViews : ArrayList<View> = arrayListOf(binding.artistColorView1,binding.artistColorView2,binding.artistColorView3,binding.artistColorView4,binding.artistColorView5)
-        artists.add(binding.artist1Text)
-        artists.add(binding.artist2Text)
-        artists.add(binding.artist3Text)
-        artists.add(binding.artist4Text)
-        artists.add(binding.artist5Text)
-
+        val colors : ArrayList<String> = arrayListOf("#FFA726", "#66BB6A", "#EF5350","#29B6F6", "#FF6200EE")
+        val artists : ArrayList<TextView> = arrayListOf(binding.artist1Text,binding.artist2Text,binding.artist3Text,binding.artist4Text,binding.artist5Text)
+        val artistViews : ArrayList<View> = arrayListOf(binding.artistColorView1,binding.artistColorView2,binding.artistColorView3,binding.artistColorView4,binding.artistColorView5)
 
         artists.map { it.isVisible = false }
         artistViews.map { it.isVisible = false}
@@ -131,11 +125,7 @@ class StatsFragment : Fragment() {
             artists[i].text = arrayList[i].name
             artists[i].isVisible = true
             artistViews[i].isVisible = true
-            pc!!.addPieSlice(
-                PieModel(
-                    arrayList[i].name,
-                    arrayList[i].popularity.toFloat(),
-                    Color.parseColor(colors[i])))
+            pc!!.addPieSlice(PieModel(arrayList[i].name, arrayList[i].popularity.toFloat(), Color.parseColor(colors[i])))
         }
 
         pc!!.innerPaddingColor = Color.parseColor("#2E6943")
