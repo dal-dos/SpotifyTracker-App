@@ -81,6 +81,16 @@ class SettingsFragment: PreferenceFragmentCompat() {
                 val sharedSettings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity())
                 sharedSettings.edit().clear().apply()
                 requireActivity().onBackPressed()
+                val afterPreference = findPreference<Preference>(SettingsActivity.recentlyPlayedAfterKey)
+                val beforePreference = findPreference<Preference>(SettingsActivity.recentlyPlayedBeforeKey)
+                afterPreference?.shouldDisableView = false
+                afterPreference?.isEnabled = true
+                beforePreference?.shouldDisableView = false
+                beforePreference?.isEnabled = true
+                beforePreference?.title = "Listened to before X"
+                beforePreference?.summary = "Music that you listened to before X"
+                afterPreference?.title = "Listened to after X"
+                afterPreference?.summary = "Music that you listened to after X"
             }
         }
         return super.onPreferenceTreeClick(preference)
@@ -122,7 +132,6 @@ class SettingsFragment: PreferenceFragmentCompat() {
         datePickerDialog.datePicker.maxDate = Calendar.getInstance().timeInMillis
 
         datePickerDialogResetButton(datePickerDialog, sharedSettings, afterPreference, beforePreference)
-
 
         datePickerDialog.show()
     }
