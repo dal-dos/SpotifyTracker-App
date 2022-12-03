@@ -330,7 +330,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
 
     private fun applySettings(){
-        binding.recentlyPlayedOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.hoursPlayedWeekVisibilityKey, true)
+        binding.recentlyPlayedOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.recentlyPlayedVisibilityKey, true)
         binding.favoriteTracksOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.favoriteTracksVisibilityKey, true)
         binding.favoriteArtistsOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.favoriteArtistsVisibilityKey, true)
         binding.suggestedOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.suggestedVisibilityKey, true)

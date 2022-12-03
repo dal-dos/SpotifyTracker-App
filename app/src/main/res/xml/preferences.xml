@@ -159,6 +159,17 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="Play time past day Chart"
+        app:iconSpaceReserved="false">
+        <SwitchPreference
+            android:key="time_played_day_visibility"
+            android:title="Show"
+            android:summary="Show/Hide Chart"
+            app:iconSpaceReserved="false"
+            android:defaultValue="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="Play time past week Chart"
         app:iconSpaceReserved="false">
         <SwitchPreference
