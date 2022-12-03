@@ -5,14 +5,16 @@ package com.example.spotifytracker.ui.stats
 import android.animation.LayoutTransition
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
+import androidx.core.view.size
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -24,16 +26,16 @@ import com.example.spotifytracker.R
 import com.example.spotifytracker.database.SpotifyDataDao
 import com.example.spotifytracker.database.SpotifyDataRepository
 import com.example.spotifytracker.database.SpotifyDatabase
-import com.example.spotifytracker.settings.SettingsActivity
 import com.example.spotifytracker.databinding.FragmentStatsBinding
+import com.example.spotifytracker.settings.SettingsActivity
 import com.example.spotifytracker.ui.home.HomeViewModel
 import com.example.spotifytracker.ui.home.HomeViewModelFactory
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import org.eazegraph.lib.charts.PieChart
-import org.eazegraph.lib.models.PieModel
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.*
 
 
 class StatsFragment : Fragment() {
@@ -114,33 +116,54 @@ class StatsFragment : Fragment() {
 
     private fun makePopularityPieChart(arrayList : List<Artist>) {
         pc = binding.popularityPieChart
-        pc?.clearChart()
-        val colors : ArrayList<String> = arrayListOf("#FFA726", "#66BB6A", "#EF5350","#29B6F6", "#FF6200EE")
-        val artists : ArrayList<TextView> = arrayListOf(binding.artist1Text,binding.artist2Text,binding.artist3Text,binding.artist4Text,binding.artist5Text)
-        val artistViews : ArrayList<View> = arrayListOf(binding.artistColorView1,binding.artistColorView2,binding.artistColorView3,binding.artistColorView4,binding.artistColorView5)
 
-        artists.map { it.isVisible = false }
-        artistViews.map { it.isVisible = false}
+        val legend: Legend = pc!!.legend
+        legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
+        legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+        legend.orientation = Legend.LegendOrientation.VERTICAL
+        legend.isWordWrapEnabled = true
+        legend.setDrawInside(false)
+        legend.textColor= Color.WHITE
+        legend.textSize = 12F
+        val tf : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaalight);
+        legend.typeface = tf
+        legend.xOffset = -30F
+
+        val colors : ArrayList<Int> = arrayListOf(Color.parseColor("#FFA726"), Color.parseColor("#66BB6A"), Color.parseColor("#EF5350"),Color.parseColor("#29B6F6"), Color.parseColor("#FF6200EE"))
+        val dataEntries : ArrayList<PieEntry> = arrayListOf()
+
         for (i in arrayList.indices) {
             if (i == 5){
                 break
             }
-            artists[i].text = arrayList[i].name
-            artists[i].isVisible = true
-            artistViews[i].isVisible = true
-            pc!!.addPieSlice(PieModel(arrayList[i].name, arrayList[i].popularity.toFloat(), Color.parseColor(colors[i])))
+            dataEntries.add(PieEntry(arrayList[i].popularity.toFloat(),arrayList[i].name))
         }
         if (arrayList.isEmpty()) {
-            artists[0].text = getString(R.string.noData)
-            artists[0].isVisible = true
-            artistViews[0].isVisible = true
-            pc!!.addPieSlice(PieModel("No Data Available", 100f, Color.parseColor(colors[0])))
+            dataEntries.add(PieEntry(100f,"No Data Available"))
         }
 
-        pc!!.innerPaddingColor = Color.parseColor("#2E6943")
+        val pieDataSet = PieDataSet(dataEntries, "")
+        pieDataSet.colors = colors
 
-        pc!!.startAnimation()
+        val pieData = PieData(pieDataSet)
+        pieData.setDrawValues(true)
+        pieData.dataSetLabels
+        pieData.setValueTextSize(12F)
+        pieData.setValueTypeface(tf)
+
+        pc!!.data = pieData
+        pc!!.setHoleColor(Color.parseColor("#2E6943"))
+        pc!!.setDrawEntryLabels(false)
+        pc!!.setUsePercentValues(true)
+        pc!!.description.isEnabled= false
+        pc!!.extraRightOffset = -20F
+        pc!!.extraBottomOffset = 0F
+
+        pc!!.invalidate()
+        pc!!.animateY(1400,Easing.EaseInOutQuad)
+
     }
+
 
     private fun setChart(){
         val lineChart : LineChart = binding.statsGraph

@@ -162,141 +162,137 @@
                     android:padding="10dp"
                     android:orientation="horizontal">
 
-                <org.eazegraph.lib.charts.PieChart
-                android:id="@+id/popularity_pie_chart"
-                android:layout_width="20dp"
-                android:layout_height="200dp"
-                android:padding="6dp"
-                android:layout_weight="1"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginBottom="15dp"
-                    />
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/popularity_pie_chart"
+                        android:layout_width="0dp"
+                        android:layout_height="200dp"
+                        android:layout_weight="1"
+                        />
 
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:paddingLeft="40dp"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical"
-                    >
+<!--                <LinearLayout-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:paddingLeft="40dp"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    >-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="15dp"
-                        android:layout_gravity="center_vertical">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="15dp"-->
+<!--                        android:layout_gravity="center_vertical">-->
 
-                        <View
-                            android:id="@+id/artistColorView1"
-                            android:layout_width="15dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/Artist1"
-                            />
+<!--                        <View-->
+<!--                            android:id="@+id/artistColorView1"-->
+<!--                            android:layout_width="15dp"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:background="@color/Artist1"-->
+<!--                            />-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Artist 1"
-                            android:paddingLeft="10dp"
-                            android:id="@+id/artist1Text"/>
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Artist 1"-->
+<!--                            android:paddingLeft="10dp"-->
+<!--                            android:id="@+id/artist1Text"/>-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="15dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="5dp">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="15dp"-->
+<!--                        android:layout_gravity="center_vertical"-->
+<!--                        android:layout_marginTop="5dp">-->
 
-                        <View
-                            android:layout_width="15dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/Artist2"
-                            android:id="@+id/artistColorView2"
-                            />
+<!--                        <View-->
+<!--                            android:layout_width="15dp"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:background="@color/Artist2"-->
+<!--                            android:id="@+id/artistColorView2"-->
+<!--                            />-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Artist 2"
-                            android:paddingLeft="10dp"
-                            android:id="@+id/artist2Text"/>
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Artist 2"-->
+<!--                            android:paddingLeft="10dp"-->
+<!--                            android:id="@+id/artist2Text"/>-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="15dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="5dp">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="15dp"-->
+<!--                        android:layout_gravity="center_vertical"-->
+<!--                        android:layout_marginTop="5dp">-->
 
-                        <!--View to display the red color icon-->
-                        <View
-                            android:layout_width="15dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/Artist3"
-                            android:id="@+id/artistColorView3"
-                            />
+<!--                        &lt;!&ndash;View to display the red color icon&ndash;&gt;-->
+<!--                        <View-->
+<!--                            android:layout_width="15dp"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:background="@color/Artist3"-->
+<!--                            android:id="@+id/artistColorView3"-->
+<!--                            />-->
 
-                        <!--Text view to display C++ text -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Artist 3"
-                            android:paddingLeft="10dp"
-                            android:id="@+id/artist3Text"/>
+<!--                        &lt;!&ndash;Text view to display C++ text &ndash;&gt;-->
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Artist 3"-->
+<!--                            android:paddingLeft="10dp"-->
+<!--                            android:id="@+id/artist3Text"/>-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="15dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="5dp">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="15dp"-->
+<!--                        android:layout_gravity="center_vertical"-->
+<!--                        android:layout_marginTop="5dp">-->
 
-                        <!--View to display the blue color icon-->
-                        <View
-                            android:layout_width="15dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/Artist4"
-                            android:id="@+id/artistColorView4"
-                            />
+<!--                        &lt;!&ndash;View to display the blue color icon&ndash;&gt;-->
+<!--                        <View-->
+<!--                            android:layout_width="15dp"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:background="@color/Artist4"-->
+<!--                            android:id="@+id/artistColorView4"-->
+<!--                            />-->
 
-                        <!--Text view to display Java text -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Artist 4"
-                            android:paddingLeft="10dp"
-                            android:id="@+id/artist4Text"/>
+<!--                        &lt;!&ndash;Text view to display Java text &ndash;&gt;-->
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Artist 4"-->
+<!--                            android:paddingLeft="10dp"-->
+<!--                            android:id="@+id/artist4Text"/>-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="15dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="5dp">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="15dp"-->
+<!--                        android:layout_gravity="center_vertical"-->
+<!--                        android:layout_marginTop="5dp">-->
 
-                        <View
-                            android:layout_width="15dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/Artist5"
-                            android:id="@+id/artistColorView5"
-                            />
+<!--                        <View-->
+<!--                            android:layout_width="15dp"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:background="@color/Artist5"-->
+<!--                            android:id="@+id/artistColorView5"-->
+<!--                            />-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Artist 5"
-                            android:paddingLeft="10dp"
-                            android:id="@+id/artist5Text"/>
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Artist 5"-->
+<!--                            android:paddingLeft="10dp"-->
+<!--                            android:id="@+id/artist5Text"/>-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
             </LinearLayout>
 
