@@ -105,7 +105,12 @@ class StatsFragment : Fragment() {
             setChart(it)
         }
 
+        myViewModel.timePlayedDay.observe(viewLifecycleOwner) {
+            setTimePlayedDayChart(it)
+        }
     }
+
+
 
     private fun collapseAnimationInit() {
         val layout = binding.statsLayout
@@ -163,6 +168,63 @@ class StatsFragment : Fragment() {
 
     }
 
+    private fun setTimePlayedDayChart(rp: List<PlayHistory>) {
+        val gData : MutableList<Entry> = mutableListOf()
+        val lineChart : LineChart = binding.timePlayedDayChart
+        //Chart configurations
+        //Fake data to temporarily display chart
+        val timePlayHistory : ArrayList<Float> = arrayListOf(0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F)
+        val sdf : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+
+        var timeType = 60000
+//        if(sharedSettings.getString(SettingsActivity.hoursPlayedWeekTimeType, "hours") != "hours"){
+//            timeType = 60000
+//        }
+
+        for (i in rp.indices) {
+            val calendar : Calendar = Calendar.getInstance()
+            val playedAtTime = rp[i].playedAt
+            calendar.time = sdf.parse(playedAtTime)
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            println("time: " + hour)
+            val trackLengthMilliseconds = rp[i].track.length.toFloat()
+            val trackLengthMinutes = trackLengthMilliseconds/timeType
+            timePlayHistory[hour-1] = trackLengthMinutes + timePlayHistory[hour-1]
+        }
+
+
+        for (i in 1..24){
+            gData.add(Entry(i.toFloat(), timePlayHistory[i-1]))
+        }
+
+        val lineChartData : LineDataSet = LineDataSet(gData,"Spotify")
+        val chosenColor : Int = Color.WHITE //color of graph details
+        lineChartData.label = ""
+        lineChartData.setDrawValues(false)
+        lineChartData.setDrawCircles(false)
+        lineChartData.valueTextColor = chosenColor
+        lineChartData.color = chosenColor
+        lineChart.description.textColor = chosenColor
+        lineChart.axisLeft.textColor = chosenColor
+        lineChart.xAxis.textColor = chosenColor
+        lineChart.legend.textColor = chosenColor
+        lineChartData.mode = LineDataSet.Mode.CUBIC_BEZIER
+        lineChart.data =  LineData(lineChartData)
+        lineChart.description.text = ""
+        lineChart.xAxis.axisMaximum= 24F
+        lineChart.xAxis.axisMinimum= 1F
+        lineChart.xAxis.labelCount = 24
+        lineChart.xAxis.granularity = 4F
+        lineChart.xAxis.setDrawLabels(true)
+        lineChart.axisLeft.axisMinimum = 0F
+        lineChart.axisLeft.granularity = 1F
+        lineChart.axisRight.setDrawGridLines(false)
+        lineChart.axisRight.setDrawLabels(false)
+        lineChart.axisRight.setDrawZeroLine(true)
+        lineChart.invalidate()
+
+        lineChart.animateY(1300)
+    }
 
     private fun setChart(rp: List<PlayHistory>) {
         val gData : MutableList<Entry> = mutableListOf()
@@ -170,7 +232,7 @@ class StatsFragment : Fragment() {
         //Chart configurations
         //Fake data to temporarily display chart
         val timePlayHistory : ArrayList<Float> = arrayListOf(0F,0F,0F,0F,0F,0F,0F)
-        val sdf : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val sdf : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
         var timeType = 3600000
         if(sharedSettings.getString(SettingsActivity.hoursPlayedWeekTimeType, "hours") != "hours"){
@@ -179,7 +241,7 @@ class StatsFragment : Fragment() {
 
         for (i in rp.indices) {
             val calendar : Calendar = Calendar.getInstance()
-            val playedAtDate = rp[i].playedAt.split("T")[0]
+            val playedAtDate = rp[i].playedAt
             calendar.time = sdf.parse(playedAtDate)
             val day = calendar.get(Calendar.DAY_OF_WEEK)
             val trackLengthMilliseconds = rp[i].track.length.toFloat()
@@ -187,7 +249,6 @@ class StatsFragment : Fragment() {
             timePlayHistory[day-1] = trackLengthMinutes + timePlayHistory[day-1]
         }
 
-        println(timePlayHistory)
         for (i in 1..7){
             gData.add(Entry(i.toFloat(), timePlayHistory[i-1]))
         }
@@ -229,11 +290,15 @@ class StatsFragment : Fragment() {
     private fun applySettings(){
         binding.hoursPlayedWeekOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.hoursPlayedWeekVisibilityKey, true)
         binding.popularityPieChartOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.popularityPieChartVisibilityKey, true)
+        binding.timePlayedDayOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.timePlayedDayVisibilityKey, true)
+
         binding.popularityPieChartInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.popularityPieChartCollapseKey, true)
         binding.hoursPlayedWeekInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.hoursPlayedWeekCollapseKey, true)
+        binding.timePlayedDayInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.timePlayedDayCollapseKey, true)
 
         MainActivity().changeArrow(binding.popularityPieChartArrow, binding.popularityPieChartInnerCardview.isVisible)
         MainActivity().changeArrow(binding.hoursPlayedWeekArrow, binding.hoursPlayedWeekInnerCardview.isVisible)
+        MainActivity().changeArrow(binding.timePlayedDayArrow, binding.timePlayedDayInnerCardview.isVisible)
     }
 
 /*    private fun scrollOnChangeListener() {

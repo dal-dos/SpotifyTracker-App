@@ -24,6 +24,86 @@
             android:animateLayoutChanges="true"
             android:paddingTop="50dp">
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/time_played_day_outer_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="8dp"
+                android:onClick="onClickCardViewTimePlayedDayChart">
+                <LinearLayout
+                    android:id="@+id/time_played_day_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/time_played_day_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/comfortaasemibold"
+                            android:text="Play time past 24 hours" />
+
+                        <TextView
+                            android:id="@+id/time_played_day_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/comfortaasemibold"
+                            android:text="@string/arrow"
+                            app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                            app:drawableTint="@color/white" />
+                    </RelativeLayout>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/time_played_day_inner_cardview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="8dp"
+                        android:backgroundTint="@color/dark_green_var">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/time_played_day_chart"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:rotation="-90"
+                                android:text="Minutes"
+                                android:fontFamily="@font/comfortaasemibold"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="Hour of Day"
+                                    android:fontFamily="@font/comfortaasemibold"/>
+
+                                <com.github.mikephil.charting.charts.LineChart
+                                    android:id="@+id/time_played_day_chart"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/hours_played_week_outer_cardview"
@@ -69,46 +149,46 @@
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="8dp"
                         android:backgroundTint="@color/dark_green_var">
-                <LinearLayout
-                    android:id="@+id/chartLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/statsGraph"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/yTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:rotation="-90"
-                        android:text="@string/songs"
-                        android:fontFamily="@font/comfortaasemibold"/>
-
-                    <LinearLayout
-                        android:id="@+id/chartLayout2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/xTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="@string/of_days_ago"
-                            android:fontFamily="@font/comfortaasemibold"/>
-
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/statsGraph"
+                        <LinearLayout
+                            android:id="@+id/chartLayout"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp" />
-                    </LinearLayout>
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/statsGraph"
+                            android:orientation="horizontal">
 
+                            <TextView
+                                android:id="@+id/yTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:rotation="-90"
+                                android:text="Hours"
+                                android:fontFamily="@font/comfortaasemibold"/>
+
+                            <LinearLayout
+                                android:id="@+id/chartLayout2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/xTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="Day of Week"
+                                    android:fontFamily="@font/comfortaasemibold"/>
+
+                                <com.github.mikephil.charting.charts.LineChart
+                                    android:id="@+id/statsGraph"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
 
 
 
@@ -168,131 +248,6 @@
                         android:layout_height="200dp"
                         android:layout_weight="1"
                         />
-
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:paddingLeft="40dp"-->
-<!--                    android:orientation="vertical"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    >-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="15dp"-->
-<!--                        android:layout_gravity="center_vertical">-->
-
-<!--                        <View-->
-<!--                            android:id="@+id/artistColorView1"-->
-<!--                            android:layout_width="15dp"-->
-<!--                            android:layout_height="match_parent"-->
-<!--                            android:background="@color/Artist1"-->
-<!--                            />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="Artist 1"-->
-<!--                            android:paddingLeft="10dp"-->
-<!--                            android:id="@+id/artist1Text"/>-->
-
-<!--                    </LinearLayout>-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="15dp"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:layout_marginTop="5dp">-->
-
-<!--                        <View-->
-<!--                            android:layout_width="15dp"-->
-<!--                            android:layout_height="match_parent"-->
-<!--                            android:background="@color/Artist2"-->
-<!--                            android:id="@+id/artistColorView2"-->
-<!--                            />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="Artist 2"-->
-<!--                            android:paddingLeft="10dp"-->
-<!--                            android:id="@+id/artist2Text"/>-->
-
-<!--                    </LinearLayout>-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="15dp"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:layout_marginTop="5dp">-->
-
-<!--                        &lt;!&ndash;View to display the red color icon&ndash;&gt;-->
-<!--                        <View-->
-<!--                            android:layout_width="15dp"-->
-<!--                            android:layout_height="match_parent"-->
-<!--                            android:background="@color/Artist3"-->
-<!--                            android:id="@+id/artistColorView3"-->
-<!--                            />-->
-
-<!--                        &lt;!&ndash;Text view to display C++ text &ndash;&gt;-->
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="Artist 3"-->
-<!--                            android:paddingLeft="10dp"-->
-<!--                            android:id="@+id/artist3Text"/>-->
-
-<!--                    </LinearLayout>-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="15dp"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:layout_marginTop="5dp">-->
-
-<!--                        &lt;!&ndash;View to display the blue color icon&ndash;&gt;-->
-<!--                        <View-->
-<!--                            android:layout_width="15dp"-->
-<!--                            android:layout_height="match_parent"-->
-<!--                            android:background="@color/Artist4"-->
-<!--                            android:id="@+id/artistColorView4"-->
-<!--                            />-->
-
-<!--                        &lt;!&ndash;Text view to display Java text &ndash;&gt;-->
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="Artist 4"-->
-<!--                            android:paddingLeft="10dp"-->
-<!--                            android:id="@+id/artist4Text"/>-->
-
-<!--                    </LinearLayout>-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="15dp"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:layout_marginTop="5dp">-->
-
-<!--                        <View-->
-<!--                            android:layout_width="15dp"-->
-<!--                            android:layout_height="match_parent"-->
-<!--                            android:background="@color/Artist5"-->
-<!--                            android:id="@+id/artistColorView5"-->
-<!--                            />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="Artist 5"-->
-<!--                            android:paddingLeft="10dp"-->
-<!--                            android:id="@+id/artist5Text"/>-->
-
-<!--                    </LinearLayout>-->
-
-<!--                </LinearLayout>-->
 
             </LinearLayout>
 

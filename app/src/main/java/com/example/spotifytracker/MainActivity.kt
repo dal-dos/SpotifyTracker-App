@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
     private var favoriteTracks : List<Track> = arrayListOf()
     private var favoriteArtist : List<Artist> = arrayListOf()
     private var playedWeekHistory : List<PlayHistory> = arrayListOf()
+    private var timePlayedDay : List<PlayHistory> = arrayListOf()
     private lateinit var navView: BottomNavigationView
     private lateinit var spotifyDatabase : SpotifyDatabase
     private lateinit var spotifyDataDao : SpotifyDataDao
@@ -217,7 +218,8 @@ class MainActivity : AppCompatActivity() {
                 favoriteArtist = apiHandler.userTopArtists()
                 favoriteTracks = apiHandler.userTopTracks()
                 playedWeekHistory = apiHandler.userPlayedWeekHistory()
-                insertDB(username, recentlyPlayed, suggested, favoriteGenre, favoriteArtist, favoriteTracks, playedWeekHistory)
+                timePlayedDay = apiHandler.userTimePlayedDay()
+                insertDB(username, recentlyPlayed, suggested, favoriteGenre, favoriteArtist, favoriteTracks, playedWeekHistory, timePlayedDay)
             }
             openDialog(apiBuilderLoad)
         }catch (e: Exception){
@@ -226,7 +228,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Suppress("UNUSED_VARIABLE","UNUSED_PARAMETER")
-    private fun insertDB(username: String, recentlyPlayed: List<PlayHistory>, suggested: List<Track>, favoriteGenre: ArrayList<String>, favoriteArtist: List<Artist>, favoriteTracks: List<Track>, playedWeekHistory : List<PlayHistory>){
+    private fun insertDB(username: String, recentlyPlayed: List<PlayHistory>, suggested: List<Track>, favoriteGenre: ArrayList<String>, favoriteArtist: List<Artist>, favoriteTracks: List<Track>, playedWeekHistory : List<PlayHistory>, timePlayedDay : List<PlayHistory>){
 
         myViewModel.username.value = username
         myViewModel.recentlyPlayed.value = recentlyPlayed
@@ -235,7 +237,7 @@ class MainActivity : AppCompatActivity() {
         myViewModel.favTrack.value = favoriteTracks
         myViewModel.suggested.value = suggested
         myViewModel.playedWeekHistory.value = playedWeekHistory
-
+        myViewModel.timePlayedDay.value = timePlayedDay
 //        spotifyDataEntity.username = username
 //        spotifyDataEntity.recentlyPlayed = Gson().toJson(recentlyPlayed)
 //        spotifyDataEntity.suggested = Gson().toJson(suggested)
@@ -372,12 +374,27 @@ class MainActivity : AppCompatActivity() {
         changeArrow(arrow,cv.isVisible)
     }
 
+    @Suppress("UNUSED_PARAMETER")
+    fun onClickCardViewTimePlayedDayChart(view: View) {
+        val cv = findViewById<CardView>(R.id.time_played_day_inner_cardview)
+        val arrow = findViewById<TextView>(R.id.time_played_day_arrow)
+        if(cv.isVisible){
+            val chart = findViewById<LineChart>(R.id.time_played_day_chart)
+            chart.animateY(1300)
+        }
+        val bool = !cv.isVisible
+        cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
+        val editor = sharedSettings.edit()
+        editor.putBoolean(SettingsActivity.timePlayedDayCollapseKey,bool)
+        editor.apply()
+    }
     fun changeArrow(arrow: TextView, bool: Boolean) {
         if(bool){
-            arrow.rotation = 90F
+            //arrow.rotation = 90F
             arrow.animate().rotation(0F)
         } else{
-            arrow.rotation = 0F
+            //arrow.rotation = 0F
             arrow.animate().rotation(90F)
         }
     }
@@ -409,6 +426,8 @@ class MainActivity : AppCompatActivity() {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) getWeatherData()
         }
     }
+
+
 
 
 }

@@ -183,4 +183,18 @@ class SpotifyApiHandler(val token: Token, private val sharedSettings: SharedPref
 
         return api!!.player.getRecentlyPlayed(limit = itemsToShow, before = beforeDate, after = afterDate).items
     }
+
+    suspend fun userTimePlayedDay(): List<PlayHistory> {
+        val calendar : Calendar = Calendar.getInstance()
+        calendar.add(Calendar.HOUR_OF_DAY, -24)
+        val itemsToShow = 50
+        val beforeDate = null
+        val afterDate = calendar.timeInMillis.toString()
+        if(api!!.spotifyApiOptions.enableDebugMode){
+            print("DEBUG MODE: APP: userTimePlayedDay(): ")
+            println("debug: " + api!!.player.getRecentlyPlayed(limit = itemsToShow, before = beforeDate, after = afterDate).items)
+        }
+
+        return api!!.player.getRecentlyPlayed(limit = itemsToShow, before = beforeDate, after = afterDate).items
+    }
 }
