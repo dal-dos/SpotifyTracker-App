@@ -139,6 +139,10 @@ class SettingsFragment: PreferenceFragmentCompat() {
             afterPreference?.isEnabled = true
             beforePreference?.shouldDisableView = false
             beforePreference?.isEnabled = true
+            beforePreference?.title = "Listened to before X"
+            beforePreference?.summary = "Music that you listened to before X"
+            afterPreference?.title = "Listened to after X"
+            afterPreference?.summary = "Music that you listened to after X"
             editor.remove(SettingsActivity.recentlyPlayedBeforeKey)
             editor.remove(SettingsActivity.recentlyPlayedAfterKey)
             editor.apply()
