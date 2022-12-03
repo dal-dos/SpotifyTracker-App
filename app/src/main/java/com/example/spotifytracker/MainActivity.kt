@@ -2,16 +2,21 @@ package com.example.spotifytracker
 
 // Spotify API
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -37,6 +42,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.eazegraph.lib.charts.PieChart
+import java.text.DecimalFormat
 
 
 @Suppress("RedundantExplicitType")
@@ -58,15 +64,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var spotifyDataEntity : SpotifyDataEntity
     private lateinit var myViewModel :HomeViewModel
     private lateinit var mToolbar : androidx.appcompat.widget.Toolbar
-    private var mTouchPosition: Float? = null
-    private var mReleasePosition: Float? = null
     private lateinit var sharedSettings : SharedPreferences
+
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedSettings = PreferenceManager.getDefaultSharedPreferences(this)
         if(savedInstanceState == null) {
             firstTimeStart()
+            checkPermission()
         }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -369,6 +375,27 @@ class MainActivity : AppCompatActivity() {
         } else{
             arrow.rotation = 0F
             arrow.animate().rotation(90F)
+        }
+    }
+
+    fun getWeatherData(){
+        val weatherApiHandler = WeatherApiHandler(this)
+        weatherApiHandler.startApi()
+    }
+
+    fun checkPermission() {
+        if (Build.VERSION.SDK_INT < 23) return
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+            PackageManager.PERMISSION_GRANTED) ActivityCompat.requestPermissions(this, arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION), 0)
+        else
+            getWeatherData()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) getWeatherData()
         }
     }
 

@@ -82,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:rotation="-90"
-                        android:text="@string/hours"
+                        android:text="@string/songs"
                         android:fontFamily="@font/comfortaasemibold"/>
 
                     <LinearLayout

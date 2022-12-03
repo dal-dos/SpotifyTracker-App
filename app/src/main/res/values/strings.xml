@@ -26,4 +26,5 @@
     <string name="playlists">Playlists</string>
     <string name="play_time_past_week">Play time past week</string>
     <string name="noData">No Data</string>
+    <string name="songs">Songs</string>
 </resources>
