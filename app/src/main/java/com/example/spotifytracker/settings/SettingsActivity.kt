@@ -26,6 +26,7 @@ class SettingsActivity : AppCompatActivity() {
         const val suggestedVisibilityKey = "suggested_visibility"
         const val hoursPlayedWeekVisibilityKey = "hours_played_week_visibility"
         const val popularityPieChartVisibilityKey = "popularity_pie_chart_visibility"
+        const val timePlayedDayVisibilityKey = "time_played_day_visibility"
 
         const val recentlyPlayedCollapseKey = "recently_played_collapse"
         const val suggestedCollapseKey = "suggested_collapse"
@@ -34,6 +35,7 @@ class SettingsActivity : AppCompatActivity() {
         const val favoriteGenresCollapseKey = "favorite_genres_collapse"
         const val hoursPlayedWeekCollapseKey = "hours_played_week_collapse_key"
         const val popularityPieChartCollapseKey = "popularity_pie_chart_collapse"
+        const val timePlayedDayCollapseKey = "time_played_day_collapse"
 
         const val favoriteTracksTimeRangeKey = "favorite_tracks_time_range"
         const val favoriteArtistsTimeRangeKey ="favorite_artists_time_range"
