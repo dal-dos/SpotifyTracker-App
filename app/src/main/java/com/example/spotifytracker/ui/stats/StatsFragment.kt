@@ -45,7 +45,6 @@ class StatsFragment : Fragment() {
 
     private var _binding: FragmentStatsBinding? = null
     private lateinit var scrollView: NestedScrollView
-    private var gData : MutableList<Entry> = mutableListOf()
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -166,6 +165,7 @@ class StatsFragment : Fragment() {
 
 
     private fun setChart(rp: List<PlayHistory>) {
+        val gData : MutableList<Entry> = mutableListOf()
         val lineChart : LineChart = binding.statsGraph
         //Chart configurations
         //Fake data to temporarily display chart
