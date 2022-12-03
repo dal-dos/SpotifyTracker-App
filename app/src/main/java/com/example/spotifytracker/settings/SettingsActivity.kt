@@ -12,6 +12,7 @@ import com.example.spotifytracker.R
 
 class SettingsActivity : AppCompatActivity() {
     companion object{
+        const val hoursPlayedWeekTimeType = "hours_played_week_time_type"
         const val recentlyPlayedNumberOfItemsKey = "recently_played_number_of_items"
         const val favoriteTracksNumberOfItemsKey = "favorite_tracks_number_of_items"
         const val favoriteArtistsNumberOfItemsKey = "favorite_artists_number_of_items"

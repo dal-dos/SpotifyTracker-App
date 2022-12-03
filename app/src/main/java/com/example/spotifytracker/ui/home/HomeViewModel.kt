@@ -83,6 +83,15 @@ class HomeViewModel(private val repository: SpotifyDataRepository) : ViewModel()
             _suggested = value
         }
 
+    private var _playedWeekHistory = MutableLiveData<List<PlayHistory>>()
+    var playedWeekHistory : MutableLiveData<List<PlayHistory>>
+        get(){
+            return _playedWeekHistory
+        }
+        set(value) {
+            _playedWeekHistory = value
+        }
+
 }
 class HomeViewModelFactory(private val repository: SpotifyDataRepository) : ViewModelProvider.Factory {
     override fun<T: ViewModel> create(modelClass: Class<T>) : T{ //create() creates a new instance of the modelClass, which is CommentViewModel in this case.

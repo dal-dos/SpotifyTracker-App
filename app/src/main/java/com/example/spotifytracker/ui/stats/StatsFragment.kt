@@ -6,6 +6,8 @@ import android.animation.LayoutTransition
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.Typeface
+import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.transition.AutoTransition
 import android.transition.TransitionManager
@@ -14,13 +16,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
-import androidx.core.view.size
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.adamratzman.spotify.models.Artist
+import com.adamratzman.spotify.models.PlayHistory
 import com.example.spotifytracker.MainActivity
 import com.example.spotifytracker.R
 import com.example.spotifytracker.database.SpotifyDataDao
@@ -33,9 +35,10 @@ import com.example.spotifytracker.ui.home.HomeViewModelFactory
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
+import kotlin.collections.ArrayList
+import kotlin.time.Duration.Companion.hours
 
 
 class StatsFragment : Fragment() {
@@ -68,7 +71,6 @@ class StatsFragment : Fragment() {
 
         statsObservers()
 
-        setChart()
         //scrollOnChangeListener()
         applySettings()
 
@@ -100,11 +102,9 @@ class StatsFragment : Fragment() {
             makePopularityPieChart(it)
         }
 
-//        myViewModel.favTrack.observe(viewLifecycleOwner) {
-//             for(i in it.indices) {
-//                trackArrayList.add(it.get(i))
-//            }
-//        }
+        myViewModel.playedWeekHistory.observe(viewLifecycleOwner) {
+            setChart(it)
+        }
 
     }
 
@@ -165,17 +165,32 @@ class StatsFragment : Fragment() {
     }
 
 
-    private fun setChart(){
+    private fun setChart(rp: List<PlayHistory>) {
         val lineChart : LineChart = binding.statsGraph
         //Chart configurations
         //Fake data to temporarily display chart
-        gData.add(Entry(1f,1.4f))
-        gData.add(Entry(2f,5.2f))
-        gData.add(Entry(3f,4.5f))
-        gData.add(Entry(4f,2.4f))
-        gData.add(Entry(5f,1.9f))
-        gData.add(Entry(6f,7.7f))
-        gData.add(Entry(7f,3.2f))
+        val timePlayHistory : ArrayList<Float> = arrayListOf(0F,0F,0F,0F,0F,0F,0F)
+        val sdf : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+        var timeType = 3600000
+        if(sharedSettings.getString(SettingsActivity.hoursPlayedWeekTimeType, "hours") != "hours"){
+            timeType = 60000
+        }
+
+        for (i in rp.indices) {
+            val calendar : Calendar = Calendar.getInstance()
+            val playedAtDate = rp[i].playedAt.split("T")[0]
+            calendar.time = sdf.parse(playedAtDate)
+            val day = calendar.get(Calendar.DAY_OF_WEEK)
+            val trackLengthMilliseconds = rp[i].track.length.toFloat()
+            val trackLengthMinutes = trackLengthMilliseconds/timeType
+            timePlayHistory[day-1] = trackLengthMinutes + timePlayHistory[day-1]
+        }
+
+        println(timePlayHistory)
+        for (i in 1..7){
+            gData.add(Entry(i.toFloat(), timePlayHistory[i-1]))
+        }
 
         val lineChartData : LineDataSet = LineDataSet(gData,"Spotify")
         val chosenColor : Int = Color.WHITE //color of graph details

@@ -1,6 +1,7 @@
 package com.example.spotifytracker
 
 import android.content.SharedPreferences
+import android.icu.util.Calendar
 import com.adamratzman.spotify.*
 import com.adamratzman.spotify.endpoints.client.ClientPersonalizationApi
 import com.adamratzman.spotify.models.*
@@ -167,5 +168,19 @@ class SpotifyApiHandler(val token: Token, private val sharedSettings: SharedPref
         }
 
         return api!!.browse.getRecommendations(seedArtists = artistIDs.toList(), limit = itemsToShow).tracks
+    }
+
+    suspend fun userPlayedWeekHistory(): List<PlayHistory> {
+        val calendar : Calendar = Calendar.getInstance()
+        calendar.add(Calendar.DATE, -7)
+        val itemsToShow = 50
+        val beforeDate = null
+        val afterDate = calendar.timeInMillis.toString()
+        if(api!!.spotifyApiOptions.enableDebugMode){
+            print("DEBUG MODE: APP: userPlayedWeekHistory(): ")
+            println("debug: " + api!!.player.getRecentlyPlayed(limit = itemsToShow, before = beforeDate, after = afterDate).items)
+        }
+
+        return api!!.player.getRecentlyPlayed(limit = itemsToShow, before = beforeDate, after = afterDate).items
     }
 }

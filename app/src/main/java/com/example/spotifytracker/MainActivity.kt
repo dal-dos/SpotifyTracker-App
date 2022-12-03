@@ -39,12 +39,12 @@ import com.example.spotifytracker.settings.SettingsActivity
 import com.example.spotifytracker.ui.LoadingDialog
 import com.example.spotifytracker.ui.home.HomeViewModel
 import com.example.spotifytracker.ui.home.HomeViewModelFactory
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.charts.PieChart
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import org.eazegraph.lib.charts.PieChart
-import java.text.DecimalFormat
 
 
 @Suppress("RedundantExplicitType")
@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
     private var favoriteGenre : ArrayList<String> = arrayListOf()
     private var favoriteTracks : List<Track> = arrayListOf()
     private var favoriteArtist : List<Artist> = arrayListOf()
+    private var playedWeekHistory : List<PlayHistory> = arrayListOf()
     private lateinit var navView: BottomNavigationView
     private lateinit var spotifyDatabase : SpotifyDatabase
     private lateinit var spotifyDataDao : SpotifyDataDao
@@ -215,7 +216,8 @@ class MainActivity : AppCompatActivity() {
                 favoriteGenre = apiHandler.userTopGenres()
                 favoriteArtist = apiHandler.userTopArtists()
                 favoriteTracks = apiHandler.userTopTracks()
-                insertDB(username, recentlyPlayed, suggested, favoriteGenre, favoriteArtist, favoriteTracks)
+                playedWeekHistory = apiHandler.userPlayedWeekHistory()
+                insertDB(username, recentlyPlayed, suggested, favoriteGenre, favoriteArtist, favoriteTracks, playedWeekHistory)
             }
             openDialog(apiBuilderLoad)
         }catch (e: Exception){
@@ -224,7 +226,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Suppress("UNUSED_VARIABLE","UNUSED_PARAMETER")
-    private fun insertDB(username: String, recentlyPlayed: List<PlayHistory>, suggested: List<Track>, favoriteGenre: ArrayList<String>, favoriteArtist: List<Artist>, favoriteTracks: List<Track>){
+    private fun insertDB(username: String, recentlyPlayed: List<PlayHistory>, suggested: List<Track>, favoriteGenre: ArrayList<String>, favoriteArtist: List<Artist>, favoriteTracks: List<Track>, playedWeekHistory : List<PlayHistory>){
 
         myViewModel.username.value = username
         myViewModel.recentlyPlayed.value = recentlyPlayed
@@ -232,7 +234,7 @@ class MainActivity : AppCompatActivity() {
         myViewModel.favArtist.value = favoriteArtist
         myViewModel.favTrack.value = favoriteTracks
         myViewModel.suggested.value = suggested
-
+        myViewModel.playedWeekHistory.value = playedWeekHistory
 
 //        spotifyDataEntity.username = username
 //        spotifyDataEntity.recentlyPlayed = Gson().toJson(recentlyPlayed)
@@ -317,7 +319,7 @@ class MainActivity : AppCompatActivity() {
         val arrow = findViewById<TextView>(R.id.popularity_pie_chart_arrow)
         if (cv.isVisible){
             val piechart : PieChart = findViewById(R.id.popularity_pie_chart)
-            piechart.startAnimation()
+            piechart!!.animateY(1400, Easing.EaseInOutQuad)
         }
         val bool = !cv.isVisible
         cv.isVisible = bool
