@@ -10,6 +10,8 @@ import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -378,12 +380,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun getWeatherData(){
-        val weatherApiHandler = WeatherApiHandler(this)
-        weatherApiHandler.startApi()
+    private fun getWeatherData(){
+        val weatherThread = Thread(){
+            val handler = Handler(Looper.getMainLooper())
+            val runnable = Runnable {
+                val weatherApiHandler = WeatherApiHandler(this)
+                weatherApiHandler.startApi()
+            }
+            handler.post(runnable)
+        }
+        weatherThread.start()
     }
 
-    fun checkPermission() {
+    private fun checkPermission() {
         if (Build.VERSION.SDK_INT < 23) return
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
             PackageManager.PERMISSION_GRANTED) ActivityCompat.requestPermissions(this, arrayOf(
