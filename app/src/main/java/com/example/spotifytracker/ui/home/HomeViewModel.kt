@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.models.PlayHistory
 import com.adamratzman.spotify.models.Track
+import com.example.spotifytracker.WeatherObject
 import com.example.spotifytracker.database.SpotifyDataEntity
 import com.example.spotifytracker.database.SpotifyDataRepository
 import java.lang.IllegalArgumentException
@@ -99,6 +100,33 @@ class HomeViewModel(private val repository: SpotifyDataRepository) : ViewModel()
         }
         set(value) {
             _timePlayedDay = value
+        }
+
+    private var _futureWeather = MutableLiveData<ArrayList<WeatherObject>>()
+    var futureWeather: MutableLiveData<ArrayList<WeatherObject>>
+        get(){
+            return _futureWeather
+        }
+        set(value) {
+            _futureWeather = value
+        }
+
+    private var _currWeather = MutableLiveData<WeatherObject>()
+    var currWeather: MutableLiveData<WeatherObject>
+        get(){
+            return _currWeather
+        }
+        set(value) {
+            _currWeather = value
+        }
+
+    private var _city = MutableLiveData<String>()
+    var city: MutableLiveData<String>
+        get(){
+            return _city
+        }
+        set(value) {
+            _city = value
         }
 }
 class HomeViewModelFactory(private val repository: SpotifyDataRepository) : ViewModelProvider.Factory {

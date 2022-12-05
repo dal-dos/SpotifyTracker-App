@@ -99,7 +99,50 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
-                                android:id="@+id/weather_text"/>
+                                android:textSize="20sp"
+                                android:text="Current Weather"
+                                android:id="@+id/weather_text_title"/>
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="150dp"
+                                android:layout_height="150dp"
+                                android:layout_gravity="center"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_music"
+                                android:contentDescription="@string/image" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:textSize="20sp"
+                                        android:text="Raining"
+                                        android:id="@+id/weather_text"/>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:textSize="17sp"
+                                        android:text="Cloudy Showers"
+                                        android:id="@+id/weather_text_desc"/>
+                                </LinearLayout>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10sp"
+                                    android:textSize="30sp"
+                                    android:gravity="end"
+                                    android:text="20C"
+                                    android:id="@+id/weather_temp"/>
+                            </LinearLayout>
+
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
@@ -128,7 +171,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/comfortaasemibold"
-                            android:text="What to listen to tomorrow" />
+                            android:text="What to listen to in the future" />
 
                         <TextView
                             android:id="@+id/rec_tomorrow_arrow"

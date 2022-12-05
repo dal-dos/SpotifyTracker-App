@@ -246,6 +246,14 @@ class MainActivity : AppCompatActivity() {
 //        myViewModel.insert(spotifyDataEntity)
     }
 
+    private fun insertWeather(todayWeather: WeatherObject, future: ArrayList<WeatherObject>, myCity: String){
+        myViewModel.currWeather.value = todayWeather
+        myViewModel.futureWeather.value = future
+        myViewModel.city.value = myCity
+    }
+
+
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("displayName", username)
@@ -404,7 +412,16 @@ class MainActivity : AppCompatActivity() {
             val handler = Handler(Looper.getMainLooper())
             val runnable = Runnable {
                 val weatherApiHandler = WeatherApiHandler(this)
-                weatherApiHandler.startApi()
+                lifecycleScope.launch(){
+                    weatherApiHandler.startApi()
+                    val city = weatherApiHandler.getCity()
+                    weatherApiHandler.setCurrWeather()
+                    val currWeather = weatherApiHandler.getCurrentWeather()
+                    weatherApiHandler.setFutureWeather()
+                    val futureWeather = weatherApiHandler.getFutureWeather()
+                    println("Got all the weather data")
+                    insertWeather(currWeather, futureWeather, city)
+                }
             }
             handler.post(runnable)
         }

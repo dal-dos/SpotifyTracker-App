@@ -10,6 +10,8 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.delay
+import okhttp3.internal.wait
 import org.json.JSONArray
 import org.json.JSONObject
 import java.text.DecimalFormat
@@ -21,15 +23,16 @@ class WeatherApiHandler(val context: Context) {
     private var weatherUrl: String = "https://api.openweathermap.org/data/2.5/forecast?"
     private val weatherApiKey: String = "dc0a87f28557dcf5a3bd4cf16653c722"
     private lateinit var location: Location
-    lateinit var cityName: String
-    lateinit var futureWeatherArray: ArrayList<WeatherObject>
-    lateinit var currWeather: WeatherObject
+    private lateinit var cityName: String
+    private lateinit var futureWeatherArray: ArrayList<WeatherObject>
+    private lateinit var currWeather: WeatherObject
     private lateinit var queue: RequestQueue
+    private var counter: Int = 0
 
     @SuppressLint("MissingPermission")
-    fun startApi(){
+    suspend fun startApi(): Boolean{
         val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
-        fusedLocationProviderClient.lastLocation
+        val temp = fusedLocationProviderClient.lastLocation
             .addOnSuccessListener { currLocation: Location? ->
                 //get the latitude and longitude
                 //println("debug: location is lat ${currLocation?.latitude} and long ${currLocation?.longitude}")
@@ -43,13 +46,15 @@ class WeatherApiHandler(val context: Context) {
                 weatherUrl = weatherUrl + "lat=" + location.latitude + "&lon=" + location.longitude + "&appid=" + weatherApiKey
                 // Instantiate the RequestQueue.
                 queue = Volley.newRequestQueue(context)
-                getCurrWeather()
-                getFutureWeather()
             }
+        while (!temp.isComplete){
+            delay(500)
+        }
+        return temp.isComplete
     }
 
     // Function is not working correctly when called from another class
-    private fun getFutureWeather() {
+    suspend fun setFutureWeather() {
         val url: String = weatherUrl
         futureWeatherArray = arrayListOf()
         // Request a string response from the provided URL.
@@ -81,17 +86,19 @@ class WeatherApiHandler(val context: Context) {
                     lastCheckedDate = date
                     futureWeatherArray.add(newWeatherObject)
                     println(newWeatherObject)
+                    counter = 2
                 }
             },
             //In case of any error
             { error -> println("debug: Open weather API error with code $error")})
         queue.add(stringReq)
+        while (counter != 2){
+            delay(500)
+        }
     }
 
     // Function is not working correctly when called from another class
-    private fun getCurrWeather() {
-        // Instantiate the RequestQueue.
-        val queue = Volley.newRequestQueue(context)
+    suspend fun setCurrWeather() {
         val url: String = weatherUrlForCurr
         // Request a string response from the provided URL.
         val stringReq = StringRequest(
@@ -110,11 +117,33 @@ class WeatherApiHandler(val context: Context) {
                 val time = jsonWeather.getString("dt")
                 currWeather = WeatherObject(daysWeather, temp, description, time)
                 println("Curr weather is $currWeather")
+                counter = 1
             },
             //In case of any error
             { error -> println("debug: Open weather API error with code $error")})
         queue.add(stringReq)
+        while (counter != 1){
+            delay(500)
+        }
+        //println("Curr weather is set")
     }
 
+    suspend fun getCurrentWeather(): WeatherObject {
+        while (counter != 1){
+            delay(100)
+        }
+        return currWeather
+    }
+
+    suspend fun getFutureWeather(): ArrayList<WeatherObject> {
+        while (counter != 2){
+            delay(100)
+        }
+        return futureWeatherArray
+    }
+
+    fun getCity(): String {
+        return cityName
+    }
 
 }

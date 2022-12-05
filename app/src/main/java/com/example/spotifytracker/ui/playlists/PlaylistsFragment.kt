@@ -1,6 +1,7 @@
 package com.example.spotifytracker.ui.playlists
 
 import android.animation.LayoutTransition
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.transition.AutoTransition
 import android.transition.TransitionManager
@@ -11,43 +12,88 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.spotifytracker.MainActivity
 import com.example.spotifytracker.R
+import com.example.spotifytracker.database.SpotifyDataDao
+import com.example.spotifytracker.database.SpotifyDataRepository
+import com.example.spotifytracker.database.SpotifyDatabase
 import com.example.spotifytracker.databinding.FragmentPlaylistsBinding
+import com.example.spotifytracker.databinding.FragmentStatsBinding
+import com.example.spotifytracker.ui.home.HomeViewModel
+import com.example.spotifytracker.ui.home.HomeViewModelFactory
+import com.github.mikephil.charting.charts.PieChart
 
 class PlaylistsFragment : Fragment() {
 
     private var _binding: FragmentPlaylistsBinding? = null
-
+    private lateinit var scrollView: NestedScrollView
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var scrollView: NestedScrollView
-    private var switchingView: Boolean = true
+    private var pc: PieChart? = null
+    private lateinit var sharedSettings: SharedPreferences
     private lateinit var myActivity : MainActivity
+    private var switchingView: Boolean = true
+    //database stuff(expletive)
+    private lateinit var spotifyDatabase: SpotifyDatabase
+    private lateinit var spotifyDataDao: SpotifyDataDao
+    private lateinit var repo: SpotifyDataRepository
+    private lateinit var viewModelFactory: HomeViewModelFactory
+    private lateinit var myViewModel: HomeViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val playlistsViewModel =
-            ViewModelProvider(this).get(PlaylistsViewModel::class.java)
-
-        _binding = FragmentPlaylistsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
-
-        val layout = binding.playlistLayout
-        layout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-        TransitionManager.beginDelayedTransition(layout, AutoTransition())
-
         myActivity = requireActivity() as MainActivity
+        val root = startFunction(inflater,container)
 
+        collapseAnimationInit()
+        statsObservers()
         //scrollOnChangeListener()
         swipeRefresh()
         return root
+    }
+
+    private fun startFunction(inflater: LayoutInflater, container: ViewGroup?): View {
+        initViewModel()
+        _binding = FragmentPlaylistsBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+        myActivity = requireActivity() as MainActivity
+        return root
+    }
+
+    private fun statsObservers() {
+
+        myViewModel.city.observe(viewLifecycleOwner) {
+           println("The city in fragment is $it")
+        }
+
+        myViewModel.futureWeather.observe(viewLifecycleOwner) {
+            //setChart(it)
+        }
+
+        myViewModel.currWeather.observe(viewLifecycleOwner) {
+            println("The weather in fragment is $it")
+        }
+    }
+
+    private fun initViewModel() {
+        spotifyDatabase = SpotifyDatabase.getInstance(requireActivity())
+        spotifyDataDao = spotifyDatabase.spotifyDataDao
+        repo = SpotifyDataRepository(spotifyDataDao)
+        viewModelFactory = HomeViewModelFactory(repo)
+        myViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[HomeViewModel::class.java]
+    }
+
+    private fun collapseAnimationInit() {
+        val layout = binding.playlistLayout
+        layout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        TransitionManager.beginDelayedTransition(layout, AutoTransition())
     }
 
     override fun onDestroyView() {

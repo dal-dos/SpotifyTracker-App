@@ -83,7 +83,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
     }
 
     private fun startFunction(inflater: LayoutInflater, container: ViewGroup?): View {
-        initViemodel()
+        initViewModel()
         _binding = FragmentStatsBinding.inflate(inflater, container, false)
         val root: View = binding.root
         myActivity = requireActivity() as MainActivity
@@ -91,7 +91,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         return root
     }
 
-    private fun initViemodel() {
+    private fun initViewModel() {
         spotifyDatabase = SpotifyDatabase.getInstance(requireActivity())
         spotifyDataDao = spotifyDatabase.spotifyDataDao
         repo = SpotifyDataRepository(spotifyDataDao)
@@ -372,7 +372,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         val index : Int = h!!.x.toInt()
         onNothingSelected()
         artistTexts[index].typeface = tf
-        pc!!.centerText = "%$data"
+        pc!!.centerText = "$data%"
     }
 
     override fun onNothingSelected() {
