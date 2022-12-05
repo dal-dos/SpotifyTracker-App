@@ -14,7 +14,9 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ScrollView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
@@ -78,7 +80,8 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
 
         statsObservers()
 
-        //scrollOnChangeListener()
+        scrollView = binding.statsNestedScrollView
+        scrollOnChangeListener()
         applySettings()
 
         swipeRefresh()
@@ -136,7 +139,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         artistViews.map { it.isVisible = false }
         artistTexts.map { it.isVisible = false }
         pc = binding.popularityPieChart
-        val tf : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaalight);
+        val tf : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaalight)
         val legend: Legend = pc!!.legend
         legend.isEnabled = false
 //        legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
@@ -388,18 +391,20 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         binding.hoursPlayedWeekOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.hoursPlayedWeekVisibilityKey, true)
         binding.popularityPieChartOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.popularityPieChartVisibilityKey, true)
         binding.timePlayedDayOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.timePlayedDayVisibilityKey, true)
+        binding.statsPieChartOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.statsPieChartVisibilityKey, true)
 
         binding.popularityPieChartInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.popularityPieChartCollapseKey, true)
         binding.hoursPlayedWeekInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.hoursPlayedWeekCollapseKey, true)
         binding.timePlayedDayInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.timePlayedDayCollapseKey, true)
+        binding.statsPieChartInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.statsPieChartCollapseKey, true)
 
         MainActivity().changeArrow(binding.popularityPieChartArrow, binding.popularityPieChartInnerCardview.isVisible)
         MainActivity().changeArrow(binding.hoursPlayedWeekArrow, binding.hoursPlayedWeekInnerCardview.isVisible)
         MainActivity().changeArrow(binding.timePlayedDayArrow, binding.timePlayedDayInnerCardview.isVisible)
+        MainActivity().changeArrow(binding.statsPieChartArrow, binding.statsPieChartInnerCardview.isVisible)
     }
 
-/*    private fun scrollOnChangeListener() {
-        scrollView = binding.statsNestedScrollView
+    private fun scrollOnChangeListener() {
         scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY + 4 <= oldScrollY ){
                 println("debug: Oldscrolly is $oldScrollY and scrolly is $scrollY")
@@ -416,7 +421,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
             }
         }
     }
-    override fun onResume() {
+    /*override fun onResume() {
         super.onResume()
         switchingView = true
     }
@@ -427,6 +432,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
 
     override fun onResume() {
         super.onResume()
+        binding.statsLayout.isVisible = true
         myActivity.showActionBar(true)
     }
 
@@ -440,12 +446,16 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
         val raw = e!!.y
+        println("RAW IS $raw")
         if(raw != POSITIVE_INFINITY){
             if(raw <= 100){
                 val tfbold : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaabold)
                 val tflight : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaalight)
                 val artistTexts : ArrayList<TextView> = arrayListOf(binding.artist1Text,binding.artist2Text,binding.artist3Text,binding.artist4Text,binding.artist5Text)
-                val data = String.format("%.1f",(raw/totalPopularity)*100)
+                var data = "100.0"
+                if (raw < 100f){
+                    data = String.format("%.1f",(raw/totalPopularity)*100)
+                }
                 val index : Int = h!!.x.toInt()
                 onNothingSelected()
                 artistTexts.map{ it.typeface = tflight}
@@ -468,5 +478,12 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
     override fun onNothingSelected() {
         pc.centerText = ""
         timeListenedPieChart.centerText = ""
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.statsLayout.isVisible = false
+        scrollView.fullScroll(ScrollView.FOCUS_UP);
+        scrollView.scrollTo(0,0)
     }
 }

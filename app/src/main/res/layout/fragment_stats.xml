@@ -392,7 +392,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
                 app:cardCornerRadius="8dp"
-                android:onClick="onClickCardViewPopularityPieChart">
+                android:onClick="onClickCardViewStatsPieChart">
                 <LinearLayout
                     android:id="@+id/stats_pie_chart_layout"
                     android:layout_width="match_parent"

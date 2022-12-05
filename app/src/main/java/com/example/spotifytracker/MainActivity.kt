@@ -404,6 +404,9 @@ class MainActivity : AppCompatActivity() {
         cv.isVisible = bool
         cv2.isVisible = bool
         changeArrow(arrow,cv.isVisible)
+        val editor = sharedSettings.edit()
+        editor.putBoolean(SettingsActivity.recommendedTodayCollapseKey,bool)
+        editor.apply()
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -413,6 +416,9 @@ class MainActivity : AppCompatActivity() {
         val bool = !cv.isVisible
         cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
+        val editor = sharedSettings.edit()
+        editor.putBoolean(SettingsActivity.recommendedTomorrowCollapseKey,bool)
+        editor.apply()
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -422,6 +428,9 @@ class MainActivity : AppCompatActivity() {
         val bool = !cv.isVisible
         cv.isVisible = bool
         changeArrow(arrow,cv.isVisible)
+        val editor = sharedSettings.edit()
+        editor.putBoolean(SettingsActivity.allPlaylistsCollapseKey,bool)
+        editor.apply()
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -439,6 +448,23 @@ class MainActivity : AppCompatActivity() {
         editor.putBoolean(SettingsActivity.timePlayedDayCollapseKey,bool)
         editor.apply()
     }
+
+    fun onClickCardViewStatsPieChart(view: View) {
+        val cv = findViewById<CardView>(R.id.stats_pie_chart_inner_cardview)
+        val arrow = findViewById<TextView>(R.id.stats_pie_chart_arrow)
+        if (cv.isVisible){
+            val piechart : PieChart = findViewById(R.id.stats_pie_chart)
+            piechart!!.animateY(1400, Easing.EaseInOutQuad)
+        }
+        val bool = !cv.isVisible
+        cv.isVisible = bool
+        changeArrow(arrow,cv.isVisible)
+        val editor = sharedSettings.edit()
+        editor.putBoolean(SettingsActivity.statsPieChartCollapseKey,bool)
+        editor.apply()
+    }
+
+
     fun changeArrow(arrow: TextView, bool: Boolean) {
         if(bool){
             //arrow.rotation = 90F
@@ -521,7 +547,6 @@ class MainActivity : AppCompatActivity() {
 //            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) getWeatherData()
 //        }
 //    }
-
 
 
 

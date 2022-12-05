@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
+import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
@@ -69,6 +70,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     private lateinit var scrollView: NestedScrollView
     private lateinit var myActivity : MainActivity
     private lateinit var sharedSettings: SharedPreferences
+    private var hideLayoutBool: Boolean = false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -77,6 +79,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         val root = startFunction(inflater,container)
 
         initializeOnItemClickListeners()
+        println("debug: On createview called")
 
         initializeVariables()
 
@@ -271,7 +274,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     }
 
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
+        hideLayoutBool = true
         when(p0?.id){
             recentlyPlayedList.id -> {
                 if (songArrayList.isNotEmpty()){
@@ -319,11 +322,14 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         val params = listView.layoutParams
         params.height = totalHeight + listView.dividerHeight * (listAdapter.count - 1)
         listView.layoutParams = params
+        listView.isFocusable = false
     }
 
     override fun onResume() {
         super.onResume()
         //println("debug: called on resume")
+        binding.homeLayout.isVisible = true
+        hideLayoutBool = false
         myActivity.showActionBar(true)
         binding.homeLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         TransitionManager.beginDelayedTransition(binding.homeLayout, AutoTransition())
@@ -350,6 +356,15 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         MainActivity().changeArrow(binding.favTracksArrow,binding.favoriteTracksInnerCardview.isVisible)
         MainActivity().changeArrow(binding.suggestedArrow,binding.suggestedInnerCardview.isVisible)
         MainActivity().changeArrow(binding.recentlyPlayedArrow,binding.recentlyPlayedInnerCardview.isVisible)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.homeLayout.isVisible = hideLayoutBool
+        if (!hideLayoutBool){
+            scrollView.fullScroll(ScrollView.FOCUS_UP);
+            scrollView.scrollTo(0, 0)
+        }
     }
 
 }
