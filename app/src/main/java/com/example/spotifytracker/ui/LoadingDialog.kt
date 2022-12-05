@@ -21,7 +21,7 @@ class LoadingDialog(
         dialog.setOnShowListener {
             CoroutineScope(Dispatchers.Default).launch {
                 while(apiBuilderLoad.isActive){
-                    //nothing
+                    delay(500)
                 }
                 dialog.dismiss()
                 delay(500)

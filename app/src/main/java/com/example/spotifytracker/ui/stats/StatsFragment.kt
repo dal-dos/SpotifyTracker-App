@@ -14,6 +14,7 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
@@ -119,19 +120,23 @@ class StatsFragment : Fragment() {
     }
 
     private fun makePopularityPieChart(arrayList : List<Artist>) {
+        val artistViews : ArrayList<View> = arrayListOf(binding.artist1View,binding.artist2View,binding.artist3View,binding.artist4View,binding.artist5View)
+        val artistTexts : ArrayList<TextView> = arrayListOf(binding.artist1Text,binding.artist2Text,binding.artist3Text,binding.artist4Text,binding.artist5Text)
+        artistViews.map { it.isVisible = false }
+        artistTexts.map { it.isVisible = false }
         pc = binding.popularityPieChart
-
-        val legend: Legend = pc!!.legend
-        legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
-        legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
-        legend.orientation = Legend.LegendOrientation.VERTICAL
-        legend.isWordWrapEnabled = true
-        legend.setDrawInside(false)
-        legend.textColor= Color.WHITE
-        legend.textSize = 12F
         val tf : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaalight);
-        legend.typeface = tf
-        legend.xOffset = -30F
+        val legend: Legend = pc!!.legend
+        legend.isEnabled = false
+//        legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
+//        legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+//        legend.orientation = Legend.LegendOrientation.VERTICAL
+//        legend.isWordWrapEnabled = true
+//        legend.setDrawInside(false)
+//        legend.textColor= Color.WHITE
+//        legend.textSize = 12F
+//        legend.typeface = tf
+//        legend.xOffset = -30F
 
         val colors : ArrayList<Int> = arrayListOf(Color.parseColor("#FFA726"), Color.parseColor("#66BB6A"), Color.parseColor("#EF5350"),Color.parseColor("#29B6F6"), Color.parseColor("#FF6200EE"))
         val dataEntries : ArrayList<PieEntry> = arrayListOf()
@@ -140,9 +145,19 @@ class StatsFragment : Fragment() {
             if (i == 5){
                 break
             }
-            dataEntries.add(PieEntry(arrayList[i].popularity.toFloat(),arrayList[i].name))
+            val name = arrayList[i].name
+            artistTexts[i].isVisible = true
+            artistViews[i].isVisible = true
+            artistTexts[i].isSelected = true
+            dataEntries.add(PieEntry(arrayList[i].popularity.toFloat(),name))
+            artistTexts[i].text = name
         }
+
         if (arrayList.isEmpty()) {
+            artistTexts[0].text = "No Data Available"
+            artistTexts[0].isVisible = true
+            artistViews[0].isVisible = true
+            artistTexts[0].isSelected = true
             dataEntries.add(PieEntry(100f,"No Data Available"))
         }
 

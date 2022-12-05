@@ -144,7 +144,10 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
             else if (oldScrollY + 4 <= scrollY){
                 //scroll down
                 println("debug: Hiding the tool bar")
-                (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+                try {
+                    (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+                }catch (e :Exception){
+                }
             }
         }
     }

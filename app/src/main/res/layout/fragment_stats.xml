@@ -247,7 +247,133 @@
                         android:layout_width="0dp"
                         android:layout_height="200dp"
                         android:layout_weight="1"
+
                         />
+
+                    <LinearLayout
+                        android:layout_width="110dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical">
+                            <View
+                                android:id="@+id/artist1View"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:background="@color/Artist1"
+                                android:layout_gravity="center_vertical"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Artist 1"
+                                android:paddingLeft="10dp"
+                                android:id="@+id/artist1Text"
+                                android:fontFamily="@font/comfortaalight"
+                                android:marqueeRepeatLimit="marquee_forever"
+                                android:scrollHorizontally="true"
+                                android:singleLine="true"
+                                android:ellipsize="marquee" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="5dp">
+                            <View
+                                android:id="@+id/artist2View"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:background="@color/Artist2"
+                                android:layout_gravity="center_vertical"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Artist 2"
+                                android:paddingLeft="10dp"
+                                android:id="@+id/artist2Text"
+                                android:fontFamily="@font/comfortaalight"
+                                android:marqueeRepeatLimit="marquee_forever"
+                                android:scrollHorizontally="true"
+                                android:singleLine="true"
+                                android:ellipsize="marquee"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="5dp">
+                            <View
+                                android:id="@+id/artist3View"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:background="@color/Artist3"
+                                android:layout_gravity="center_vertical"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Artist 3"
+                                android:paddingLeft="10dp"
+                                android:id="@+id/artist3Text"
+                                android:fontFamily="@font/comfortaalight"
+                                android:marqueeRepeatLimit="marquee_forever"
+                                android:scrollHorizontally="true"
+                                android:singleLine="true"
+                                android:ellipsize="marquee"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="5dp">
+                            <View
+                                android:id="@+id/artist4View"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:background="@color/Artist4"
+                                android:layout_gravity="center_vertical"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Artist 4"
+                                android:paddingLeft="10dp"
+                                android:id="@+id/artist4Text"
+                                android:fontFamily="@font/comfortaalight"
+                                android:marqueeRepeatLimit="marquee_forever"
+                                android:scrollHorizontally="true"
+                                android:singleLine="true"
+                                android:ellipsize="marquee"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="5dp">
+                            <View
+                                android:id="@+id/artist5View"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:background="@color/Artist5"
+                                android:layout_gravity="center_vertical"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Artist 5"
+                                android:paddingLeft="10dp"
+                                android:id="@+id/artist5Text"
+                                android:fontFamily="@font/comfortaalight"
+                                android:marqueeRepeatLimit="marquee_forever"
+                                android:scrollHorizontally="true"
+                                android:singleLine="true"
+                                android:ellipsize="marquee"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
 
             </LinearLayout>
 

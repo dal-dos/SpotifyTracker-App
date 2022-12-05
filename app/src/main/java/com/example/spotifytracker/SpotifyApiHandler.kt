@@ -50,7 +50,7 @@ class SpotifyApiHandler(val token: Token, private val sharedSettings: SharedPref
         //println("debug: " + api)
         //println("debug: Recently Played:" + api!!.player.getRecentlyPlayed(limit = 5))
 
-        api!!.spotifyApiOptions.enableDebugMode = true
+        api!!.spotifyApiOptions.enableDebugMode = false
     }
 
     fun getApi(): SpotifyClientApi? {

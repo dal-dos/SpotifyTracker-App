@@ -28,7 +28,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:exported="false"/>
         <activity android:name=".settings.SettingsActivity"
             android:exported="false"
             android:label="Settings"/>
