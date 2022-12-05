@@ -38,11 +38,13 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kotlin.collections.ArrayList
 import kotlin.time.Duration.Companion.hours
 
 
-class StatsFragment : Fragment() {
+class StatsFragment : Fragment(), OnChartValueSelectedListener {
 
     private var _binding: FragmentStatsBinding? = null
     private lateinit var scrollView: NestedScrollView
@@ -165,7 +167,7 @@ class StatsFragment : Fragment() {
         pieDataSet.colors = colors
 
         val pieData = PieData(pieDataSet)
-        pieData.setDrawValues(true)
+        pieData.setDrawValues(false)
         pieData.dataSetLabels
         pieData.setValueTextSize(12F)
         pieData.setValueTypeface(tf)
@@ -173,10 +175,15 @@ class StatsFragment : Fragment() {
         pc!!.data = pieData
         pc!!.setHoleColor(Color.parseColor("#2E6943"))
         pc!!.setDrawEntryLabels(false)
-        pc!!.setUsePercentValues(true)
+        //pc!!.setUsePercentValues(true)
         pc!!.description.isEnabled= false
         pc!!.extraRightOffset = -20F
         pc!!.extraBottomOffset = 0F
+        pc!!.setDrawCenterText(true)
+        pc!!.setOnChartValueSelectedListener(this)
+        pc!!.setCenterTextTypeface(tf)
+        pc!!.centerText = "Click a slice"
+        pc!!.setCenterTextColor(Color.WHITE)
 
         pc!!.invalidate()
         pc!!.animateY(1400,Easing.EaseInOutQuad)
@@ -356,5 +363,15 @@ class StatsFragment : Fragment() {
             myActivity.apiBuilder()
             swipeLayout.isRefreshing = false
         }
+    }
+
+    override fun onValueSelected(e: Entry?, h: Highlight?) {
+        println(e)
+        println(h)
+        pc!!.centerText = e?.y.toString()
+    }
+
+    override fun onNothingSelected() {
+        pc!!.centerText = ""
     }
 }
