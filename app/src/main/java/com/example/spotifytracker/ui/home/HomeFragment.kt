@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
+import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
@@ -77,6 +78,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         val root = startFunction(inflater,container)
 
         initializeOnItemClickListeners()
+        println("debug: On createview called")
 
         initializeVariables()
 
@@ -319,6 +321,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         val params = listView.layoutParams
         params.height = totalHeight + listView.dividerHeight * (listAdapter.count - 1)
         listView.layoutParams = params
+        listView.isFocusable = false
     }
 
     override fun onResume() {
@@ -350,6 +353,12 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         MainActivity().changeArrow(binding.favTracksArrow,binding.favoriteTracksInnerCardview.isVisible)
         MainActivity().changeArrow(binding.suggestedArrow,binding.suggestedInnerCardview.isVisible)
         MainActivity().changeArrow(binding.recentlyPlayedArrow,binding.recentlyPlayedInnerCardview.isVisible)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        scrollView.fullScroll(ScrollView.FOCUS_UP);
+        scrollView.scrollTo(0,0)
     }
 
 }

@@ -14,6 +14,7 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
@@ -79,6 +80,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         statsObservers()
 
         //scrollOnChangeListener()
+        scrollView = binding.statsNestedScrollView
         applySettings()
 
         swipeRefresh()
@@ -136,7 +138,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         artistViews.map { it.isVisible = false }
         artistTexts.map { it.isVisible = false }
         pc = binding.popularityPieChart
-        val tf : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaalight);
+        val tf : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaalight)
         val legend: Legend = pc!!.legend
         legend.isEnabled = false
 //        legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
@@ -471,5 +473,11 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
     override fun onNothingSelected() {
         pc.centerText = ""
         timeListenedPieChart.centerText = ""
+    }
+
+    override fun onPause() {
+        super.onPause()
+        scrollView.fullScroll(ScrollView.FOCUS_UP);
+        scrollView.scrollTo(0,0)
     }
 }

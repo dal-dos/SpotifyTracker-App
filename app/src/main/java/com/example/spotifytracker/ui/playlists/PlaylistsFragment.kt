@@ -10,10 +10,7 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.AdapterView
-import android.widget.ListView
+import android.widget.*
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -80,6 +77,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
 
         initializeVariables(root)
 
+        scrollView = binding.playlistNestedScrollView
 
         playlistsObservers()
         applySettings()
@@ -181,7 +179,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         recommendedTodayList: ListView,
         recommendedTodayListAdapter: PlaylistListAdapter
     ) {
-        val IDmap = PlaylistsData.allPlaylist
+        val IDmap = playlistArrayList
         var index = 0
         val currWeatherPlaylistIndices = arrayListOf<Int>()
         for(item in IDmap){
@@ -272,6 +270,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         val params = listView.layoutParams
         params.height = totalHeight + listView.dividerHeight * (listAdapter.count - 1)
         listView.layoutParams = params
+        listView.isFocusable = false
     }
 
     override fun onResume() {
@@ -313,5 +312,11 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         MainActivity().changeArrow(binding.recTodayArrow, binding.recommendedTodayInnerCardview.isVisible)
         MainActivity().changeArrow(binding.recTomorrowArrow, binding.recommendedTomorrowInnerCardview.isVisible)
         MainActivity().changeArrow(binding.allPlaylistsArrow, binding.allPlaylistsInnerCardview.isVisible)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        scrollView.fullScroll(ScrollView.FOCUS_UP);
+        scrollView.scrollTo(0,0)
     }
 }
