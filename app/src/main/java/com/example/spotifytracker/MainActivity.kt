@@ -50,7 +50,42 @@ class MainActivity : AppCompatActivity() {
         val mapOfPlaylistIds = linkedMapOf(
             "35xI4hSJ8MdO1xkXwsd56a" to "Rain",
             "4eWBwGl0c5wtp6k5Krp6My" to "Rain",
-            "37i9dQZF1DX4aYNO8X5RpR" to "Thunderstorm"
+            "37i9dQZF1DX4aYNO8X5RpR" to "Thunderstorm",
+            "37i9dQZF1DWUWC0NIJDJKL" to "Clear",
+            "37i9dQZF1DWVlm7xgnWdvJ" to "Clear",
+            "69VpTvkL1wnucTlcE4xeAu" to "Clear",
+            "49MqbWUSYMpxaUzog7MDqG" to "Clear",
+            "37i9dQZEVXbMDoHDwVN2tF" to "Clear", //top 50 global
+
+
+            //probably the same as rain
+
+            "2RXp3BYsvstt4OLs35MEAE" to "Cloudy",
+            "1WOKSAOF2jQ6bwb2R7Ji3B" to "Cloudy",
+            "6cQikvBTHpNlXUEmhsLIb2" to "Cloudy",
+            "1ocqFRrQpH3fvsUyWJ2Kya" to "Cloudy",
+            "7lLnV1ifkO7DWJ72pJj6b7" to "Cloudy",
+            "37i9dQZF1DX6ziVCJnEm59" to "Cloudy",
+
+            //smoke, haze, dust, FOG, sand, ash, mist
+            "2LncPQHTRFodEUIJOqhULw" to "Fog",
+            "3SfCLlEbXujHz7vPcetTVb" to "Fog",
+            "4JeYlFthkA8VcdkDXLUOJR" to "Fog",
+            "37i9dQZF1DXbENHm2OgowX" to "Fog",
+            //smoke
+            "0snmYSf58sLE3NPEL5zqZn" to "Fog",
+            "37i9dQZF1DX3XgesiUXnsq" to "Fog",
+
+            //going to change squall to wind
+
+            "5pTvWEc67MvzN5i49NEcQC" to "Wind",
+            "5REHKworia9rIuLDMZd2Wy" to "Wind",
+            "5vAuUpKJN4iUVhFSYjJevi" to "Wind",
+
+
+            "37i9dQZF1DX6ziVCJnEm59" to "Tornado",
+            "37i9dQZF1DWZQaaqNMbbXa" to "Tornado",
+            "1lS6v9h4MXOw6f6y8MkS8w" to "Tornado"
         )
     }
     private lateinit var binding: ActivityMainBinding
