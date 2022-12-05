@@ -49,25 +49,6 @@ class MainActivity : AppCompatActivity() {
     companion object{
         val mapOfPlaylistIds = mapOf(
 
-
-            get a couple for these
-
-                    Clear
-                    Clouds
-
-
-                    get 1ish? for this idk tornado never gonna happen
-                    Mist
-                    Smoke
-                    Haze
-                    Dust
-                    Fog
-                    Sand
-                    Dust
-                    Ash
-                    Squall
-                    Tornado
-
              //some jazz, classical, calm vibes
             "35xI4hSJ8MdO1xkXwsd56a" to "rain",
             "4eWBwGl0c5wtp6k5Krp6My" to "rain",
@@ -110,19 +91,38 @@ class MainActivity : AppCompatActivity() {
             "37i9dQZF1DWUWC0NIJDJKL" to "clear",
             "37i9dQZF1DWVlm7xgnWdvJ" to "clear",
             "69VpTvkL1wnucTlcE4xeAu" to "clear",
+            "49MqbWUSYMpxaUzog7MDqG" to "clear",
             "37i9dQZEVXbMDoHDwVN2tF" to "clear", //top 50 global
 
 
+            //probably the same as rain
+
+            "2RXp3BYsvstt4OLs35MEAE" to "cloudy",
+            "1WOKSAOF2jQ6bwb2R7Ji3B" to "cloudy",
+            "6cQikvBTHpNlXUEmhsLIb2" to "cloudy",
+            "1ocqFRrQpH3fvsUyWJ2Kya" to "cloudy",
+            "7lLnV1ifkO7DWJ72pJj6b7" to "cloudy",
+            "37i9dQZF1DX6ziVCJnEm59" to "cloudy",
+
+            //smoke, haze, dust, FOG, sand, ash, mist
+            "2LncPQHTRFodEUIJOqhULw" to "fog",
+            "3SfCLlEbXujHz7vPcetTVb" to "fog",
+            "4JeYlFthkA8VcdkDXLUOJR" to "fog",
+            "37i9dQZF1DXbENHm2OgowX" to "fog",
+            //smoke
+            "0snmYSf58sLE3NPEL5zqZn" to "fog",
+            "37i9dQZF1DX3XgesiUXnsq" to "fog",
+
+            //going to change squall to wind
+
+            "5pTvWEc67MvzN5i49NEcQC" to "wind",
+            "5REHKworia9rIuLDMZd2Wy" to "wind",
+            "5vAuUpKJN4iUVhFSYjJevi" to "wind",
 
 
-
-
-
-
-
-
-
-
+            "37i9dQZF1DX6ziVCJnEm59" to "tornado",
+           "37i9dQZF1DWZQaaqNMbbXa" to "tornado",
+            "1lS6v9h4MXOw6f6y8MkS8w" to "tornado"
 
         )
     }
