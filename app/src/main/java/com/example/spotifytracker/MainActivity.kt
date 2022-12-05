@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
             onGPS()
         }
-
+//gg
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
