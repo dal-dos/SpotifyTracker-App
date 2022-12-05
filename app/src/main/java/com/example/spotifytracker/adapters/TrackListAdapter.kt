@@ -33,14 +33,20 @@ class TrackListAdapter(private val context: Context, private var spotifyFavTrack
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View = View.inflate(context, R.layout.song_item,null)
 
-        val itemTitleText = view.findViewById<TextView>(R.id.itemTitleText)
-        val itemSubText =  view.findViewById<TextView>(R.id.itemSubText)
+        setTitleText(view, position)
+        setSubText(view, position)
+        setImage(view,position)
+
+        return view
+    }
+
+    private fun setImage(view: View, position: Int) {
         val image = view.findViewById<ImageView>(R.id.imageView)
-        val layout = view.findViewById<LinearLayout>(R.id.linearlayout)
+        Picasso.get().load(spotifyFavTrack[position].album.images[0].url).into(image);
+    }
 
-        var track : String = spotifyFavTrack[position].name
-        itemTitleText.text = track
-
+    private fun setSubText(view: View, position: Int) {
+        val itemSubText =  view.findViewById<TextView>(R.id.itemSubText)
         var myArtists = ""
         spotifyFavTrack[position].artists.forEach { it ->
             if(myArtists == ""){
@@ -49,23 +55,16 @@ class TrackListAdapter(private val context: Context, private var spotifyFavTrack
                 myArtists = "$myArtists, ${it.name}"
             }
         }
-
         itemSubText.text = myArtists
         itemSubText.isSelected = true
-        itemTitleText.isSelected = true
-//        println("debug: Image address is " + spotifyRecentlyPlayed[position].track.album.images[0].url)
-        //image.setImageResource(R.drawable.ic_spotify_icon)
-        Picasso.get().load(spotifyFavTrack[position].album.images[0].url).into(image);
-        return view
     }
 
-    @SuppressLint("SetTextI18n")
-    fun listEmpty(): View {
-        val linearLayout : LinearLayout = LinearLayout(context)
-        val textView : TextView = TextView(context)
-        textView.text = "None Found"
-        linearLayout.addView(textView)
-        return linearLayout
+    private fun setTitleText(view: View, position: Int) {
+        val itemTitleText = view.findViewById<TextView>(R.id.itemTitleText)
+        val track : String = spotifyFavTrack[position].name
+        itemTitleText.text = track
+        itemTitleText.isSelected = true
     }
+
 
 }

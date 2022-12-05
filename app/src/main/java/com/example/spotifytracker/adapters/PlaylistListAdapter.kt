@@ -1,35 +1,35 @@
 package com.example.spotifytracker.adapters
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import com.adamratzman.spotify.models.PlayHistory
+import com.adamratzman.spotify.models.Artist
+import com.adamratzman.spotify.models.Playlist
 import com.example.spotifytracker.R
 import com.squareup.picasso.Picasso
+import java.text.NumberFormat
+import java.util.*
 
-class SongListAdapter(private val context: Context, private var spotifyRecentlyPlayed: List<PlayHistory>) : BaseAdapter(){
+class PlaylistListAdapter(private val context: Context, private var spotifyPlaylists: List<Playlist>) : BaseAdapter(){
     override fun getCount(): Int {
-        return spotifyRecentlyPlayed.size
+        return spotifyPlaylists.size
     }
 
     override fun getItem(position: Int): Any {
-        return spotifyRecentlyPlayed[position]
+        return spotifyPlaylists[position]
     }
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
 
-    fun replace(newSpotifyData: List<PlayHistory>){
-        spotifyRecentlyPlayed = newSpotifyData
+    fun replace(newSpotifyData: List<Playlist>){
+        spotifyPlaylists = newSpotifyData
     }
 
-    @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View = View.inflate(context, R.layout.song_item,null)
 
@@ -42,26 +42,20 @@ class SongListAdapter(private val context: Context, private var spotifyRecentlyP
 
     private fun setImage(view: View, position: Int) {
         val image = view.findViewById<ImageView>(R.id.imageView)
-        Picasso.get().load(spotifyRecentlyPlayed[position].track.album.images[0].url).into(image);
+        Picasso.get().load(spotifyPlaylists[position].images[0].url).into(image);
     }
 
     private fun setSubText(view: View, position: Int) {
-        var myArtists = ""
         val itemSubText =  view.findViewById<TextView>(R.id.itemSubText)
-        spotifyRecentlyPlayed[position].track.artists.forEach { it ->
-            if(myArtists == ""){
-                myArtists = it.name
-            }else{
-                myArtists = "$myArtists, ${it.name}"
-            }
-        }
-        itemSubText.text = myArtists
+        val author = spotifyPlaylists[position].owner.displayName
+        itemSubText.text = "$author"
         itemSubText.isSelected = true
     }
 
     private fun setTitleText(view: View, position: Int) {
         val itemTitleText = view.findViewById<TextView>(R.id.itemTitleText)
-        itemTitleText.text = spotifyRecentlyPlayed[position].track.name
+        val playlistName : String = spotifyPlaylists[position].name
+        itemTitleText.text = playlistName
         itemTitleText.isSelected = true
     }
 

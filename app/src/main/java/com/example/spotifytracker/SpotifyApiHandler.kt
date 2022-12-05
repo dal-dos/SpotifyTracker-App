@@ -69,6 +69,16 @@ class SpotifyApiHandler(val token: Token, private val sharedSettings: SharedPref
         return api!!.search.searchAllTypes(searchQuery, 50, 1, market = Market.US)
     }
 
+    suspend fun playlistSearch(searchIds: List<String>): ArrayList<Playlist> {
+        val market = null
+        val myPlaylists : ArrayList<Playlist> = arrayListOf()
+        searchIds.map {
+            val searchID = it
+            myPlaylists.add(api!!.playlists.getPlaylist(searchID, market = market)!!)
+        }
+        return myPlaylists
+    }
+
     // Performs Spotify database query for queries related to user top tracks. Returns
     suspend fun userTopTracks(): List<Track> {
         var itemsToShow = sharedSettings.getInt(SettingsActivity.favoriteTracksNumberOfItemsKey, 5)

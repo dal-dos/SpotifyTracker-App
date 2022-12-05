@@ -3,6 +3,7 @@ package com.example.spotifytracker.ui.home
 import androidx.lifecycle.*
 import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.models.PlayHistory
+import com.adamratzman.spotify.models.Playlist
 import com.adamratzman.spotify.models.Track
 import com.example.spotifytracker.WeatherObject
 import com.example.spotifytracker.database.SpotifyDataEntity
@@ -100,6 +101,15 @@ class HomeViewModel(private val repository: SpotifyDataRepository) : ViewModel()
         }
         set(value) {
             _timePlayedDay = value
+        }
+
+    private var _allPlaylists = MutableLiveData<List<Playlist>>()
+    var allPlaylists : MutableLiveData<List<Playlist>>
+        get(){
+            return _allPlaylists
+        }
+        set(value) {
+            _allPlaylists = value
         }
 
     private var _futureWeather = MutableLiveData<ArrayList<WeatherObject>>()

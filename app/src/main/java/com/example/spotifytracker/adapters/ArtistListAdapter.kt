@@ -1,12 +1,10 @@
 package com.example.spotifytracker.adapters
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import com.adamratzman.spotify.models.Artist
 import com.example.spotifytracker.R
@@ -34,36 +32,34 @@ class ArtistListAdapter(private val context: Context, private var spotifyFavArti
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View = View.inflate(context, R.layout.song_item,null)
 
-        val itemTitleText = view.findViewById<TextView>(R.id.itemTitleText)
-        val itemSubText =  view.findViewById<TextView>(R.id.itemSubText)
-        val image = view.findViewById<ImageView>(R.id.imageView)
+        setTitleText(view, position)
+        setSubText(view, position)
+        setImage(view,position)
 
-        var artist : String = spotifyFavArtist[position].name
-        itemTitleText.text = artist
-
-
-        var popularity : String = spotifyFavArtist[position].popularity.toString()
-        var followers : String? = getFormatedAmount(spotifyFavArtist[position].followers.total?.toInt()!!)
-
-        itemSubText.text = "$followers followers"
-        itemSubText.isSelected = true
-        itemTitleText.isSelected = true
-        //        println("debug: Image address is " + spotifyRecentlyPlayed[position].track.album.images[0].url)
-        //image.setImageResource(R.drawable.ic_spotify_icon)
-        Picasso.get().load(spotifyFavArtist[position].images[0].url).into(image);
         return view
     }
 
-    fun getFormatedAmount(amount: Int): String? {
-        return NumberFormat.getNumberInstance(Locale.US).format(amount);
+    private fun setImage(view: View, position: Int) {
+        val image = view.findViewById<ImageView>(R.id.imageView)
+        Picasso.get().load(spotifyFavArtist[position].images[0].url).into(image);
     }
-    @SuppressLint("SetTextI18n")
-    fun listEmpty(): View {
-        val linearLayout : LinearLayout = LinearLayout(context)
-        val textView : TextView = TextView(context)
-        textView.text = "None Found"
-        linearLayout.addView(textView)
-        return linearLayout
+
+    private fun setSubText(view: View, position: Int) {
+        val itemSubText =  view.findViewById<TextView>(R.id.itemSubText)
+        var followers : String? = getFormattedAmount(spotifyFavArtist[position].followers.total?.toInt()!!)
+        itemSubText.text = "$followers followers"
+        itemSubText.isSelected = true
+    }
+
+    private fun setTitleText(view: View, position: Int) {
+        val itemTitleText = view.findViewById<TextView>(R.id.itemTitleText)
+        val artist : String = spotifyFavArtist[position].name
+        itemTitleText.text = artist
+        itemTitleText.isSelected = true
+    }
+
+    private fun getFormattedAmount(amount: Int): String? {
+        return NumberFormat.getNumberInstance(Locale.US).format(amount);
     }
 
 }

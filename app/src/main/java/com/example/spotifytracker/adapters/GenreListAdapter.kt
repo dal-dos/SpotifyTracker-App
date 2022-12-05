@@ -5,9 +5,7 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.LinearLayout
 import android.widget.TextView
-import com.adamratzman.spotify.utils.Language
 import com.example.spotifytracker.R
 
 class GenreListAdapter(private val context: Context, private var spotifyFavGenre: ArrayList<String>) : BaseAdapter(){
@@ -32,30 +30,28 @@ class GenreListAdapter(private val context: Context, private var spotifyFavGenre
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View = View.inflate(context, R.layout.song_item,null)
-        val itemTitleTextView = view.findViewById<TextView>(R.id.itemTitleText)
-        val itemSubTextView =  view.findViewById<TextView>(R.id.itemSubText)
 
-
-        itemTitleTextView.text = spotifyFavGenre[position].split(' ').joinToString(" ") {
-            it.replaceFirstChar {
-                it.uppercase()
-
-            }
-        }
-        val myArtists = ""
-
-        itemSubTextView.text = myArtists
+        setTitleText(view, position)
+        setSubText(view, position)
 
         return view
     }
 
-    @SuppressLint("SetTextI18n")
-    fun listEmpty(): View {
-        val linearLayout : LinearLayout = LinearLayout(context)
-        val textView : TextView = TextView(context)
-        textView.text = "None Found"
-        linearLayout.addView(textView)
-        return linearLayout
+    private fun setSubText(view: View, position: Int) {
+        val itemSubTextView =  view.findViewById<TextView>(R.id.itemSubText)
+        itemSubTextView.text = ""
+        itemSubTextView.isSelected = true
     }
+
+    private fun setTitleText(view: View, position: Int) {
+        val itemTitleTextView = view.findViewById<TextView>(R.id.itemTitleText)
+        itemTitleTextView.text = spotifyFavGenre[position].split(' ').joinToString(" ") { words ->
+            words.replaceFirstChar { firstLetter ->
+                firstLetter.uppercase()
+            }
+        }
+        itemTitleTextView.isSelected = true
+    }
+
 
 }

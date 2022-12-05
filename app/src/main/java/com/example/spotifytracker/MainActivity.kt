@@ -25,10 +25,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
-import com.adamratzman.spotify.models.Artist
-import com.adamratzman.spotify.models.PlayHistory
-import com.adamratzman.spotify.models.Token
-import com.adamratzman.spotify.models.Track
+import com.adamratzman.spotify.models.*
 import com.example.spotifytracker.database.SpotifyDataDao
 import com.example.spotifytracker.database.SpotifyDataEntity
 import com.example.spotifytracker.database.SpotifyDataRepository
@@ -49,7 +46,13 @@ import kotlinx.coroutines.launch
 
 @Suppress("RedundantExplicitType")
 class MainActivity : AppCompatActivity() {
-
+    companion object{
+        val listOfIds = listOf<String>(
+            "35xI4hSJ8MdO1xkXwsd56a",
+            "4eWBwGl0c5wtp6k5Krp6My",
+            "37i9dQZF1DX4aYNO8X5RpR"
+        )
+    }
     private lateinit var binding: ActivityMainBinding
     private lateinit var apiHandler: SpotifyApiHandler
     private var username = ""
@@ -60,6 +63,7 @@ class MainActivity : AppCompatActivity() {
     private var favoriteArtist : List<Artist> = arrayListOf()
     private var playedWeekHistory : List<PlayHistory> = arrayListOf()
     private var timePlayedDay : List<PlayHistory> = arrayListOf()
+    private var allPlaylists : List<Playlist> = arrayListOf()
     private lateinit var navView: BottomNavigationView
     private lateinit var spotifyDatabase : SpotifyDatabase
     private lateinit var spotifyDataDao : SpotifyDataDao
@@ -219,7 +223,8 @@ class MainActivity : AppCompatActivity() {
                 favoriteTracks = apiHandler.userTopTracks()
                 playedWeekHistory = apiHandler.userPlayedWeekHistory()
                 timePlayedDay = apiHandler.userTimePlayedDay()
-                insertDB(username, recentlyPlayed, suggested, favoriteGenre, favoriteArtist, favoriteTracks, playedWeekHistory, timePlayedDay)
+                allPlaylists = apiHandler.playlistSearch(listOfIds)
+                insertDB(username, recentlyPlayed, suggested, favoriteGenre, favoriteArtist, favoriteTracks, playedWeekHistory, timePlayedDay, allPlaylists)
             }
             openDialog(apiBuilderLoad)
         }catch (e: Exception){
@@ -228,7 +233,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Suppress("UNUSED_VARIABLE","UNUSED_PARAMETER")
-    private fun insertDB(username: String, recentlyPlayed: List<PlayHistory>, suggested: List<Track>, favoriteGenre: ArrayList<String>, favoriteArtist: List<Artist>, favoriteTracks: List<Track>, playedWeekHistory : List<PlayHistory>, timePlayedDay : List<PlayHistory>){
+    private fun insertDB(
+        username: String,
+        recentlyPlayed: List<PlayHistory>,
+        suggested: List<Track>,
+        favoriteGenre: ArrayList<String>,
+        favoriteArtist: List<Artist>,
+        favoriteTracks: List<Track>,
+        playedWeekHistory: List<PlayHistory>,
+        timePlayedDay: List<PlayHistory>,
+        allPlaylists: List<Playlist>
+    ){
 
         myViewModel.username.value = username
         myViewModel.recentlyPlayed.value = recentlyPlayed
@@ -238,6 +253,7 @@ class MainActivity : AppCompatActivity() {
         myViewModel.suggested.value = suggested
         myViewModel.playedWeekHistory.value = playedWeekHistory
         myViewModel.timePlayedDay.value = timePlayedDay
+        myViewModel.allPlaylists.value = allPlaylists
 //        spotifyDataEntity.username = username
 //        spotifyDataEntity.recentlyPlayed = Gson().toJson(recentlyPlayed)
 //        spotifyDataEntity.suggested = Gson().toJson(suggested)
