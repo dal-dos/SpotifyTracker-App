@@ -157,9 +157,9 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
             }
             index += 1
         }
-        val currWeatherPlaylistArrayList = currWeatherPlaylistIndices.map { idx ->
-            playlistArrayList[idx]
-        }
+        val randomNumber = currWeatherPlaylistIndices.random()
+
+        val currWeatherPlaylistArrayList = listOf(playlistArrayList[currWeatherPlaylistIndices[randomNumber]])
 
         if(!IDmap.containsValue(currWeather)){
             val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList())
