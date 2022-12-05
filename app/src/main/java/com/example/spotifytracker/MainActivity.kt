@@ -47,10 +47,83 @@ import kotlinx.coroutines.launch
 @Suppress("RedundantExplicitType")
 class MainActivity : AppCompatActivity() {
     companion object{
-        val mapOfPlaylistIds = linkedMapOf(
-            "35xI4hSJ8MdO1xkXwsd56a" to "Rain",
-            "4eWBwGl0c5wtp6k5Krp6My" to "Rain",
-            "37i9dQZF1DX4aYNO8X5RpR" to "Thunderstorm"
+        val mapOfPlaylistIds = mapOf(
+
+
+            get a couple for these
+
+                    Clear
+                    Clouds
+
+
+                    get 1ish? for this idk tornado never gonna happen
+                    Mist
+                    Smoke
+                    Haze
+                    Dust
+                    Fog
+                    Sand
+                    Dust
+                    Ash
+                    Squall
+                    Tornado
+
+             //some jazz, classical, calm vibes
+            "35xI4hSJ8MdO1xkXwsd56a" to "rain",
+            "4eWBwGl0c5wtp6k5Krp6My" to "rain",
+            "4r1QeXUOudzBUy6bDJpPYA" to "rain",
+            "4P19lnnt265VEGjiQlgHBb" to "rain",
+            "2zBI3DVawETlZKPU0SKmuV" to "rain",
+            "37i9dQZF1DWV7EzJMK2FUI" to "rain",
+            "27Zm1P410dPfedsdoO9fqm" to "rain",
+
+            //tried to go for a moody dark vibe
+            //think there is r&b dark pop stuff
+            "71d99pLh0TpbdIJESHAsDN" to "thunderstorm",
+            "37i9dQZF1DX7FY5ma9162x" to "thunderstorm",
+            "50jo5Wt2EINXGgL3FrHpgT" to "thunderstorm",
+            "37i9dQZF1EIf8n0XZ9B2Ys" to "thunderstorm",
+           " 0shCgINAgNsEGoFTVDonOW" to "thunderstorm",
+            "7a3ZFq8fhI1h8BpT84dZJS" to "thunderstorm",
+            "37i9dQZF1DX4aYNO8X5RpR" to "thunderstorm",
+
+            //random playlists from rain and thunder
+            "4P19lnnt265VEGjiQlgHBb" to "drizzle",
+            "2zBI3DVawETlZKPU0SKmuV" to "drizzle",
+            "37i9dQZF1DWV7EzJMK2FUI" to "drizzle",
+            "71d99pLh0TpbdIJESHAsDN" to "drizzle",
+            "37i9dQZF1DX7FY5ma9162x" to "drizzle",
+            "50jo5Wt2EINXGgL3FrHpgT" to "drizzle",
+
+            //christmas, jazz, indie
+           "37i9dQZF1DX5T5XRP5VmUL" to "snow",
+            "1zOEqfxkCekU1Y6nZoeuyI" to "snow",
+            "37i9dQZF1DX6R7QUWePReA" to "snow",
+           "37i9dQZF1DX0Yxoavh5qJV" to "snow",
+            "6gNZoFHaKhusArUeqIv6tt" to "snow",
+            "4raqLXnmb8WYkjfed9olAR" to "snow",
+            "2JSn2M0DFwcfCMuYogXiu7" to "snow",
+
+            //bright indie summer vibes
+            "2L7ITJDRWIVNkxNq8qhI30" to "clear",
+            "37i9dQZF1DXbtuVQL4zoey" to "clear",
+            "37i9dQZF1DWUWC0NIJDJKL" to "clear",
+            "37i9dQZF1DWVlm7xgnWdvJ" to "clear",
+            "69VpTvkL1wnucTlcE4xeAu" to "clear",
+            "37i9dQZEVXbMDoHDwVN2tF" to "clear", //top 50 global
+
+
+
+
+
+
+
+
+
+
+
+
+
         )
     }
     private lateinit var binding: ActivityMainBinding
