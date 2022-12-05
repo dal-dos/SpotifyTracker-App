@@ -24,6 +24,7 @@ import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.models.PlayHistory
+import com.adamratzman.spotify.models.Track
 import com.example.spotifytracker.MainActivity
 import com.example.spotifytracker.R
 import com.example.spotifytracker.database.SpotifyDataDao
@@ -62,6 +63,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
     private lateinit var viewModelFactory: HomeViewModelFactory
     private lateinit var myViewModel: HomeViewModel
     private var totalPopularity : Float = 0F
+    private var totalListened : Float = 0F
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -111,6 +113,10 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
 
         myViewModel.timePlayedDay.observe(viewLifecycleOwner) {
             setTimePlayedDayChart(it)
+        }
+
+        myViewModel.favTrack.observe(viewLifecycleOwner) {
+            makeListenedPieChart(it)
         }
     }
 
@@ -190,6 +196,70 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
 
     }
 
+    private fun makeListenedPieChart(arrayList : List<Track>) {
+        val artistViews : ArrayList<View> = arrayListOf(binding.statsArtist1View,binding.statsArtist2View,binding.statsArtist3View,binding.statsArtist4View,binding.statsArtist5View)
+        val artistTexts : ArrayList<TextView> = arrayListOf(binding.statsArtist1Text,binding.statsArtist2Text,binding.statsArtist3Text,binding.statsArtist4Text,binding.statsArtist5Text)
+        artistViews.map { it.isVisible = false }
+        artistTexts.map { it.isVisible = false }
+        pc = binding.statsPieChart
+        val tf : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaalight);
+        val legend: Legend = pc!!.legend
+        legend.isEnabled = false
+
+        val colors : ArrayList<Int> = arrayListOf(Color.parseColor("#FF018786"),
+            Color.parseColor("#fb7268"),
+            Color.parseColor("#9C0700"),
+            Color.parseColor("#FF000000"),
+            Color.parseColor("#FFA726"))
+        val dataEntries : ArrayList<PieEntry> = arrayListOf()
+
+        for (i in arrayList.indices) {
+            if (i == 5){
+                break
+            }
+            val name = arrayList[i].name
+            artistTexts[i].isVisible = true
+            artistViews[i].isVisible = true
+            artistTexts[i].isSelected = true
+            val listened = arrayList[i].durationMs.toFloat()
+            totalListened += listened
+            dataEntries.add(PieEntry(listened,name))
+            artistTexts[i].text = name
+        }
+
+        if (arrayList.isEmpty()) {
+            artistTexts[0].text = "No Data Available"
+            artistTexts[0].isVisible = true
+            artistViews[0].isVisible = true
+            artistTexts[0].isSelected = true
+            dataEntries.add(PieEntry(100f,"No Data Available"))
+        }
+
+        val pieDataSet = PieDataSet(dataEntries, "")
+        pieDataSet.colors = colors
+
+        val pieData = PieData(pieDataSet)
+        pieData.setDrawValues(false)
+        pieData.dataSetLabels
+        pieData.setValueTextSize(12F)
+        pieData.setValueTypeface(tf)
+
+        pc!!.data = pieData
+        pc!!.setHoleColor(Color.parseColor("#2E6943"))
+        pc!!.setDrawEntryLabels(false)
+        pc!!.description.isEnabled= false
+        pc!!.setDrawCenterText(true)
+        pc!!.setOnChartValueSelectedListener(this)
+        pc!!.setCenterTextTypeface(tf)
+        pc!!.centerText = "Click a slice"
+        pc!!.setCenterTextColor(Color.WHITE)
+
+        pc!!.invalidate()
+        pc!!.animateY(1400,Easing.EaseInOutQuad)
+
+    }
+
+
     private fun setTimePlayedDayChart(rp: List<PlayHistory>) {
         val gData : MutableList<Entry> = mutableListOf()
         val lineChart : LineChart = binding.timePlayedDayChart
@@ -211,7 +281,8 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
             println("time: " + hour)
             val trackLengthMilliseconds = rp[i].track.length.toFloat()
             val trackLengthMinutes = trackLengthMilliseconds/timeType
-            timePlayHistory[hour-1] = trackLengthMinutes + timePlayHistory[hour-1]
+            println(hour)
+            timePlayHistory[hour] = trackLengthMinutes + timePlayHistory[hour]
         }
 
 

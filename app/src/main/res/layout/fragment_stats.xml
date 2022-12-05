@@ -378,7 +378,199 @@
 
         </androidx.cardview.widget.CardView>
         </LinearLayout>
+
+
+
+
     </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/stats_pie_chart_outer_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="8dp"
+                android:onClick="onClickCardViewPopularityPieChart">
+                <LinearLayout
+                    android:id="@+id/stats_pie_chart_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/stats_pie_chart_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/comfortaasemibold"
+                            android:text="How much you played your favorite songs!" />
+
+                        <TextView
+                            android:id="@+id/stats_pie_chart_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/comfortaasemibold"
+                            android:text="@string/arrow"
+                            app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                            app:drawableTint="@color/white" />
+                    </RelativeLayout>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/stats_pie_chart_inner_cardview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="8dp"
+                        android:backgroundTint="@color/dark_green_var">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:orientation="horizontal">
+
+                            <com.github.mikephil.charting.charts.PieChart
+                                android:id="@+id/stats_pie_chart"
+                                android:layout_width="150dp"
+                                android:layout_height="200dp"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical"
+                                android:layout_marginStart="10dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical">
+                                    <View
+                                        android:id="@+id/statsArtist1View"
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:background="@color/teal_700"
+                                        android:layout_gravity="center_vertical"
+                                        />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Track 1"
+                                        android:paddingLeft="10dp"
+                                        android:id="@+id/statsArtist1Text"
+                                        android:fontFamily="@font/comfortaalight"
+                                        android:marqueeRepeatLimit="marquee_forever"
+                                        android:scrollHorizontally="true"
+                                        android:singleLine="true"
+                                        android:ellipsize="marquee" />
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginTop="5dp">
+                                    <View
+                                        android:id="@+id/statsArtist2View"
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:background="@color/color_one"
+                                        android:layout_gravity="center_vertical"
+                                        />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Track 2"
+                                        android:paddingLeft="10dp"
+                                        android:id="@+id/statsArtist2Text"
+                                        android:fontFamily="@font/comfortaalight"
+                                        android:marqueeRepeatLimit="marquee_forever"
+                                        android:scrollHorizontally="true"
+                                        android:singleLine="true"
+                                        android:ellipsize="marquee"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginTop="5dp">
+                                    <View
+                                        android:id="@+id/statsArtist3View"
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:background="@color/red"
+                                        android:layout_gravity="center_vertical"/>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Track 3"
+                                        android:paddingLeft="10dp"
+                                        android:id="@+id/statsArtist3Text"
+                                        android:fontFamily="@font/comfortaalight"
+                                        android:marqueeRepeatLimit="marquee_forever"
+                                        android:scrollHorizontally="true"
+                                        android:singleLine="true"
+                                        android:ellipsize="marquee"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginTop="5dp">
+                                    <View
+                                        android:id="@+id/statsArtist4View"
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:background="@color/black"
+                                        android:layout_gravity="center_vertical"/>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Track 4"
+                                        android:paddingLeft="10dp"
+                                        android:id="@+id/statsArtist4Text"
+                                        android:fontFamily="@font/comfortaalight"
+                                        android:marqueeRepeatLimit="marquee_forever"
+                                        android:scrollHorizontally="true"
+                                        android:singleLine="true"
+                                        android:ellipsize="marquee"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginTop="5dp">
+                                    <View
+                                        android:id="@+id/statsArtist5View"
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:background="@color/Artist1"
+                                        android:layout_gravity="center_vertical"/>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Track 5"
+                                        android:paddingLeft="10dp"
+                                        android:id="@+id/statsArtist5Text"
+                                        android:fontFamily="@font/comfortaalight"
+                                        android:marqueeRepeatLimit="marquee_forever"
+                                        android:scrollHorizontally="true"
+                                        android:singleLine="true"
+                                        android:ellipsize="marquee"/>
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
