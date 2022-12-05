@@ -54,6 +54,8 @@ class WeatherApiHandler(val context: Context) {
         return temp.isComplete
     }
 
+
+
     // Function is not working correctly when called from another class
     suspend fun setFutureWeather() {
         val url: String = weatherUrl

@@ -4,14 +4,19 @@ package com.example.spotifytracker
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.location.LocationManager
+import android.location.LocationRequest
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -41,6 +46,9 @@ import com.example.spotifytracker.ui.playlists.SpotifyPlaylist
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
+import com.google.android.gms.location.*
+import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
+import com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -69,14 +77,36 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mToolbar : androidx.appcompat.widget.Toolbar
     private lateinit var sharedSettings : SharedPreferences
 
-    @SuppressLint("RestrictedApi")
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
+    val callback = object : LocationCallback() {
+        override fun onLocationAvailability(p0: LocationAvailability) {
+            super.onLocationAvailability(p0)
+        }
+
+        override fun onLocationResult(result: LocationResult) {
+            val lastLocation = result?.lastLocation
+            Log.e("MYTAGCHILLINTOCHECKTHISSHIT", lastLocation.toString())
+            getWeatherData()
+
+            super.onLocationResult(result)
+        }
+    }
+
+
+    @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedSettings = PreferenceManager.getDefaultSharedPreferences(this)
         if(savedInstanceState == null) {
             firstTimeStart()
-            checkPermission()
+//            checkPermission()
+            Log.e("MYTAGCHILLINTOCHECKTHISSHIT", "ONCREATE BEFORE LOCATION")
+            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+            onGPS()
         }
+
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -440,21 +470,57 @@ class MainActivity : AppCompatActivity() {
         weatherThread.start()
     }
 
-    private fun checkPermission() {
+    fun onGPS() {
+        if(!isLocationEnabled()) {
+            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+        } else {
+            Log.e("MYTAGCHILLINTOCHECKTHISSHIT", "GET MY LOCATION")
+            getMyLocation()
+        }
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager = applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+    private fun getMyLocation() {
         if (Build.VERSION.SDK_INT < 23) return
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
             PackageManager.PERMISSION_GRANTED) ActivityCompat.requestPermissions(this, arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION), 0)
         else
-            getWeatherData()
+            requestLocation()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 0) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) getWeatherData()
-        }
+    @SuppressLint("MissingPermission")
+    private fun requestLocation() {
+        val requestLocation = LocationRequest()
+        requestLocation.priority = LocationRequest.QUALITY_HIGH_ACCURACY
+        requestLocation.interval = 0
+        requestLocation.fastestInterval = 0
+        requestLocation.numUpdates = 1
+        fusedLocationProviderClient.requestLocationUpdates(requestLocation, callback, Looper.myLooper())
+        Log.e("MYTAGCHILLINTOCHECKTHISSHIT", "REQUESTED LOCATION WORKS")
+
     }
+
+
+//    private fun checkPermission() {
+//        if (Build.VERSION.SDK_INT < 23) return
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+//            PackageManager.PERMISSION_GRANTED) ActivityCompat.requestPermissions(this, arrayOf(
+//            Manifest.permission.ACCESS_FINE_LOCATION), 0)
+//        else
+//            getWeatherData()
+//    }
+//
+//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        if (requestCode == 0) {
+//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) getWeatherData()
+//        }
+//    }
 
 
 
