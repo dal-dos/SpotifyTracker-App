@@ -327,6 +327,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     override fun onResume() {
         super.onResume()
         //println("debug: called on resume")
+        binding.homeLayout.isVisible = true
         myActivity.showActionBar(true)
         binding.homeLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         TransitionManager.beginDelayedTransition(binding.homeLayout, AutoTransition())
@@ -355,6 +356,11 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         MainActivity().changeArrow(binding.recentlyPlayedArrow,binding.recentlyPlayedInnerCardview.isVisible)
     }
 
-
+    override fun onPause() {
+        super.onPause()
+        binding.homeLayout.isVisible = false
+        scrollView.fullScroll(ScrollView.FOCUS_UP);
+        scrollView.scrollTo(0,0)
+    }
 
 }

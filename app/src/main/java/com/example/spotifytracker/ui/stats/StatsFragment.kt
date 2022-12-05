@@ -432,6 +432,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
 
     override fun onResume() {
         super.onResume()
+        binding.statsLayout.isVisible = true
         myActivity.showActionBar(true)
     }
 
@@ -475,4 +476,10 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         timeListenedPieChart.centerText = ""
     }
 
+    override fun onPause() {
+        super.onPause()
+        binding.statsLayout.isVisible = false
+        scrollView.fullScroll(ScrollView.FOCUS_UP);
+        scrollView.scrollTo(0,0)
+    }
 }

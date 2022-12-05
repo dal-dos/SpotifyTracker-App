@@ -278,6 +278,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
 
     override fun onResume() {
         super.onResume()
+        binding.playlistLayout.isVisible = true
         myActivity.showActionBar(true)
     }
 
@@ -316,6 +317,13 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         MainActivity().changeArrow(binding.recTomorrowArrow, binding.recommendedTomorrowInnerCardview.isVisible)
         MainActivity().changeArrow(binding.allPlaylistsArrow, binding.allPlaylistsInnerCardview.isVisible)
 
+    }
+
+    override fun onPause() {
+        binding.playlistLayout.isVisible = false
+        scrollView.fullScroll(ScrollView.FOCUS_UP);
+        scrollView.scrollTo(0, 0)
+        super.onPause()
     }
 
 
