@@ -446,12 +446,16 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
         val raw = e!!.y
+        println("RAW IS $raw")
         if(raw != POSITIVE_INFINITY){
             if(raw <= 100){
                 val tfbold : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaabold)
                 val tflight : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaalight)
                 val artistTexts : ArrayList<TextView> = arrayListOf(binding.artist1Text,binding.artist2Text,binding.artist3Text,binding.artist4Text,binding.artist5Text)
-                val data = String.format("%.1f",(raw/totalPopularity)*100)
+                var data = "100.0"
+                if (raw < 100f){
+                    data = String.format("%.1f",(raw/totalPopularity)*100)
+                }
                 val index : Int = h!!.x.toInt()
                 onNothingSelected()
                 artistTexts.map{ it.typeface = tflight}
