@@ -61,6 +61,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
     private lateinit var repo: SpotifyDataRepository
     private lateinit var viewModelFactory: HomeViewModelFactory
     private lateinit var myViewModel: HomeViewModel
+    private var totalPopularity : Float = 0F
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -151,7 +152,9 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
             artistTexts[i].isVisible = true
             artistViews[i].isVisible = true
             artistTexts[i].isSelected = true
-            dataEntries.add(PieEntry(arrayList[i].popularity.toFloat(),name))
+            val popularity = arrayList[i].popularity.toFloat()
+            totalPopularity += popularity
+            dataEntries.add(PieEntry(popularity,name))
             artistTexts[i].text = name
         }
 
@@ -175,7 +178,6 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         pc!!.data = pieData
         pc!!.setHoleColor(Color.parseColor("#2E6943"))
         pc!!.setDrawEntryLabels(false)
-        //pc!!.setUsePercentValues(true)
         pc!!.description.isEnabled= false
         pc!!.setDrawCenterText(true)
         pc!!.setOnChartValueSelectedListener(this)
@@ -364,12 +366,19 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
-        println(e)
-        println(h)
-        pc!!.centerText = e?.y.toString()
+        val tf : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaabold)
+        val artistTexts : ArrayList<TextView> = arrayListOf(binding.artist1Text,binding.artist2Text,binding.artist3Text,binding.artist4Text,binding.artist5Text)
+        val data = String.format("%.1f",(e!!.y/totalPopularity)*100)
+        val index : Int = h!!.x.toInt()
+        onNothingSelected()
+        artistTexts[index].typeface = tf
+        pc!!.centerText = "%$data"
     }
 
     override fun onNothingSelected() {
+        val artistTexts : ArrayList<TextView> = arrayListOf(binding.artist1Text,binding.artist2Text,binding.artist3Text,binding.artist4Text,binding.artist5Text)
+        val tf : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaalight);
         pc!!.centerText = ""
+        artistTexts.map { it.typeface = tf }
     }
 }
