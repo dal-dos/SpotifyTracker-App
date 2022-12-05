@@ -157,20 +157,21 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
             }
             index += 1
         }
-        val randomNumber = currWeatherPlaylistIndices.random()
+        if (currWeatherPlaylistIndices.isNotEmpty()){
+            val randomNumber = currWeatherPlaylistIndices.random()
+            val currWeatherPlaylistArrayList = listOf(playlistArrayList[currWeatherPlaylistIndices[randomNumber]])
 
-        val currWeatherPlaylistArrayList = listOf(playlistArrayList[currWeatherPlaylistIndices[randomNumber]])
-
-        if(!IDmap.containsValue(currWeather)){
-            val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList())
-            recommendedTodayList.adapter = emptyListAdapter
-            emptyListAdapter.replace(arrayListOf("None Found"))
-            emptyListAdapter.notifyDataSetChanged()
-            setListViewHeightBasedOnChildren(recommendedTodayList)
-        }else{
-            recommendedTodayListAdapter.replace(currWeatherPlaylistArrayList)
-            recommendedTodayListAdapter.notifyDataSetChanged()
-            setListViewHeightBasedOnChildren(recommendedTodayList)
+            if(!IDmap.containsValue(currWeather)){
+                val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList())
+                recommendedTodayList.adapter = emptyListAdapter
+                emptyListAdapter.replace(arrayListOf("None Found"))
+                emptyListAdapter.notifyDataSetChanged()
+                setListViewHeightBasedOnChildren(recommendedTodayList)
+            }else{
+                recommendedTodayListAdapter.replace(currWeatherPlaylistArrayList)
+                recommendedTodayListAdapter.notifyDataSetChanged()
+                setListViewHeightBasedOnChildren(recommendedTodayList)
+            }
         }
     }
 
