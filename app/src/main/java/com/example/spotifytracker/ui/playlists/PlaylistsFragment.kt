@@ -7,7 +7,6 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -33,8 +32,8 @@ class PlaylistsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val settingsViewModel =
-            ViewModelProvider(this).get(SettingsViewModel::class.java)
+        val playlistsViewModel =
+            ViewModelProvider(this).get(PlaylistsViewModel::class.java)
 
         _binding = FragmentPlaylistsBinding.inflate(inflater, container, false)
         val root: View = binding.root

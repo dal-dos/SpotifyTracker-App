@@ -221,6 +221,7 @@ class StatsFragment : Fragment() {
         lineChart.axisRight.setDrawGridLines(false)
         lineChart.axisRight.setDrawLabels(false)
         lineChart.axisRight.setDrawZeroLine(true)
+        lineChart.legend.isEnabled = false
         lineChart.invalidate()
 
         lineChart.animateY(1300)
@@ -277,6 +278,7 @@ class StatsFragment : Fragment() {
         lineChart.axisRight.setDrawGridLines(false)
         lineChart.axisRight.setDrawLabels(false)
         lineChart.axisRight.setDrawZeroLine(true)
+        lineChart.legend.isEnabled = false
         lineChart.invalidate()
 
         lineChart.animateY(1300)
