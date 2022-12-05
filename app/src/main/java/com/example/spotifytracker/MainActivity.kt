@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         val mapOfPlaylistIds = mapOf(
             "35xI4hSJ8MdO1xkXwsd56a" to "rain",
             "4eWBwGl0c5wtp6k5Krp6My" to "rain",
-            "37i9dQZF1DX4aYNO8X5RpR" to "thunder")
+            "37i9dQZF1DX4aYNO8X5RpR" to "thunderstorm")
     }
     private lateinit var binding: ActivityMainBinding
     private lateinit var apiHandler: SpotifyApiHandler
