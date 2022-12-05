@@ -41,6 +41,7 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import kotlin.Float.Companion.POSITIVE_INFINITY
 import kotlin.collections.ArrayList
 import kotlin.time.Duration.Companion.hours
 
@@ -52,7 +53,8 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private var pc: PieChart? = null
+    private lateinit var pc: PieChart
+    private lateinit var timeListenedPieChart: PieChart
     private lateinit var sharedSettings: SharedPreferences
     private lateinit var myActivity : MainActivity
     private var switchingView: Boolean = true
@@ -201,9 +203,9 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         val artistTexts : ArrayList<TextView> = arrayListOf(binding.statsArtist1Text,binding.statsArtist2Text,binding.statsArtist3Text,binding.statsArtist4Text,binding.statsArtist5Text)
         artistViews.map { it.isVisible = false }
         artistTexts.map { it.isVisible = false }
-        pc = binding.statsPieChart
+        timeListenedPieChart = binding.statsPieChart
         val tf : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaalight);
-        val legend: Legend = pc!!.legend
+        val legend: Legend = timeListenedPieChart!!.legend
         legend.isEnabled = false
 
         val colors : ArrayList<Int> = arrayListOf(Color.parseColor("#FF018786"),
@@ -244,18 +246,18 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         pieData.setValueTextSize(12F)
         pieData.setValueTypeface(tf)
 
-        pc!!.data = pieData
-        pc!!.setHoleColor(Color.parseColor("#2E6943"))
-        pc!!.setDrawEntryLabels(false)
-        pc!!.description.isEnabled= false
-        pc!!.setDrawCenterText(true)
-        pc!!.setOnChartValueSelectedListener(this)
-        pc!!.setCenterTextTypeface(tf)
-        pc!!.centerText = "Click a slice"
-        pc!!.setCenterTextColor(Color.WHITE)
+        timeListenedPieChart!!.data = pieData
+        timeListenedPieChart!!.setHoleColor(Color.parseColor("#2E6943"))
+        timeListenedPieChart!!.setDrawEntryLabels(false)
+        timeListenedPieChart!!.description.isEnabled= false
+        timeListenedPieChart!!.setDrawCenterText(true)
+        timeListenedPieChart!!.setOnChartValueSelectedListener(this)
+        timeListenedPieChart!!.setCenterTextTypeface(tf)
+        timeListenedPieChart!!.centerText = "Click a slice"
+        timeListenedPieChart!!.setCenterTextColor(Color.WHITE)
 
-        pc!!.invalidate()
-        pc!!.animateY(1400,Easing.EaseInOutQuad)
+        timeListenedPieChart!!.invalidate()
+        timeListenedPieChart!!.animateY(1400,Easing.EaseInOutQuad)
 
     }
 
@@ -437,19 +439,34 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
-        val tf : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaabold)
-        val artistTexts : ArrayList<TextView> = arrayListOf(binding.artist1Text,binding.artist2Text,binding.artist3Text,binding.artist4Text,binding.artist5Text)
-        val data = String.format("%.1f",(e!!.y/totalPopularity)*100)
-        val index : Int = h!!.x.toInt()
-        onNothingSelected()
-        artistTexts[index].typeface = tf
-        pc!!.centerText = "$data%"
+        val raw = e!!.y
+        if(raw != POSITIVE_INFINITY){
+            if(raw <= 100){
+                val tfbold : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaabold)
+                val tflight : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaalight)
+                val artistTexts : ArrayList<TextView> = arrayListOf(binding.artist1Text,binding.artist2Text,binding.artist3Text,binding.artist4Text,binding.artist5Text)
+                val data = String.format("%.1f",(raw/totalPopularity)*100)
+                val index : Int = h!!.x.toInt()
+                onNothingSelected()
+                artistTexts.map{ it.typeface = tflight}
+                artistTexts[index].typeface = tfbold
+                pc.centerText = "$data%"
+            } else {
+                val tfbold : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaabold)
+                val tflight : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaalight);
+                val artistTexts : ArrayList<TextView> = arrayListOf(binding.statsArtist1Text,binding.statsArtist2Text,binding.statsArtist3Text,binding.statsArtist4Text,binding.statsArtist5Text)
+                val data = String.format("%.2f", raw/3600000)
+                val index : Int = h!!.x.toInt()
+                artistTexts.map{ it.typeface = tflight}
+                artistTexts[index].typeface = tfbold
+                timeListenedPieChart.centerText = "$data hrs"
+            }
+        }
+
     }
 
     override fun onNothingSelected() {
-        val artistTexts : ArrayList<TextView> = arrayListOf(binding.artist1Text,binding.artist2Text,binding.artist3Text,binding.artist4Text,binding.artist5Text)
-        val tf : Typeface? = ResourcesCompat.getFont(myActivity.applicationContext, R.font.comfortaalight);
-        pc!!.centerText = ""
-        artistTexts.map { it.typeface = tf }
+        pc.centerText = ""
+        timeListenedPieChart.centerText = ""
     }
 }
