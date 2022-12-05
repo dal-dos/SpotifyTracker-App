@@ -51,7 +51,7 @@ class PlaylistListAdapter(private val context: Context, private var spotifyPlayl
         val author = spotifyPlaylists[position].owner.displayName
         val id : String = spotifyPlaylists[position].id
 
-        itemSubText.text = "$author Type: " + MainActivity.mapOfPlaylistIds[id]
+        itemSubText.text = "$author"
         itemSubText.isSelected = true
     }
 
