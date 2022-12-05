@@ -388,14 +388,17 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         binding.hoursPlayedWeekOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.hoursPlayedWeekVisibilityKey, true)
         binding.popularityPieChartOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.popularityPieChartVisibilityKey, true)
         binding.timePlayedDayOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.timePlayedDayVisibilityKey, true)
+        binding.statsPieChartOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.statsPieChartVisibilityKey, true)
 
         binding.popularityPieChartInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.popularityPieChartCollapseKey, true)
         binding.hoursPlayedWeekInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.hoursPlayedWeekCollapseKey, true)
         binding.timePlayedDayInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.timePlayedDayCollapseKey, true)
+        binding.statsPieChartInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.statsPieChartCollapseKey, true)
 
         MainActivity().changeArrow(binding.popularityPieChartArrow, binding.popularityPieChartInnerCardview.isVisible)
         MainActivity().changeArrow(binding.hoursPlayedWeekArrow, binding.hoursPlayedWeekInnerCardview.isVisible)
         MainActivity().changeArrow(binding.timePlayedDayArrow, binding.timePlayedDayInnerCardview.isVisible)
+        MainActivity().changeArrow(binding.statsPieChartArrow, binding.statsPieChartInnerCardview.isVisible)
     }
 
 /*    private fun scrollOnChangeListener() {

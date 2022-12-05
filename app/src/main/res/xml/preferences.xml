@@ -192,6 +192,50 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="Favorite Songs Playtime Pie Chart"
+        app:iconSpaceReserved="false">
+        <SwitchPreference
+            android:key="stats_pie_chart_visibility"
+            android:title="Show"
+            android:summary="Show/Hide Chart"
+            app:iconSpaceReserved="false"
+            android:defaultValue="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Current Weather"
+        app:iconSpaceReserved="false">
+        <SwitchPreference
+            android:key="recommended_today_visibility"
+            android:title="Show"
+            android:summary="Show/Hide Chart"
+            app:iconSpaceReserved="false"
+            android:defaultValue="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Future Weather"
+        app:iconSpaceReserved="false">
+        <SwitchPreference
+            android:key="recommended_tomorrow_visibility"
+            android:title="Show"
+            android:summary="Show/Hide Chart"
+            app:iconSpaceReserved="false"
+            android:defaultValue="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="All Playlists"
+        app:iconSpaceReserved="false">
+        <SwitchPreference
+            android:key="all_playlists_visibility"
+            android:title="Show"
+            android:summary="Show/Hide Chart"
+            app:iconSpaceReserved="false"
+            android:defaultValue="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="Other"
         app:iconSpaceReserved="false">
 

@@ -14,24 +14,23 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.AdapterView
 import android.widget.ListView
+import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.adamratzman.spotify.models.PlayHistory
-import com.adamratzman.spotify.models.Playlist
-import com.adamratzman.spotify.models.Track
 import com.example.spotifytracker.MainActivity
 import com.example.spotifytracker.R
 import com.example.spotifytracker.WeatherObject
 import com.example.spotifytracker.adapters.GenreListAdapter
 import com.example.spotifytracker.adapters.PlaylistListAdapter
-import com.example.spotifytracker.adapters.TrackListAdapter
 import com.example.spotifytracker.adapters.WeatherListAdapter
 import com.example.spotifytracker.database.SpotifyDataDao
 import com.example.spotifytracker.database.SpotifyDataRepository
 import com.example.spotifytracker.database.SpotifyDatabase
 import com.example.spotifytracker.databinding.FragmentPlaylistsBinding
+import com.example.spotifytracker.settings.SettingsActivity
 import com.example.spotifytracker.ui.home.HomeViewModel
 import com.example.spotifytracker.ui.home.HomeViewModelFactory
 import com.github.mikephil.charting.charts.PieChart
@@ -72,11 +71,24 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        myActivity = requireActivity() as MainActivity
+
         val root = startFunction(inflater,container)
 
         initializeOnItemClickListeners()
+
         collapseAnimationInit()
+
+        initializeVariables(root)
+
+
+        playlistsObservers()
+        applySettings()
+        //scrollOnChangeListener()
+        swipeRefresh()
+        return root
+    }
+
+    private fun initializeVariables(root: View) {
         mainImage = root.findViewById(R.id.imageView)
         currentWeatherTv = root.findViewById(R.id.weather_text)
         currWeatherDescTv = root.findViewById(R.id.weather_text_desc)
@@ -87,10 +99,6 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         futureListView = root.findViewById(R.id.rec_tomorrow_list)
         futureWeatherListAdapter = WeatherListAdapter(requireActivity(), futureArrayList)
         futureListView.adapter = futureWeatherListAdapter
-        playlistsObservers()
-        //scrollOnChangeListener()
-        swipeRefresh()
-        return root
     }
 
     private fun initializeOnItemClickListeners() {
@@ -98,10 +106,11 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
     }
 
     private fun startFunction(inflater: LayoutInflater, container: ViewGroup?): View {
-        initViewModel()
         _binding = FragmentPlaylistsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
         myActivity = requireActivity() as MainActivity
+        sharedSettings = PreferenceManager.getDefaultSharedPreferences(myActivity)
+        initViewModel()
+        val root: View = binding.root
         return root
     }
 
@@ -288,5 +297,21 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
              }
          }
         }
+    }
+
+    private fun applySettings(){
+        binding.recommendedTodayOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.recommendedTodayVisibilityKey, true)
+        binding.recommendedTodayPlaylistCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.recommendedTodayVisibilityKey, true)
+        binding.recommendedTomorrowOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.recommendedTomorrowVisibilityKey, true)
+        binding.allPlaylistsOuterCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.allPlaylistsVisibilityKey, true)
+
+        binding.recommendedTodayInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.recommendedTodayCollapseKey, true)
+        binding.recommendedTodayPlaylistCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.recommendedTodayCollapseKey, true)
+        binding.recommendedTomorrowInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.recommendedTomorrowCollapseKey, true)
+        binding.allPlaylistsInnerCardview.isVisible = sharedSettings.getBoolean(SettingsActivity.allPlaylistsCollapseKey, true)
+
+        MainActivity().changeArrow(binding.recTodayArrow, binding.recommendedTodayInnerCardview.isVisible)
+        MainActivity().changeArrow(binding.recTomorrowArrow, binding.recommendedTomorrowInnerCardview.isVisible)
+        MainActivity().changeArrow(binding.allPlaylistsArrow, binding.allPlaylistsInnerCardview.isVisible)
     }
 }

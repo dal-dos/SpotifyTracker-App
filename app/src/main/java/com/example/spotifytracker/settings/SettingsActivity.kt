@@ -12,6 +12,9 @@ import com.example.spotifytracker.R
 
 class SettingsActivity : AppCompatActivity() {
     companion object{
+
+
+
         const val hoursPlayedWeekTimeType = "hours_played_week_time_type"
         const val recentlyPlayedNumberOfItemsKey = "recently_played_number_of_items"
         const val favoriteTracksNumberOfItemsKey = "favorite_tracks_number_of_items"
@@ -27,15 +30,23 @@ class SettingsActivity : AppCompatActivity() {
         const val hoursPlayedWeekVisibilityKey = "hours_played_week_visibility"
         const val popularityPieChartVisibilityKey = "popularity_pie_chart_visibility"
         const val timePlayedDayVisibilityKey = "time_played_day_visibility"
+        const val statsPieChartVisibilityKey = "stats_pie_chart_visibility"
+        const val allPlaylistsVisibilityKey= "all_playlists_visibility"
+        const val recommendedTomorrowVisibilityKey= "recommended_tomorrow_visibility"
+        const val recommendedTodayVisibilityKey= "recommended_today_visibility"
 
         const val recentlyPlayedCollapseKey = "recently_played_collapse"
         const val suggestedCollapseKey = "suggested_collapse"
         const val favoriteTracksCollapseKey = "favorite_tracks_collapse"
         const val favoriteArtistsCollapseKey = "favorite_artists_collapse"
         const val favoriteGenresCollapseKey = "favorite_genres_collapse"
-        const val hoursPlayedWeekCollapseKey = "hours_played_week_collapse_key"
+        const val hoursPlayedWeekCollapseKey = "hours_played_week_collapse"
         const val popularityPieChartCollapseKey = "popularity_pie_chart_collapse"
         const val timePlayedDayCollapseKey = "time_played_day_collapse"
+        const val statsPieChartCollapseKey = "stats_pie_chart_collapse"
+        const val allPlaylistsCollapseKey= "all_playlists_collapse"
+        const val recommendedTomorrowCollapseKey= "recommended_tomorrow_collapse"
+        const val recommendedTodayCollapseKey= "recommended_today_collapse"
 
         const val favoriteTracksTimeRangeKey = "favorite_tracks_time_range"
         const val favoriteArtistsTimeRangeKey ="favorite_artists_time_range"
