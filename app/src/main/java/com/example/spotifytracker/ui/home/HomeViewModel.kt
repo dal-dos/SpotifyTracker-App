@@ -8,6 +8,7 @@ import com.adamratzman.spotify.models.Track
 import com.example.spotifytracker.WeatherObject
 import com.example.spotifytracker.database.SpotifyDataEntity
 import com.example.spotifytracker.database.SpotifyDataRepository
+import com.example.spotifytracker.ui.playlists.SpotifyPlaylist
 import java.lang.IllegalArgumentException
 
 class HomeViewModel(private val repository: SpotifyDataRepository) : ViewModel() {
@@ -103,8 +104,8 @@ class HomeViewModel(private val repository: SpotifyDataRepository) : ViewModel()
             _timePlayedDay = value
         }
 
-    private var _allPlaylists = MutableLiveData<List<Playlist>>()
-    var allPlaylists : MutableLiveData<List<Playlist>>
+    private var _allPlaylists = MutableLiveData<List<SpotifyPlaylist>>()
+    var allPlaylists : MutableLiveData<List<SpotifyPlaylist>>
         get(){
             return _allPlaylists
         }

@@ -36,6 +36,8 @@ import com.example.spotifytracker.settings.SettingsActivity
 import com.example.spotifytracker.ui.LoadingDialog
 import com.example.spotifytracker.ui.home.HomeViewModel
 import com.example.spotifytracker.ui.home.HomeViewModelFactory
+import com.example.spotifytracker.ui.playlists.PlaylistsData
+import com.example.spotifytracker.ui.playlists.SpotifyPlaylist
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
@@ -46,71 +48,6 @@ import kotlinx.coroutines.launch
 
 @Suppress("RedundantExplicitType")
 class MainActivity : AppCompatActivity() {
-    companion object{
-        val mapOfPlaylistIds = linkedMapOf(
-            "35xI4hSJ8MdO1xkXwsd56a" to "Rain",
-            "4eWBwGl0c5wtp6k5Krp6My" to "Rain",
-            "4r1QeXUOudzBUy6bDJpPYA" to "Rain",
-            "4P19lnnt265VEGjiQlgHBb" to "Rain",
-            "2zBI3DVawETlZKPU0SKmuV" to "Rain",
-            "37i9dQZF1DWV7EzJMK2FUI" to "Rain",
-            "27Zm1P410dPfedsdoO9fqm" to "Rain",
-            //tried to go for a moody dark vibe
-            //think there is r&b dark pop stuff
-            "71d99pLh0TpbdIJESHAsDN" to "Thunderstorm",
-            "37i9dQZF1DX7FY5ma9162x" to "Thunderstorm",
-            "50jo5Wt2EINXGgL3FrHpgT" to "Thunderstorm",
-            "37i9dQZF1EIf8n0XZ9B2Ys" to "Thunderstorm",
-            " 0shCgINAgNsEGoFTVDonOW" to "Thunderstorm",
-            "7a3ZFq8fhI1h8BpT84dZJS" to "Thunderstorm",
-            "37i9dQZF1DX4aYNO8X5RpR" to "Thunderstorm",
-            //random playlists from rain and thunder
-            "4P19lnnt265VEGjiQlgHBb" to "Drizzle",
-            "2zBI3DVawETlZKPU0SKmuV" to "Drizzle",
-            "37i9dQZF1DWV7EzJMK2FUI" to "Drizzle",
-            "71d99pLh0TpbdIJESHAsDN" to "Drizzle",
-            "37i9dQZF1DX7FY5ma9162x" to "Drizzle",
-            "50jo5Wt2EINXGgL3FrHpgT" to "Drizzle",
-            //christmas, jazz, indie
-            "37i9dQZF1DX5T5XRP5VmUL" to "Snow",
-            "1zOEqfxkCekU1Y6nZoeuyI" to "Snow",
-            "37i9dQZF1DX6R7QUWePReA" to "Snow",
-            "37i9dQZF1DX0Yxoavh5qJV" to "Snow",
-            "6gNZoFHaKhusArUeqIv6tt" to "Snow",
-            "4raqLXnmb8WYkjfed9olAR" to "Snow",
-            "2JSn2M0DFwcfCMuYogXiu7" to "Snow",
-            //bright indie summer vibes
-            "2L7ITJDRWIVNkxNq8qhI30" to "Clear",
-            "37i9dQZF1DXbtuVQL4zoey" to "Clear",
-            "37i9dQZF1DWUWC0NIJDJKL" to "Clear",
-            "37i9dQZF1DWVlm7xgnWdvJ" to "Clear",
-            "69VpTvkL1wnucTlcE4xeAu" to "Clear",
-            "49MqbWUSYMpxaUzog7MDqG" to "Clear",
-            "37i9dQZEVXbMDoHDwVN2tF" to "Clear", //top 50 global
-            //probably the same as rain
-            "2RXp3BYsvstt4OLs35MEAE" to "Clouds",
-            "1WOKSAOF2jQ6bwb2R7Ji3B" to "Clouds",
-            "6cQikvBTHpNlXUEmhsLIb2" to "Clouds",
-            "1ocqFRrQpH3fvsUyWJ2Kya" to "Clouds",
-            "7lLnV1ifkO7DWJ72pJj6b7" to "Clouds",
-            "37i9dQZF1DX6ziVCJnEm59" to "Clouds",
-            //smoke, haze, dust, FOG, sand, ash, mist
-            "2LncPQHTRFodEUIJOqhULw" to "Fog",
-            "3SfCLlEbXujHz7vPcetTVb" to "Fog",
-            "4JeYlFthkA8VcdkDXLUOJR" to "Fog",
-            "37i9dQZF1DXbENHm2OgowX" to "Fog",
-            //smoke
-            "0snmYSf58sLE3NPEL5zqZn" to "Fog",
-            "37i9dQZF1DX3XgesiUXnsq" to "Fog",
-            //going to change squall to wind
-            "5pTvWEc67MvzN5i49NEcQC" to "Wind",
-            "5REHKworia9rIuLDMZd2Wy" to "Wind",
-            "5vAuUpKJN4iUVhFSYjJevi" to "Wind",
-            "37i9dQZF1DX6ziVCJnEm59" to "Tornado",
-            "37i9dQZF1DWZQaaqNMbbXa" to "Tornado",
-            "1lS6v9h4MXOw6f6y8MkS8w" to "Tornado"
-        )
-    }
     private lateinit var binding: ActivityMainBinding
     private lateinit var apiHandler: SpotifyApiHandler
     private var username = ""
@@ -121,7 +58,7 @@ class MainActivity : AppCompatActivity() {
     private var favoriteArtist : List<Artist> = arrayListOf()
     private var playedWeekHistory : List<PlayHistory> = arrayListOf()
     private var timePlayedDay : List<PlayHistory> = arrayListOf()
-    private var allPlaylists : List<Playlist> = arrayListOf()
+    private var allPlaylists : List<SpotifyPlaylist> = arrayListOf()
     private lateinit var navView: BottomNavigationView
     private lateinit var spotifyDatabase : SpotifyDatabase
     private lateinit var spotifyDataDao : SpotifyDataDao
@@ -227,7 +164,6 @@ class MainActivity : AppCompatActivity() {
         inflater.inflate(R.menu.custom_actionbar, menu)
         return true
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.option1 -> {
@@ -281,7 +217,7 @@ class MainActivity : AppCompatActivity() {
                 favoriteTracks = apiHandler.userTopTracks()
                 playedWeekHistory = apiHandler.userPlayedWeekHistory()
                 timePlayedDay = apiHandler.userTimePlayedDay()
-                allPlaylists = apiHandler.playlistSearch(mapOfPlaylistIds.keys.toList())
+                allPlaylists = PlaylistsData.allPlaylist
                 insertDB(username, recentlyPlayed, suggested, favoriteGenre, favoriteArtist, favoriteTracks, playedWeekHistory, timePlayedDay, allPlaylists)
             }
             openDialog(apiBuilderLoad)
@@ -300,7 +236,7 @@ class MainActivity : AppCompatActivity() {
         favoriteTracks: List<Track>,
         playedWeekHistory: List<PlayHistory>,
         timePlayedDay: List<PlayHistory>,
-        allPlaylists: List<Playlist>
+        allPlaylists: List<SpotifyPlaylist>
     ){
 
         myViewModel.username.value = username

@@ -60,8 +60,8 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
     private lateinit var currentWeatherTv: TextView
     private lateinit var currWeatherDescTv: TextView
     private lateinit var tempTv: TextView
-    private lateinit var playlistArrayList :ArrayList<Playlist>
-    private lateinit var recommendedTodayArrayList :ArrayList<Playlist>
+    private lateinit var playlistArrayList :ArrayList<SpotifyPlaylist>
+    private lateinit var recommendedTodayArrayList :ArrayList<SpotifyPlaylist>
 
     private lateinit var futureWeatherListAdapter: WeatherListAdapter
     private lateinit var futureArrayList: ArrayList<WeatherObject>
@@ -126,7 +126,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
             }else{
                 playlistListAdapter.replace(it)
                 playlistListAdapter.notifyDataSetChanged()
-                playlistArrayList = it as ArrayList<Playlist>
+                playlistArrayList = it as ArrayList<SpotifyPlaylist>
                 setListViewHeightBasedOnChildren(allPlaylistsList)
             }
         }
@@ -172,17 +172,17 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         recommendedTodayList: ListView,
         recommendedTodayListAdapter: PlaylistListAdapter
     ) {
-        val IDmap = MainActivity.mapOfPlaylistIds
+        val IDmap = PlaylistsData.allPlaylist
         var index = 0
         val currWeatherPlaylistIndices = arrayListOf<Int>()
         for(item in IDmap){
-            if(item.value == currWeather){
+            if(item.weatherType == currWeather){
                 currWeatherPlaylistIndices.add(index)
             }
             index += 1
         }
 
-            if(!IDmap.containsValue(currWeather)){
+            if(currWeatherPlaylistIndices.isEmpty()){
                 val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList())
                 recommendedTodayList.adapter = emptyListAdapter
                 emptyListAdapter.replace(arrayListOf("None Found"))
@@ -190,7 +190,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
                 setListViewHeightBasedOnChildren(recommendedTodayList)
             }else{
                 val randomNumber = currWeatherPlaylistIndices.random()
-                val currWeatherPlaylistArrayList = listOf(playlistArrayList[randomNumber])
+                val currWeatherPlaylistArrayList = listOf(IDmap[randomNumber])
                 recommendedTodayListAdapter.replace(currWeatherPlaylistArrayList)
                 recommendedTodayListAdapter.notifyDataSetChanged()
                 setListViewHeightBasedOnChildren(recommendedTodayList)
@@ -282,7 +282,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         when(p0?.id) {
          binding.allPlaylistsList.id -> {
              if (playlistArrayList.isNotEmpty()){
-                 val hyperlink = playlistArrayList[p2].externalUrls.spotify
+                 val hyperlink = playlistArrayList[p2].webLink
                  val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
                  startActivity(intent)
              }

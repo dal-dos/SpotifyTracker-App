@@ -4,13 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import com.adamratzman.spotify.models.Track
+import android.widget.*
 import com.example.spotifytracker.R
 import com.example.spotifytracker.WeatherObject
+import com.example.spotifytracker.ui.playlists.PlaylistsData
 import com.squareup.picasso.Picasso
 import kotlin.math.roundToInt
 
@@ -40,8 +37,33 @@ class WeatherListAdapter(private val context: Context, private var futureWeather
         setImage(view,position)
         setTemp(view,position)
         setTime(view,position)
+        setListView(view,position)
 
         return view
+    }
+
+    private fun setListView(view: View, position: Int) {
+        val innerPlaylistListView = view.findViewById<ListView>(R.id.rec_tomorrow_list)
+        val IDmap = PlaylistsData.allPlaylist
+        var index = 0
+        val currWeatherPlaylistIndices = arrayListOf<Int>()
+        for(item in IDmap){
+            if(item.weatherType == futureWeather[position].weather){
+                currWeatherPlaylistIndices.add(index)
+            }
+            index += 1
+        }
+        if(currWeatherPlaylistIndices.isEmpty()){
+            val emptyListAdapter = GenreListAdapter(context, arrayListOf("None Found"))
+            innerPlaylistListView.adapter = emptyListAdapter
+            setListViewHeightBasedOnChildren(innerPlaylistListView,view)
+        }else {
+            val randomNumber = currWeatherPlaylistIndices.random()
+            val currWeatherPlaylistArrayList = listOf(IDmap[randomNumber])
+            innerPlaylistListView.adapter = PlaylistListAdapter(context, currWeatherPlaylistArrayList)
+            setListViewHeightBasedOnChildren(innerPlaylistListView,view)
+        }
+
     }
 
     private fun setImage(view: View, position: Int) {
@@ -81,5 +103,20 @@ class WeatherListAdapter(private val context: Context, private var futureWeather
         itemTitleText.isSelected = true
     }
 
+    private fun setListViewHeightBasedOnChildren(listView: ListView, view: View) {
+        val listAdapter = listView.adapter
+            ?: // pre-condition
+            return
+        var totalHeight = listView.paddingTop + listView.paddingBottom
+        for (i in 0 until listAdapter.count) {
+            val listItem = listAdapter.getView(i, null, listView)
+            (listItem as? ViewGroup)?.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            listItem.measure(view.measuredWidth, view.measuredHeight)
 
+            totalHeight += listItem.measuredHeight
+        }
+        val params = listView.layoutParams
+        params.height = totalHeight + listView.dividerHeight * (listAdapter.count - 1)
+        listView.layoutParams = params
+    }
 }

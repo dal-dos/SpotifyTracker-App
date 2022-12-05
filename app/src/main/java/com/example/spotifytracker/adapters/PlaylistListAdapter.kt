@@ -10,11 +10,12 @@ import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.models.Playlist
 import com.example.spotifytracker.MainActivity
 import com.example.spotifytracker.R
+import com.example.spotifytracker.ui.playlists.SpotifyPlaylist
 import com.squareup.picasso.Picasso
 import java.text.NumberFormat
 import java.util.*
 
-class PlaylistListAdapter(private val context: Context, private var spotifyPlaylists: List<Playlist>) : BaseAdapter(){
+class PlaylistListAdapter(private val context: Context, private var spotifyPlaylists: List<SpotifyPlaylist>) : BaseAdapter(){
     override fun getCount(): Int {
         return spotifyPlaylists.size
     }
@@ -27,7 +28,7 @@ class PlaylistListAdapter(private val context: Context, private var spotifyPlayl
         return position.toLong()
     }
 
-    fun replace(newSpotifyData: List<Playlist>){
+    fun replace(newSpotifyData: List<SpotifyPlaylist>){
         spotifyPlaylists = newSpotifyData
     }
 
@@ -43,13 +44,12 @@ class PlaylistListAdapter(private val context: Context, private var spotifyPlayl
 
     private fun setImage(view: View, position: Int) {
         val image = view.findViewById<ImageView>(R.id.imageView)
-        Picasso.get().load(spotifyPlaylists[position].images[0].url).into(image);
+        Picasso.get().load(spotifyPlaylists[position].imageUrl).into(image);
     }
 
     private fun setSubText(view: View, position: Int) {
         val itemSubText =  view.findViewById<TextView>(R.id.itemSubText)
-        val author = spotifyPlaylists[position].owner.displayName
-        val id : String = spotifyPlaylists[position].id
+        val author = spotifyPlaylists[position].author
 
         itemSubText.text = "$author"
         itemSubText.isSelected = true
@@ -57,7 +57,7 @@ class PlaylistListAdapter(private val context: Context, private var spotifyPlayl
 
     private fun setTitleText(view: View, position: Int) {
         val itemTitleText = view.findViewById<TextView>(R.id.itemTitleText)
-        val playlistName : String = spotifyPlaylists[position].name
+        val playlistName : String = spotifyPlaylists[position].title
         itemTitleText.text = playlistName
         itemTitleText.isSelected = true
     }

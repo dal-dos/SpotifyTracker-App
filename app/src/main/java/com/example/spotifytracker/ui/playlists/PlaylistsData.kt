@@ -1,0 +1,53 @@
+package com.example.spotifytracker.ui.playlists
+
+class PlaylistsData {
+    companion object{
+        val allPlaylist : ArrayList<SpotifyPlaylist> = arrayListOf(
+            SpotifyPlaylist("lofi sleep, lofi rain 💤","Sleep Tales","https://i.scdn.co/image/ab67706c0000bebbc97cb4620a0e4a5f5b1278b5","https://open.spotify.com/playlist/35xI4hSJ8MdO1xkXwsd56a","Rain"),
+            SpotifyPlaylist("🌧️ lofi rain 😴 lofi sleep","Chillhop World","https://i.scdn.co/image/ab67706c0000bebbd337427024662a33f08ee58b","https://open.spotify.com/playlist/4eWBwGl0c5wtp6k5Krp6My","Rain"),
+            SpotifyPlaylist("songs to listen to in the rain.","Christinelol<3","https://i.scdn.co/image/ab67706c0000bebb32ff2fc96a7ddaa8c943146f","https://open.spotify.com/playlist/4r1QeXUOudzBUy6bDJpPYA","Rain"),
+            SpotifyPlaylist("Raining in Tokyo LoFi 🌧️","EJ","https://i.scdn.co/image/ab67706c0000bebb0b6f1b339fc2eb703436b1dd","https://open.spotify.com/playlist/4P19lnnt265VEGjiQlgHBb","Drizzle"),
+            SpotifyPlaylist("Soft songs for when it’s raining 🌧🌙","Aisling","https://i.scdn.co/image/ab67706c0000bebb4d1c595b98ae138d0b307493","https://open.spotify.com/playlist/2zBI3DVawETlZKPU0SKmuV","Drizzle"),
+            SpotifyPlaylist("Jazz in the Background","Spotify","https://i.scdn.co/image/ab67706f000000036808b15e5db5e5569aae1471","https://open.spotify.com/playlist/37i9dQZF1DWV7EzJMK2FUI","Drizzle"),
+            SpotifyPlaylist("Classical Bangers 🎹🎻","Matt Box","https://i.scdn.co/image/ab67706c0000bebb8f7897818345c7198f21f85a","https://open.spotify.com/playlist/27Zm1P410dPfedsdoO9fqm","Rain"),
+            SpotifyPlaylist("Lo-Fi Beats","Amplify","https://i.scdn.co/image/ab67706c0000bebb8fde3f650b6f23e9ebc61350","https://open.spotify.com/playlist/71d99pLh0TpbdIJESHAsDN","Drizzle"),
+            SpotifyPlaylist("R&B Favourites","Spotify","https://i.scdn.co/image/ab67706f000000031085f29cb8b0ae664112be65","https://open.spotify.com/playlist/37i9dQZF1DX7FY5ma9162x","Drizzle"),
+            SpotifyPlaylist("slow soft music to fall asleep to 😴","Low Key Bops","https://i.scdn.co/image/ab67706c0000bebbf44308c31616aa42ff4bb998","https://open.spotify.com/playlist/50jo5Wt2EINXGgL3FrHpgT","Drizzle"),
+            SpotifyPlaylist("Dark Moody Mix","Spotify","https://seed-mix-image.spotifycdn.com/v6/img/desc/Dark%20Moody/en/large","https://open.spotify.com/playlist/37i9dQZF1EIf8n0XZ9B2Ys","Thunderstorm"),
+            SpotifyPlaylist("Dark Pop","Summertime","https://i.scdn.co/image/ab67706c0000bebb58e57f287ae09ef9480013a8","https://open.spotify.com/playlist/0shCgINAgNsEGoFTVDonOW","Thunderstorm"),
+            SpotifyPlaylist("DARK POP ESSENTIALS 2022","ESSENTIALS","https://i.scdn.co/image/ab67706c0000bebb6bb27219a0cd9630465890e9","https://open.spotify.com/playlist/7a3ZFq8fhI1h8BpT84dZJS","Thunderstorm"),
+            SpotifyPlaylist("Nightstorms","Spotify","https://i.scdn.co/image/ab67706f00000003f86e0ffd52b324b3c455b185","https://open.spotify.com/playlist/37i9dQZF1DX4aYNO8X5RpR","Thunderstorm"),
+            SpotifyPlaylist("Christmas in Canada","Spotify","https://i.scdn.co/image/ab67706f00000003fb87db3fb3fe655957fc8326","https://open.spotify.com/playlist/37i9dQZF1DX5T5XRP5VmUL","Snow"),
+            SpotifyPlaylist("Worlds Best Christmas Playlist ","Henry Janzen","https://i.scdn.co/image/ab67706c0000bebb097aa16e736be5c32d44fd03","https://open.spotify.com/playlist/1zOEqfxkCekU1Y6nZoeuyI","Snow"),
+            SpotifyPlaylist("Christmas Classics","Spotify","https://i.scdn.co/image/ab67706f00000003b70e0f51ac4cf9d62cee4977","https://open.spotify.com/playlist/37i9dQZF1DX6R7QUWePReA","Snow"),
+            SpotifyPlaylist("Christmas Hits","Spotify","https://i.scdn.co/image/ab67706f00000003ef53563c4fa1187c7537f13f","https://open.spotify.com/playlist/37i9dQZF1DX0Yxoavh5qJV","Snow"),
+            SpotifyPlaylist("snowy nights & mornings","laynegrace","https://i.scdn.co/image/ab67706c0000bebb2a4de86125b7e14493950675","https://open.spotify.com/playlist/6gNZoFHaKhusArUeqIv6tt","Snow"),
+            SpotifyPlaylist("Snow Day Vibes ❄️","Raquel Pratte","https://i.scdn.co/image/ab67706c0000bebb5b68b4e6632d2b23fd5207fd","https://open.spotify.com/playlist/4raqLXnmb8WYkjfed9olAR","Snow"),
+            SpotifyPlaylist("Snowy Jazz","Bailey","https://i.scdn.co/image/ab67706c0000bebb6137cad01261e5c2799fce2b","https://open.spotify.com/playlist/2JSn2M0DFwcfCMuYogXiu7","Snow"),
+            SpotifyPlaylist("Sunny Daytime Vibes ☀️🚗🏙","Lucas Vuitton","https://i.scdn.co/image/ab67706c0000bebba012f807a2d6c52296684798","https://open.spotify.com/playlist/2L7ITJDRWIVNkxNq8qhI30","Clear"),
+            SpotifyPlaylist("Sunny Beats","Spotify","https://i.scdn.co/image/ab67706f0000000385305faef8dac6072bf73b76","https://open.spotify.com/playlist/37i9dQZF1DXbtuVQL4zoey","Clear"),
+            SpotifyPlaylist("Indie Sunshine","Spotify","https://i.scdn.co/image/ab67706f000000035245f740b1190f5bb330de74","https://open.spotify.com/playlist/37i9dQZF1DWUWC0NIJDJKL","Clear"),
+            SpotifyPlaylist("Sunny Mix","Spotify","https://i.scdn.co/image/ab67706f00000003ee494115af72fbb1bf2c3e4d","https://open.spotify.com/playlist/37i9dQZF1DWVlm7xgnWdvJ","Clear"),
+            SpotifyPlaylist("Feel good hits of the summer","keene","https://i.scdn.co/image/ab67706c0000bebb3ca5e7d7ccb22313fe3673f8","https://open.spotify.com/playlist/69VpTvkL1wnucTlcE4xeAu","Clear"),
+            SpotifyPlaylist("Late Night Music","Digster Canada","https://i.scdn.co/image/ab67706c0000bebb70e7854bc6548569cf146c4e","https://open.spotify.com/playlist/49MqbWUSYMpxaUzog7MDqG","Clear"),
+            SpotifyPlaylist("Top 50 - Global","Spotify","https://charts-images.scdn.co/assets/locale_en/regional/daily/region_global_large.jpg","https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF","Clear"),
+            SpotifyPlaylist("rainy days / cloudy days","zzzgaabs","https://i.scdn.co/image/ab67706c0000bebbfb6932ab734413812791454a","https://open.spotify.com/playlist/2RXp3BYsvstt4OLs35MEAE","Clouds"),
+            SpotifyPlaylist("cloudy fall days 🍂","grace","https://i.scdn.co/image/ab67706c0000bebbb40393340337dc1f497a6078","https://open.spotify.com/playlist/1WOKSAOF2jQ6bwb2R7Ji3B","Clouds"),
+            SpotifyPlaylist("cloudy days🤍✨","bren romero","https://i.scdn.co/image/ab67706c0000bebb839bf830974ebbcaab4566cf","https://open.spotify.com/playlist/6cQikvBTHpNlXUEmhsLIb2","Clouds"),
+            SpotifyPlaylist("cloudy day lofi ☁️","abi :P","https://i.scdn.co/image/ab67706c0000bebba42276a1247b4db2a758e6ee","https://open.spotify.com/playlist/1ocqFRrQpH3fvsUyWJ2Kya","Clouds"),
+            SpotifyPlaylist("Feel good ","keene","https://mosaic.scdn.co/640/ab67616d0000b2738265a736a1eb838ad5a0b921ab67616d0000b2738e434692f8d330ad8f5d933aab67616d0000b273ab9d1ae18b640b7b0ce390d4ab67616d0000b273f3aa0e6ca22a382007f61e4d","https://open.spotify.com/playlist/7lLnV1ifkO7DWJ72pJj6b7","Clouds"),
+            SpotifyPlaylist("Your Favorite Coffeehouse","Spotify","https://i.scdn.co/image/ab67706f000000035ae7aa0454c9eafdd6505fda","https://open.spotify.com/playlist/37i9dQZF1DX6ziVCJnEm59","Tornado"),
+            SpotifyPlaylist("Foggy Autumn Morning🤎🍂✨","Mariah","https://i.scdn.co/image/ab67706c0000bebb5b506bc28b30d42652dcb2f0","https://open.spotify.com/playlist/2LncPQHTRFodEUIJOqhULw","Fog"),
+            SpotifyPlaylist("a cold fall foggy morning ","Alyssa_rod05","https://i.scdn.co/image/ab67706c0000bebbdb430511cc58340f59ac6871","https://open.spotify.com/playlist/3SfCLlEbXujHz7vPcetTVb","Fog"),
+            SpotifyPlaylist("foggy nights ","Sarah","https://i.scdn.co/image/ab67706c0000bebb30cc576b167ec80709543280","https://open.spotify.com/playlist/4JeYlFthkA8VcdkDXLUOJR","Fog"),
+            SpotifyPlaylist("gloomcore","Spotify","https://i.scdn.co/image/ab67706f000000030735dc1db1e306ce42c7bb5a","https://open.spotify.com/playlist/37i9dQZF1DXbENHm2OgowX","Fog"),
+            SpotifyPlaylist("late night smoke sesh🍃🍄","BiggyD","https://i.scdn.co/image/ab67706c0000bebb14f770a3bad5d2b5935e3851","https://open.spotify.com/playlist/0snmYSf58sLE3NPEL5zqZn","Fog"),
+            SpotifyPlaylist("Raw & Uncut","Spotify","https://i.scdn.co/image/ab67706f0000000303a6e158d5466d21cba74c27","https://open.spotify.com/playlist/37i9dQZF1DX3XgesiUXnsq","Fog"),
+            SpotifyPlaylist("Windy days🌙","Amelia","https://i.scdn.co/image/ab67706c0000bebb5a5ebf5d1682c156a0b15257","https://open.spotify.com/playlist/5pTvWEc67MvzN5i49NEcQC","Wind"),
+            SpotifyPlaylist("windy day","atussa","https://i.scdn.co/image/ab67706c0000bebbea294d69540326f79f7dd0db","https://open.spotify.com/playlist/5REHKworia9rIuLDMZd2Wy","Wind"),
+            SpotifyPlaylist("Windy Vibes","Gaby Ghusen","https://i.scdn.co/image/ab67706c0000bebbb9cf162cf37cd86b3b590b44","https://open.spotify.com/playlist/5vAuUpKJN4iUVhFSYjJevi","Wind"),
+            SpotifyPlaylist("Dance Pop Hits","Spotify","https://i.scdn.co/image/ab67706f000000031deebf75d5abd0f11a3cea52","https://open.spotify.com/playlist/37i9dQZF1DWZQaaqNMbbXa","Tornado"),
+            SpotifyPlaylist("EDM Classics (Top 100)","Den Haku Records","https://i.scdn.co/image/ab67706c0000bebbd7a4572292abeac5e1966bff","https://open.spotify.com/playlist/1lS6v9h4MXOw6f6y8MkS8w","Tornado")
+        )
+    }
+}
