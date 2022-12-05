@@ -48,6 +48,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     companion object{
         val mapOfPlaylistIds = mapOf(
+            //comment so i can edit the commit message
 
              //some jazz, classical, calm vibes
             "35xI4hSJ8MdO1xkXwsd56a" to "rain",
