@@ -177,8 +177,6 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         pc!!.setDrawEntryLabels(false)
         //pc!!.setUsePercentValues(true)
         pc!!.description.isEnabled= false
-        pc!!.extraRightOffset = -20F
-        pc!!.extraBottomOffset = 0F
         pc!!.setDrawCenterText(true)
         pc!!.setOnChartValueSelectedListener(this)
         pc!!.setCenterTextTypeface(tf)
