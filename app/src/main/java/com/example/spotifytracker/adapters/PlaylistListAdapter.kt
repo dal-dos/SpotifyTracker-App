@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.adamratzman.spotify.models.Artist
 import com.adamratzman.spotify.models.Playlist
+import com.example.spotifytracker.MainActivity
 import com.example.spotifytracker.R
 import com.squareup.picasso.Picasso
 import java.text.NumberFormat
@@ -48,7 +49,9 @@ class PlaylistListAdapter(private val context: Context, private var spotifyPlayl
     private fun setSubText(view: View, position: Int) {
         val itemSubText =  view.findViewById<TextView>(R.id.itemSubText)
         val author = spotifyPlaylists[position].owner.displayName
-        itemSubText.text = "$author"
+        val id : String = spotifyPlaylists[position].id
+
+        itemSubText.text = "$author Type: " + MainActivity.mapOfPlaylistIds[id]
         itemSubText.isSelected = true
     }
 

@@ -47,11 +47,10 @@ import kotlinx.coroutines.launch
 @Suppress("RedundantExplicitType")
 class MainActivity : AppCompatActivity() {
     companion object{
-        val listOfIds = listOf<String>(
-            "35xI4hSJ8MdO1xkXwsd56a",
-            "4eWBwGl0c5wtp6k5Krp6My",
-            "37i9dQZF1DX4aYNO8X5RpR"
-        )
+        val mapOfPlaylistIds = mapOf(
+            "35xI4hSJ8MdO1xkXwsd56a" to "rain",
+            "4eWBwGl0c5wtp6k5Krp6My" to "rain",
+            "37i9dQZF1DX4aYNO8X5RpR" to "thunder")
     }
     private lateinit var binding: ActivityMainBinding
     private lateinit var apiHandler: SpotifyApiHandler
@@ -223,7 +222,7 @@ class MainActivity : AppCompatActivity() {
                 favoriteTracks = apiHandler.userTopTracks()
                 playedWeekHistory = apiHandler.userPlayedWeekHistory()
                 timePlayedDay = apiHandler.userTimePlayedDay()
-                allPlaylists = apiHandler.playlistSearch(listOfIds)
+                allPlaylists = apiHandler.playlistSearch(mapOfPlaylistIds.keys.toList())
                 insertDB(username, recentlyPlayed, suggested, favoriteGenre, favoriteArtist, favoriteTracks, playedWeekHistory, timePlayedDay, allPlaylists)
             }
             openDialog(apiBuilderLoad)

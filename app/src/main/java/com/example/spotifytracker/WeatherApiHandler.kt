@@ -40,6 +40,7 @@ class WeatherApiHandler(val context: Context) {
                 val geocoder: Geocoder = Geocoder(context, Locale.getDefault())
                 val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
                 cityName = addresses[0].locality
+                counter = 3
                 val country = addresses[0].countryCode
                 println("debug: location is $cityName")
                 weatherUrlForCurr = "$weatherUrlForCurr?q=$cityName,$country&appid=$weatherApiKey"
@@ -144,7 +145,10 @@ class WeatherApiHandler(val context: Context) {
         return futureWeatherArray
     }
 
-    fun getCity(): String {
+    suspend fun getCity(): String {
+        while (counter != 3){
+            delay(100)
+        }
         return cityName
     }
 
