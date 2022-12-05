@@ -8,6 +8,8 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -24,6 +26,8 @@ import com.example.spotifytracker.databinding.FragmentStatsBinding
 import com.example.spotifytracker.ui.home.HomeViewModel
 import com.example.spotifytracker.ui.home.HomeViewModelFactory
 import com.github.mikephil.charting.charts.PieChart
+import com.squareup.picasso.Picasso
+import kotlin.math.roundToInt
 
 class PlaylistsFragment : Fragment() {
 
@@ -42,6 +46,11 @@ class PlaylistsFragment : Fragment() {
     private lateinit var repo: SpotifyDataRepository
     private lateinit var viewModelFactory: HomeViewModelFactory
     private lateinit var myViewModel: HomeViewModel
+    private lateinit var mainImage: ImageView
+    private lateinit var cityTextView: TextView
+    private lateinit var currentWeatherTv: TextView
+    private lateinit var currWeatherDescTv: TextView
+    private lateinit var tempTv: TextView
 
 
     override fun onCreateView(
@@ -53,6 +62,11 @@ class PlaylistsFragment : Fragment() {
         val root = startFunction(inflater,container)
 
         collapseAnimationInit()
+        mainImage = root.findViewById(R.id.imageView)
+        currentWeatherTv = root.findViewById(R.id.weather_text)
+        currWeatherDescTv = root.findViewById(R.id.weather_text_desc)
+        cityTextView = root.findViewById(R.id.weather_text_city)
+        tempTv = root.findViewById(R.id.weather_temp)
         statsObservers()
         //scrollOnChangeListener()
         swipeRefresh()
@@ -70,7 +84,7 @@ class PlaylistsFragment : Fragment() {
     private fun statsObservers() {
 
         myViewModel.city.observe(viewLifecycleOwner) {
-           println("The city in fragment is $it")
+           cityTextView.text = it
         }
 
         myViewModel.futureWeather.observe(viewLifecycleOwner) {
@@ -78,7 +92,14 @@ class PlaylistsFragment : Fragment() {
         }
 
         myViewModel.currWeather.observe(viewLifecycleOwner) {
-            println("The weather in fragment is $it")
+            currentWeatherTv.text = it.weather
+            currWeatherDescTv.text = it.weatherDesc.split(' ').joinToString(" ") {
+                it.replaceFirstChar {
+                    it.uppercase()
+                }
+            }
+            Picasso.get().load(it.icon).into(mainImage)
+            tempTv.text = it.temp.roundToInt().toString() + "°C"
         }
     }
 

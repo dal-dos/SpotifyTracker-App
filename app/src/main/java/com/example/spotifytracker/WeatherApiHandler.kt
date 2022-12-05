@@ -74,6 +74,7 @@ class WeatherApiHandler(val context: Context) {
                     val jsonObjectWeather = jsonArray.getJSONObject(0)
                     val currWeather = jsonObjectWeather.getString("main")
                     val description = jsonObjectWeather.getString("description")
+                    val iconUrl = "http://openweathermap.org/img/wn/"+ jsonObjectWeather.getString("icon") + "@4x.png"
                     val jsonObjectMain: JSONObject = daysWeatherObject.getJSONObject("main")
                     val temp = jsonObjectMain.getDouble("temp") - 273.15 // minus this to convert to Celsius from kelvin
                     val time = daysWeatherObject.getString("dt_txt")
@@ -82,7 +83,7 @@ class WeatherApiHandler(val context: Context) {
                     if (date == lastCheckedDate){
                         continue
                     }
-                    val newWeatherObject: WeatherObject = WeatherObject(currWeather, temp, description, date)
+                    val newWeatherObject: WeatherObject = WeatherObject(currWeather, temp, description, date, iconUrl)
                     lastCheckedDate = date
                     futureWeatherArray.add(newWeatherObject)
                     println(newWeatherObject)
@@ -110,12 +111,13 @@ class WeatherApiHandler(val context: Context) {
                 val jsonWeather: JSONObject = JSONObject(response)
                 val jsonArray: JSONArray = jsonWeather.getJSONArray("weather")
                 val jsonObjectWeather = jsonArray.getJSONObject(0)
+                val iconUrl = "https://openweathermap.org/img/wn/"+ jsonObjectWeather.getString("icon") + "@4x.png"
                 val daysWeather = jsonObjectWeather.getString("main")
                 val description = jsonObjectWeather.getString("description")
                 val jsonObjectMain: JSONObject = jsonWeather.getJSONObject("main")
                 val temp = jsonObjectMain.getDouble("temp") - 273.15 // minus this to convert to Celsius from kelvin
                 val time = jsonWeather.getString("dt")
-                currWeather = WeatherObject(daysWeather, temp, description, time)
+                currWeather = WeatherObject(daysWeather, temp, description, time, iconUrl)
                 println("Curr weather is $currWeather")
                 counter = 1
             },

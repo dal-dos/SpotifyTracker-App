@@ -358,9 +358,11 @@ class MainActivity : AppCompatActivity() {
     @Suppress("UNUSED_PARAMETER")
     fun onClickCardViewRecommendToday(view: View) {
         val cv = findViewById<CardView>(R.id.recommmended_today_inner_cardview)
+        val cv2 = findViewById<CardView>(R.id.recommmended_today_playlist_cardview)
         val arrow = findViewById<TextView>(R.id.rec_today_arrow)
         val bool = !cv.isVisible
         cv.isVisible = bool
+        cv2.isVisible = bool
         changeArrow(arrow,cv.isVisible)
     }
 
