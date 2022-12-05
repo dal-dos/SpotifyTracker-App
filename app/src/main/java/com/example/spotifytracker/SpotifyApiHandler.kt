@@ -70,11 +70,11 @@ class SpotifyApiHandler(val token: Token, private val sharedSettings: SharedPref
     }
 
     suspend fun playlistSearch(searchIds: List<String>): ArrayList<Playlist> {
-        val market = null
+        val market = Market.US
         val myPlaylists : ArrayList<Playlist> = arrayListOf()
         searchIds.map {
             val searchID = it
-            myPlaylists.add(api!!.playlists.getPlaylist(searchID, market = market)!!)
+            myPlaylists.add(api!!.playlists.getPlaylist(playlist = searchID)!!)
         }
         return myPlaylists
     }

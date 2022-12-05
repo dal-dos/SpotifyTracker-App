@@ -75,7 +75,7 @@ class WeatherApiHandler(val context: Context) {
                     val jsonObjectWeather = jsonArray.getJSONObject(0)
                     val currWeather = jsonObjectWeather.getString("main")
                     val description = jsonObjectWeather.getString("description")
-                    val iconUrl = "http://openweathermap.org/img/wn/"+ jsonObjectWeather.getString("icon") + "@4x.png"
+                    val iconUrl = "https://openweathermap.org/img/wn/"+ jsonObjectWeather.getString("icon") + "@4x.png"
                     val jsonObjectMain: JSONObject = daysWeatherObject.getJSONObject("main")
                     val temp = jsonObjectMain.getDouble("temp") - 273.15 // minus this to convert to Celsius from kelvin
                     val time = daysWeatherObject.getString("dt_txt")

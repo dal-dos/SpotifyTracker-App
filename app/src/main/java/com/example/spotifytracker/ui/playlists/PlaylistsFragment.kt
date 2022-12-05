@@ -18,11 +18,16 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.adamratzman.spotify.models.PlayHistory
 import com.adamratzman.spotify.models.Playlist
+import com.adamratzman.spotify.models.Track
 import com.example.spotifytracker.MainActivity
 import com.example.spotifytracker.R
+import com.example.spotifytracker.WeatherObject
 import com.example.spotifytracker.adapters.GenreListAdapter
 import com.example.spotifytracker.adapters.PlaylistListAdapter
+import com.example.spotifytracker.adapters.TrackListAdapter
+import com.example.spotifytracker.adapters.WeatherListAdapter
 import com.example.spotifytracker.database.SpotifyDataDao
 import com.example.spotifytracker.database.SpotifyDataRepository
 import com.example.spotifytracker.database.SpotifyDatabase
@@ -58,6 +63,10 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
     private lateinit var playlistArrayList :ArrayList<Playlist>
     private lateinit var recommendedTodayArrayList :ArrayList<Playlist>
 
+    private lateinit var futureWeatherListAdapter: WeatherListAdapter
+    private lateinit var futureArrayList: ArrayList<WeatherObject>
+    private lateinit var futureListView: ListView
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -73,6 +82,11 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         currWeatherDescTv = root.findViewById(R.id.weather_text_desc)
         cityTextView = root.findViewById(R.id.weather_text_city)
         tempTv = root.findViewById(R.id.weather_temp)
+
+        futureArrayList = ArrayList()
+        futureListView = root.findViewById(R.id.rec_tomorrow_list)
+        futureWeatherListAdapter = WeatherListAdapter(requireActivity(), futureArrayList)
+        futureListView.adapter = futureWeatherListAdapter
         playlistsObservers()
         //scrollOnChangeListener()
         swipeRefresh()
@@ -102,7 +116,6 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         val recommendedTodayListAdapter: PlaylistListAdapter = PlaylistListAdapter(requireActivity(), recommendedTodayArrayList)
         recommendedTodayList.adapter = recommendedTodayListAdapter
 
-
         myViewModel.allPlaylists.observe(viewLifecycleOwner){
             if(it.isEmpty()){
                 val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList())
@@ -123,7 +136,18 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         }
 
         myViewModel.futureWeather.observe(viewLifecycleOwner) {
-            //setChart(it)
+            if(it.isEmpty()){
+                val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList())
+                futureListView.adapter = emptyListAdapter
+                emptyListAdapter.replace(arrayListOf("None Found"))
+                emptyListAdapter.notifyDataSetChanged()
+                setListViewHeightBasedOnChildren(futureListView)
+            }else{
+                futureWeatherListAdapter.replace(it)
+                futureWeatherListAdapter.notifyDataSetChanged()
+                futureArrayList = it as ArrayList<WeatherObject>
+                setListViewHeightBasedOnChildren(futureListView)
+            }
         }
 
         myViewModel.currWeather.observe(viewLifecycleOwner) {
