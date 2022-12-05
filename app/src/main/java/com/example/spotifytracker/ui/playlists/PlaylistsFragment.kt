@@ -166,7 +166,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
                 setListViewHeightBasedOnChildren(recommendedTodayList)
             }else{
                 val randomNumber = currWeatherPlaylistIndices.random()
-                val currWeatherPlaylistArrayList = listOf(playlistArrayList[currWeatherPlaylistIndices[randomNumber]])
+                val currWeatherPlaylistArrayList = listOf(playlistArrayList[randomNumber])
                 recommendedTodayListAdapter.replace(currWeatherPlaylistArrayList)
                 recommendedTodayListAdapter.notifyDataSetChanged()
                 setListViewHeightBasedOnChildren(recommendedTodayList)

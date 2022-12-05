@@ -88,12 +88,12 @@ class MainActivity : AppCompatActivity() {
             "49MqbWUSYMpxaUzog7MDqG" to "Clear",
             "37i9dQZEVXbMDoHDwVN2tF" to "Clear", //top 50 global
             //probably the same as rain
-            "2RXp3BYsvstt4OLs35MEAE" to "Cloudy",
-            "1WOKSAOF2jQ6bwb2R7Ji3B" to "Cloudy",
-            "6cQikvBTHpNlXUEmhsLIb2" to "Cloudy",
-            "1ocqFRrQpH3fvsUyWJ2Kya" to "Cloudy",
-            "7lLnV1ifkO7DWJ72pJj6b7" to "Cloudy",
-            "37i9dQZF1DX6ziVCJnEm59" to "Cloudy",
+            "2RXp3BYsvstt4OLs35MEAE" to "Clouds",
+            "1WOKSAOF2jQ6bwb2R7Ji3B" to "Clouds",
+            "6cQikvBTHpNlXUEmhsLIb2" to "Clouds",
+            "1ocqFRrQpH3fvsUyWJ2Kya" to "Clouds",
+            "7lLnV1ifkO7DWJ72pJj6b7" to "Clouds",
+            "37i9dQZF1DX6ziVCJnEm59" to "Clouds",
             //smoke, haze, dust, FOG, sand, ash, mist
             "2LncPQHTRFodEUIJOqhULw" to "Fog",
             "3SfCLlEbXujHz7vPcetTVb" to "Fog",
