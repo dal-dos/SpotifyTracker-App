@@ -66,6 +66,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
     private lateinit var futureWeatherListAdapter: WeatherListAdapter
     private lateinit var futureArrayList: ArrayList<WeatherObject>
     private lateinit var futureListView: ListView
+    private var hideLayoutBool: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -277,6 +278,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
     override fun onResume() {
         super.onResume()
         binding.playlistLayout.isVisible = true
+        hideLayoutBool = false
         myActivity.showActionBar(true)
     }
 
@@ -289,6 +291,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
     }
 
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        hideLayoutBool = true
         when(p0?.id) {
          binding.allPlaylistsList.id -> {
              if (playlistArrayList.isNotEmpty()){
@@ -318,9 +321,11 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
     }
 
     override fun onPause() {
-        binding.playlistLayout.isVisible = false
-        scrollView.fullScroll(ScrollView.FOCUS_UP);
-        scrollView.scrollTo(0, 0)
+        binding.playlistLayout.isVisible = hideLayoutBool
+        if (!hideLayoutBool){
+            scrollView.fullScroll(ScrollView.FOCUS_UP);
+            scrollView.scrollTo(0, 0)
+        }
         super.onPause()
     }
 

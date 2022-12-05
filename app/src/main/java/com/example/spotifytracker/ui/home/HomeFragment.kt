@@ -70,6 +70,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     private lateinit var scrollView: NestedScrollView
     private lateinit var myActivity : MainActivity
     private lateinit var sharedSettings: SharedPreferences
+    private var hideLayoutBool: Boolean = false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -273,7 +274,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
     }
 
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
+        hideLayoutBool = true
         when(p0?.id){
             recentlyPlayedList.id -> {
                 if (songArrayList.isNotEmpty()){
@@ -328,6 +329,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         super.onResume()
         //println("debug: called on resume")
         binding.homeLayout.isVisible = true
+        hideLayoutBool = false
         myActivity.showActionBar(true)
         binding.homeLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         TransitionManager.beginDelayedTransition(binding.homeLayout, AutoTransition())
@@ -358,9 +360,11 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
 
     override fun onPause() {
         super.onPause()
-        binding.homeLayout.isVisible = false
-        scrollView.fullScroll(ScrollView.FOCUS_UP);
-        scrollView.scrollTo(0,0)
+        binding.homeLayout.isVisible = hideLayoutBool
+        if (!hideLayoutBool){
+            scrollView.fullScroll(ScrollView.FOCUS_UP);
+            scrollView.scrollTo(0, 0)
+        }
     }
 
 }
