@@ -47,10 +47,11 @@ import kotlinx.coroutines.launch
 @Suppress("RedundantExplicitType")
 class MainActivity : AppCompatActivity() {
     companion object{
-        val mapOfPlaylistIds = mapOf(
-            "35xI4hSJ8MdO1xkXwsd56a" to "rain",
-            "4eWBwGl0c5wtp6k5Krp6My" to "rain",
-            "37i9dQZF1DX4aYNO8X5RpR" to "thunderstorm")
+        val mapOfPlaylistIds = linkedMapOf(
+            "35xI4hSJ8MdO1xkXwsd56a" to "Rain",
+            "4eWBwGl0c5wtp6k5Krp6My" to "Rain",
+            "37i9dQZF1DX4aYNO8X5RpR" to "Thunderstorm"
+        )
     }
     private lateinit var binding: ActivityMainBinding
     private lateinit var apiHandler: SpotifyApiHandler
@@ -372,8 +373,8 @@ class MainActivity : AppCompatActivity() {
 
     @Suppress("UNUSED_PARAMETER")
     fun onClickCardViewRecommendToday(view: View) {
-        val cv = findViewById<CardView>(R.id.recommmended_today_inner_cardview)
-        val cv2 = findViewById<CardView>(R.id.recommmended_today_playlist_cardview)
+        val cv = findViewById<CardView>(R.id.recommended_today_inner_cardview)
+        val cv2 = findViewById<CardView>(R.id.recommended_today_playlist_cardview)
         val arrow = findViewById<TextView>(R.id.rec_today_arrow)
         val bool = !cv.isVisible
         cv.isVisible = bool

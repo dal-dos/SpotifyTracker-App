@@ -17,15 +17,12 @@ import android.widget.ListView
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.adamratzman.spotify.models.PlayHistory
 import com.adamratzman.spotify.models.Playlist
 import com.example.spotifytracker.MainActivity
 import com.example.spotifytracker.R
 import com.example.spotifytracker.adapters.GenreListAdapter
 import com.example.spotifytracker.adapters.PlaylistListAdapter
-import com.example.spotifytracker.adapters.SongListAdapter
 import com.example.spotifytracker.database.SpotifyDataDao
 import com.example.spotifytracker.database.SpotifyDataRepository
 import com.example.spotifytracker.database.SpotifyDatabase
@@ -59,6 +56,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
     private lateinit var currWeatherDescTv: TextView
     private lateinit var tempTv: TextView
     private lateinit var playlistArrayList :ArrayList<Playlist>
+    private lateinit var recommendedTodayArrayList :ArrayList<Playlist>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -96,28 +94,14 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
     private fun playlistsObservers() {
         playlistArrayList = ArrayList()
         val allPlaylistsList = binding.allPlaylistsList
-
         val playlistListAdapter: PlaylistListAdapter = PlaylistListAdapter(requireActivity(), playlistArrayList)
         allPlaylistsList.adapter = playlistListAdapter
 
-        myViewModel.city.observe(viewLifecycleOwner) {
-           cityTextView.text = it
-        }
+        recommendedTodayArrayList = ArrayList()
+        val recommendedTodayList = binding.recommendedTodayPlaylistList
+        val recommendedTodayListAdapter: PlaylistListAdapter = PlaylistListAdapter(requireActivity(), recommendedTodayArrayList)
+        recommendedTodayList.adapter = recommendedTodayListAdapter
 
-        myViewModel.futureWeather.observe(viewLifecycleOwner) {
-            //setChart(it)
-        }
-
-        myViewModel.currWeather.observe(viewLifecycleOwner) {
-            currentWeatherTv.text = it.weather
-            currWeatherDescTv.text = it.weatherDesc.split(' ').joinToString(" ") {
-                it.replaceFirstChar {
-                    it.uppercase()
-                }
-            }
-            Picasso.get().load(it.icon).into(mainImage)
-            tempTv.text = it.temp.roundToInt().toString() + "°C"
-        }
 
         myViewModel.allPlaylists.observe(viewLifecycleOwner){
             if(it.isEmpty()){
@@ -132,6 +116,61 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
                 playlistArrayList = it as ArrayList<Playlist>
                 setListViewHeightBasedOnChildren(allPlaylistsList)
             }
+        }
+
+        myViewModel.city.observe(viewLifecycleOwner) {
+            cityTextView.text = it
+        }
+
+        myViewModel.futureWeather.observe(viewLifecycleOwner) {
+            //setChart(it)
+        }
+
+        myViewModel.currWeather.observe(viewLifecycleOwner) {
+            val currWeather = it.weather
+            currentWeatherTv.text = currWeather
+            currWeatherDescTv.text = it.weatherDesc.split(' ').joinToString(" ") {words ->
+                words.replaceFirstChar {firstLetter->
+                    firstLetter.uppercase()
+                }
+            }
+            Picasso.get().load(it.icon).into(mainImage)
+            tempTv.text = it.temp.roundToInt().toString() + "°C"
+
+            setRecommendedTodayPlaylistList(currWeather, recommendedTodayList, recommendedTodayListAdapter)
+        }
+
+
+    }
+
+    private fun setRecommendedTodayPlaylistList(
+        currWeather: String,
+        recommendedTodayList: ListView,
+        recommendedTodayListAdapter: PlaylistListAdapter
+    ) {
+        val IDmap = MainActivity.mapOfPlaylistIds
+        var index = 0
+        val currWeatherPlaylistIndices = arrayListOf<Int>()
+        for(item in IDmap){
+            if(item.value == currWeather){
+                currWeatherPlaylistIndices.add(index)
+            }
+            index += 1
+        }
+        val currWeatherPlaylistArrayList = currWeatherPlaylistIndices.map { idx ->
+            playlistArrayList[idx]
+        }
+
+        if(!IDmap.containsValue(currWeather)){
+            val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList())
+            recommendedTodayList.adapter = emptyListAdapter
+            emptyListAdapter.replace(arrayListOf("None Found"))
+            emptyListAdapter.notifyDataSetChanged()
+            setListViewHeightBasedOnChildren(recommendedTodayList)
+        }else{
+            recommendedTodayListAdapter.replace(currWeatherPlaylistArrayList)
+            recommendedTodayListAdapter.notifyDataSetChanged()
+            setListViewHeightBasedOnChildren(recommendedTodayList)
         }
     }
 
