@@ -355,10 +355,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemClickListener {
         MainActivity().changeArrow(binding.recentlyPlayedArrow,binding.recentlyPlayedInnerCardview.isVisible)
     }
 
-    override fun onPause() {
-        super.onPause()
-        scrollView.fullScroll(ScrollView.FOCUS_UP);
-        scrollView.scrollTo(0,0)
-    }
+
 
 }

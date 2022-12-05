@@ -475,9 +475,4 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         timeListenedPieChart.centerText = ""
     }
 
-    override fun onPause() {
-        super.onPause()
-        scrollView.fullScroll(ScrollView.FOCUS_UP);
-        scrollView.scrollTo(0,0)
-    }
 }
