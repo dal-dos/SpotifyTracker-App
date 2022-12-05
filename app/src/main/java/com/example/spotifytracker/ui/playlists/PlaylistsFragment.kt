@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.view.LayoutInflater
@@ -16,7 +18,6 @@ import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.spotifytracker.MainActivity
@@ -34,8 +35,7 @@ import com.example.spotifytracker.ui.home.HomeViewModel
 import com.example.spotifytracker.ui.home.HomeViewModelFactory
 import com.github.mikephil.charting.charts.PieChart
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import java.util.stream.Collectors
 import kotlin.math.roundToInt
 
 class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
@@ -67,6 +67,10 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
     private lateinit var futureArrayList: ArrayList<WeatherObject>
     private lateinit var futureListView: ListView
     private var hideLayoutBool: Boolean = false
+    private var randomNumber = 0
+    private var loadedPlaylistsCounter = 5
+
+    private lateinit var allPlaylistsList: ListView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -106,6 +110,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
 
     private fun initializeOnItemClickListeners() {
         binding.allPlaylistsList.onItemClickListener = this
+        binding.recommendedTodayPlaylistList.onItemClickListener = this
     }
 
     private fun startFunction(inflater: LayoutInflater, container: ViewGroup?): View {
@@ -117,31 +122,50 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         return root
     }
 
+    private fun getAllPlaylistData(allPlaylistsList: ListView, playlistListAdapter: PlaylistListAdapter){
+        val playlistThread = Thread(){
+            val handler = Handler(Looper.getMainLooper())
+            val runnable = Runnable {
+                myViewModel.allPlaylists.observe(viewLifecycleOwner){
+                    if(it.isEmpty()){
+                        val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList())
+                        allPlaylistsList.adapter = emptyListAdapter
+                        emptyListAdapter.replace(arrayListOf("None Found"))
+                        emptyListAdapter.notifyDataSetChanged()
+                        setListViewHeightBasedOnChildren(allPlaylistsList)
+                    }else{
+                        playlistArrayList = it as ArrayList<SpotifyPlaylist>
+                        setAllPlayList(allPlaylistsList, playlistListAdapter)
+                    }
+                }
+            }
+            handler.post(runnable)
+        }
+        playlistThread.start()
+    }
+
+    private fun setAllPlayList(allPlaylistsList: ListView, playlistListAdapter: PlaylistListAdapter){
+        val nListElements: List<SpotifyPlaylist> = playlistArrayList.stream().limit(
+            loadedPlaylistsCounter.toLong()
+        ).collect(Collectors.toList())
+        playlistListAdapter.replace(nListElements)
+        playlistListAdapter.notifyDataSetChanged()
+        setListViewHeightBasedOnChildren(allPlaylistsList)
+    }
+
     private fun playlistsObservers() {
-        playlistArrayList = ArrayList()
-        val allPlaylistsList = binding.allPlaylistsList
+        playlistArrayList = myViewModel.allPlaylists.value as ArrayList<SpotifyPlaylist>
+        allPlaylistsList = binding.allPlaylistsList
         val playlistListAdapter: PlaylistListAdapter = PlaylistListAdapter(requireActivity(), playlistArrayList)
         allPlaylistsList.adapter = playlistListAdapter
+        setListViewHeightBasedOnChildren(allPlaylistsList)
 
         recommendedTodayArrayList = ArrayList()
         val recommendedTodayList = binding.recommendedTodayPlaylistList
         val recommendedTodayListAdapter: PlaylistListAdapter = PlaylistListAdapter(requireActivity(), recommendedTodayArrayList)
         recommendedTodayList.adapter = recommendedTodayListAdapter
 
-        myViewModel.allPlaylists.observe(viewLifecycleOwner){
-            if(it.isEmpty()){
-                val emptyListAdapter = GenreListAdapter(requireActivity(), ArrayList())
-                allPlaylistsList.adapter = emptyListAdapter
-                emptyListAdapter.replace(arrayListOf("None Found"))
-                emptyListAdapter.notifyDataSetChanged()
-                setListViewHeightBasedOnChildren(allPlaylistsList)
-            }else{
-                playlistListAdapter.replace(it)
-                playlistListAdapter.notifyDataSetChanged()
-                playlistArrayList = it as ArrayList<SpotifyPlaylist>
-                setListViewHeightBasedOnChildren(allPlaylistsList)
-            }
-        }
+        //getAllPlaylistData(allPlaylistsList, playlistListAdapter)
 
         myViewModel.city.observe(viewLifecycleOwner) {
             cityTextView.text = it
@@ -175,8 +199,24 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
 
             setRecommendedTodayPlaylistList(currWeather, recommendedTodayList, recommendedTodayListAdapter)
         }
+    }
 
+    private fun setListViewHeightAllPlaylists(listView: ListView) {
+        val listAdapter = listView.adapter
+            ?: // pre-condition
+            return
+        var totalHeight = listView.paddingTop + listView.paddingBottom
+        for (i in 0 until loadedPlaylistsCounter) {
+            val listItem = listAdapter.getView(i, null, listView)
+            (listItem as? ViewGroup)?.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            listItem.measure(binding.root.measuredWidth, binding.root.measuredHeight)
 
+            totalHeight += listItem.measuredHeight
+        }
+        val params = listView.layoutParams
+        params.height = totalHeight + listView.dividerHeight * (listAdapter.count - 1)
+        listView.layoutParams = params
+        listView.isFocusable = false
     }
 
     private fun setRecommendedTodayPlaylistList(
@@ -201,7 +241,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
                 emptyListAdapter.notifyDataSetChanged()
                 setListViewHeightBasedOnChildren(recommendedTodayList)
             }else{
-                val randomNumber = currWeatherPlaylistIndices.random()
+                randomNumber = currWeatherPlaylistIndices.random()
                 val currWeatherPlaylistArrayList = listOf(IDmap[randomNumber])
                 recommendedTodayListAdapter.replace(currWeatherPlaylistArrayList)
                 recommendedTodayListAdapter.notifyDataSetChanged()
@@ -232,7 +272,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
     private fun scrollOnChangeListener() {
         scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY + 4 <= oldScrollY ){
-                println("debug: Oldscrolly is $oldScrollY and scrolly is $scrollY")
+                //println("debug: Oldscrolly is $oldScrollY and scrolly is $scrollY")
                 //scroll up
                 //println("debug: Showing the tool bar")
                 (activity as AppCompatActivity?)!!.supportActionBar!!.show()
@@ -246,16 +286,6 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
             }
         }
     }
-
-    /*override fun onResume() {
-        super.onResume()
-        switchingView = true
-    }
-
-    override fun onPause() {
-        super.onPause()
-        switchingView = false
-    }*/
 
     private fun setListViewHeightBasedOnChildren(listView: ListView) {
         val listAdapter = listView.adapter
@@ -293,13 +323,20 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         hideLayoutBool = true
         when(p0?.id) {
-         binding.allPlaylistsList.id -> {
-             if (playlistArrayList.isNotEmpty()){
-                 val hyperlink = playlistArrayList[p2].webLink
-                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
-                 startActivity(intent)
-             }
-         }
+            binding.allPlaylistsList.id -> {
+                if (playlistArrayList.isNotEmpty()){
+                    val hyperlink = playlistArrayList[p2].webLink
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
+                    startActivity(intent)
+                }
+            }
+            binding.recommendedTodayPlaylistList.id -> {
+                if (playlistArrayList.isNotEmpty()){
+                    val hyperlink = playlistArrayList[randomNumber].webLink
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
+                    startActivity(intent)
+                }
+            }
         }
     }
 

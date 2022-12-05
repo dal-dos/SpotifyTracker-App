@@ -2,16 +2,19 @@ package com.example.spotifytracker.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.spotifytracker.R
 import com.example.spotifytracker.WeatherObject
 import com.example.spotifytracker.ui.playlists.PlaylistsData
+import com.example.spotifytracker.ui.playlists.SpotifyPlaylist
 import com.squareup.picasso.Picasso
 import kotlin.math.roundToInt
 
-class WeatherListAdapter(private val context: Context, private var futureWeather: List<WeatherObject>) : BaseAdapter(){
+class WeatherListAdapter(private val context: Context, private var futureWeather: List<WeatherObject>) : BaseAdapter(), AdapterView.OnItemClickListener{
     override fun getCount(): Int {
         return futureWeather.size
     }
@@ -27,6 +30,9 @@ class WeatherListAdapter(private val context: Context, private var futureWeather
     fun replace(newWeatherData: List<WeatherObject>){
         futureWeather = newWeatherData
     }
+
+    private lateinit var IDmap: ArrayList<SpotifyPlaylist>
+    private var randomNumber = 0
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -44,7 +50,8 @@ class WeatherListAdapter(private val context: Context, private var futureWeather
 
     private fun setListView(view: View, position: Int) {
         val innerPlaylistListView = view.findViewById<ListView>(R.id.rec_tomorrow_list)
-        val IDmap = PlaylistsData.allPlaylist
+        innerPlaylistListView.onItemClickListener = this
+        IDmap = PlaylistsData.allPlaylist
         var index = 0
         val currWeatherPlaylistIndices = arrayListOf<Int>()
         for(item in IDmap){
@@ -58,7 +65,7 @@ class WeatherListAdapter(private val context: Context, private var futureWeather
             innerPlaylistListView.adapter = emptyListAdapter
             setListViewHeightBasedOnChildren(innerPlaylistListView,view)
         }else {
-            val randomNumber = currWeatherPlaylistIndices.random()
+            randomNumber = currWeatherPlaylistIndices.random()
             val currWeatherPlaylistArrayList = listOf(IDmap[randomNumber])
             innerPlaylistListView.adapter = PlaylistListAdapter(context, currWeatherPlaylistArrayList)
             setListViewHeightBasedOnChildren(innerPlaylistListView,view)
@@ -118,5 +125,13 @@ class WeatherListAdapter(private val context: Context, private var futureWeather
         val params = listView.layoutParams
         params.height = totalHeight + listView.dividerHeight * (listAdapter.count - 1)
         listView.layoutParams = params
+    }
+
+    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        if (IDmap.isNotEmpty()){
+            val hyperlink = IDmap[randomNumber].webLink
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
+            context.startActivity(intent)
+        }
     }
 }

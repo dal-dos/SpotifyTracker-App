@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun onLocationResult(result: LocationResult) {
             val lastLocation = result?.lastLocation
-            Log.e("MYTAGCHILLINTOCHECKTHISSHIT", lastLocation.toString())
+            Log.d("location", lastLocation.toString())
             getWeatherData()
 
             super.onLocationResult(result)
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
         if(savedInstanceState == null) {
             firstTimeStart()
 //            checkPermission()
-            Log.e("MYTAGCHILLINTOCHECKTHISSHIT", "ONCREATE BEFORE LOCATION")
+            Log.d("location", "ONCREATE BEFORE LOCATION")
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
             onGPS()
         }
@@ -500,7 +500,7 @@ class MainActivity : AppCompatActivity() {
         if(!isLocationEnabled()) {
             startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
         } else {
-            Log.e("MYTAGCHILLINTOCHECKTHISSHIT", "GET MY LOCATION")
+            Log.d("location", "GET MY LOCATION")
             getMyLocation()
         }
     }
@@ -527,7 +527,7 @@ class MainActivity : AppCompatActivity() {
         requestLocation.fastestInterval = 0
         requestLocation.numUpdates = 1
         fusedLocationProviderClient.requestLocationUpdates(requestLocation, callback, Looper.myLooper())
-        Log.e("MYTAGCHILLINTOCHECKTHISSHIT", "REQUESTED LOCATION WORKS")
+        Log.d("location", "REQUESTED LOCATION WORKS")
 
     }
 

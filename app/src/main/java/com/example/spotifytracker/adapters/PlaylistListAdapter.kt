@@ -38,8 +38,13 @@ class PlaylistListAdapter(private val context: Context, private var spotifyPlayl
         setTitleText(view, position)
         setSubText(view, position)
         setImage(view,position)
+        setLink(view, position)
 
         return view
+    }
+
+    private fun setLink(view: View, position: Int) {
+
     }
 
     private fun setImage(view: View, position: Int) {
