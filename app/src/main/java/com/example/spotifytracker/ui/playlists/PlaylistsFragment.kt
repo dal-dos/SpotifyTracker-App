@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -80,16 +81,16 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
 
         initializeVariables(root)
 
-        scrollView = binding.playlistNestedScrollView
+        scrollOnChangeListener()
 
         playlistsObservers()
         applySettings()
-        //scrollOnChangeListener()
         swipeRefresh()
         return root
     }
 
     private fun initializeVariables(root: View) {
+        scrollView = binding.playlistNestedScrollView
         mainImage = root.findViewById(R.id.imageView)
         currentWeatherTv = root.findViewById(R.id.weather_text)
         currWeatherDescTv = root.findViewById(R.id.weather_text_desc)
@@ -227,10 +228,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         _binding = null
     }
 
-    fun onClickLogout(view: View) {}
-
-/*    private fun scrollOnChangeListener() {
-        scrollView = binding.playlistNestedScrollView
+    private fun scrollOnChangeListener() {
         scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY + 4 <= oldScrollY ){
                 println("debug: Oldscrolly is $oldScrollY and scrolly is $scrollY")
@@ -248,7 +246,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         }
     }
 
-    override fun onResume() {
+    /*override fun onResume() {
         super.onResume()
         switchingView = true
     }

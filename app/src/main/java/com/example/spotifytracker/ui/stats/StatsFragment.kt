@@ -16,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
@@ -79,8 +80,8 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
 
         statsObservers()
 
-        //scrollOnChangeListener()
         scrollView = binding.statsNestedScrollView
+        scrollOnChangeListener()
         applySettings()
 
         swipeRefresh()
@@ -403,8 +404,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         MainActivity().changeArrow(binding.statsPieChartArrow, binding.statsPieChartInnerCardview.isVisible)
     }
 
-/*    private fun scrollOnChangeListener() {
-        scrollView = binding.statsNestedScrollView
+    private fun scrollOnChangeListener() {
         scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY + 4 <= oldScrollY ){
                 println("debug: Oldscrolly is $oldScrollY and scrolly is $scrollY")
@@ -421,7 +421,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
             }
         }
     }
-    override fun onResume() {
+    /*override fun onResume() {
         super.onResume()
         switchingView = true
     }
