@@ -129,7 +129,7 @@ class WeatherListAdapter(private val context: Context, private var futureWeather
 
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         if (IDmap.isNotEmpty()){
-            val hyperlink = IDmap[randomNumber].webLink
+            val hyperlink = p1?.tag.toString()
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink))
             context.startActivity(intent)
         }
