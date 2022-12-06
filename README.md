@@ -60,10 +60,10 @@ We used Spotify Api to create SpotifyTracker! This app tracks user statistics an
 [APK](#releases) WILL GO HERE
 
 # Project Videos
-[Project Pitch]()
-[Show & Tell 1]()
-[Show & Tell 2]()
-[Final Presentation]()
+- [Project Pitch]()
+- [Show & Tell 1]()
+- [Show & Tell 2]()
+- [Final Presentation]()
 
 # Diagrams
 ## MVVM Diagram
