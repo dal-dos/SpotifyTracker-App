@@ -52,6 +52,9 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var apiHandler: SpotifyApiHandler
+
+    private lateinit var weatherApiHandler: WeatherApiHandler
+
     private var username = ""
     private var recentlyPlayed : List<PlayHistory> = arrayListOf()
     private var suggested : List<Track> = arrayListOf()
@@ -189,6 +192,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     @SuppressLint("MissingPermission")
     private fun initLocationManager() {
+        println("DEBUG: INIT LOCATION MANAGER")
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
         val criteria = Criteria()
         criteria.accuracy = Criteria.ACCURACY_FINE
@@ -255,6 +259,11 @@ class MainActivity : AppCompatActivity(), LocationListener {
 //    }
 
     fun apiBuilder(){
+        println("DEBUG: REFRESH BUTTON CLICKED")
+        //might not need
+       // weatherApiHandler = WeatherApiHandler(this)
+        initLocationManager()
+
         val mySharedPreferences = applicationContext.getSharedPreferences(LoginActivity().spotifyKey, 0)
         val accessToken = mySharedPreferences.getString(LoginActivity().tokenKey, "")
         val type = mySharedPreferences.getString(LoginActivity().typeKey, "")
