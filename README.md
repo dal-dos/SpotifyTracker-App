@@ -23,6 +23,36 @@
 -   [Features](#features)
 -   [Contributors](#contributors)
 
+
+
+# About
+We used Spotify Api to create SpotifyTracker! This app tracks user statistics and more. It is able to login securely using spotify authentication. It allows analyzing and viewing of Spotify user data and statistics which Spotify does not show easily or often directly to the user, some these are: Listening time, Recently played, Favorite genre, Favorite artists. Music will be suggested based on local weather, and songs that are recommended and tailored to the user's interests by Spotify. 
+
+# Releases
+[APK](#releases) WILL GO HERE
+
+# Project Videos
+- [Project Pitch]()
+- [Show & Tell 1]()
+- [Show & Tell 2]()
+- [Final Presentation]()
+
+# Diagrams
+## MVVM Diagram
+Diagram here
+
+## Threads Diagram
+Diagram Here
+
+# Build
+Settings used to build the app:
+- Kotlin version: 1.6.10
+- App Version: 1.00
+- Android Studio Version: Chipmunk
+
+# Run
+**A spotify account is _required_ to use any functionality of the app.** Google Play Services is required to use the playlists feature of the app.
+
 # Features
 -   [Home](#home)
     -   [Recently Played](#recently-played)
@@ -52,34 +82,6 @@
     -   [Suggested Today Settings](#suggested-today-settings)
     -   [Suggested Future Settings](#suggested-future-settings)
     -   [All Playlists Settings](#all-playlists-settings)
-
-# About
-We used Spotify Api to create SpotifyTracker! This app tracks user statistics and more. It is able to login securely using spotify authentication. It allows analyzing and viewing of Spotify user data and statistics which Spotify does not show easily or often directly to the user, some these are: Listening time, Recently played, Favorite genre, Favorite artists. Music will be suggested based on local weather, and songs that are recommended and tailored to the user's interests by Spotify. 
-
-# Releases
-[APK](#releases) WILL GO HERE
-
-# Project Videos
-- [Project Pitch]()
-- [Show & Tell 1]()
-- [Show & Tell 2]()
-- [Final Presentation]()
-
-# Diagrams
-## MVVM Diagram
-Diagram here
-
-## Threads Diagram
-Diagram Here
-
-# Build
-Settings used to build the app:
-- Kotlin version: 1.6.10
-- App Version: 1.00
-- Android Studio Version: Chipmunk
-
-# Run
-**A spotify account is _required_ to use any functionality of the app.** Google Play Services is required to use the playlists feature of the app.
 
 # Home
 The home page lists all data that we retrieve from spotify
