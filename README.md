@@ -128,7 +128,7 @@ Displays all suggested playlists based on the weather and history. Users are abl
 - Show/Hide the entire All Playlists Cardview (Default: Show)
 
 # Contributors
-[Dalveer Dosanjh](https://github.com/dal-dos)
-[Daven Chohan](https://github.com/davenchohan)
-[Arjun Shokar](https://github.com/ashokar19)
-[Keene Upathamp](https://github.com/kupa-fp3)
+-[Dalveer Dosanjh](https://github.com/dal-dos)
+-[Daven Chohan](https://github.com/davenchohan)
+-[Arjun Shokar](https://github.com/ashokar19)
+-[Keene Upathamp](https://github.com/kupa-fp3)
