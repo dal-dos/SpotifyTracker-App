@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var initLocation: Location
     private lateinit var locationManager: LocationManager
     private lateinit var weatherCoroutine: Job
+    var locationListenerActive: Boolean = false
 
 /*    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
@@ -571,6 +572,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 0) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                locationListenerActive = true
                 initLocationManager()
             }
             else {
