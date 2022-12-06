@@ -39,10 +39,14 @@ We used Spotify Api to create SpotifyTracker! This app tracks user statistics an
 
 # Diagrams
 ## MVVM Diagram
-Diagram here
+![MVVM](https://user-images.githubusercontent.com/32851308/205789444-324c8acb-9d5b-4d45-b098-867d106dbcf3.png)
 
 ## Threads Diagram
-Diagram Here
+![Thread1](https://user-images.githubusercontent.com/32851308/205789475-ab5fe21a-fde4-4b53-8f87-2aa74b0fc3b0.png)
+![Thread2](https://user-images.githubusercontent.com/32851308/205789483-cf4ccfb0-0366-43e7-9e6f-37be7b4aad44.png)
+![Thread3](https://user-images.githubusercontent.com/32851308/205789495-b86144e5-6d21-48ff-a5f0-f2b6a842db03.png)
+
+
 
 # Build
 Settings used to build the app:
