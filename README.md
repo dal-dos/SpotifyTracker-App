@@ -16,6 +16,9 @@
 # Table of Contents
 -   [Features](#features)
 -   [About](#about)
+-   [Releases](#releases)
+-   [Project Videos](#project-videos)
+-   [Diagrams]
 -   [Build](#build)
 -   [Run](#run)
 -   [Contributors](#contributors)
@@ -52,6 +55,22 @@
 
 # About
 We used Spotify Api to create SpotifyTracker! This app tracks user statistics and more. It is able to login securely using spotify authentication. It allows analyzing and viewing of Spotify user data and statistics which Spotify does not show easily or often directly to the user, some these are: Listening time, Recently played, Favorite genre, Favorite artists. Music will be suggested based on local weather, and songs that are recommended and tailored to the user's interests by Spotify. 
+
+# Releases
+[APK](#releases) WILL GO HERE
+
+# Project Videos
+[Project Pitch]()
+[Show & Tell 1]()
+[Show & Tell 2]()
+[Final Presentation]()
+
+# Diagrams
+## MVVM Diagram
+Diagram here
+
+## Threads Diagram
+Diagram Here
 
 # Build
 Settings used to build the app:
@@ -128,6 +147,10 @@ Displays all suggested playlists based on the weather and history. Users are abl
 
 # Contributors
 - [Dalveer Dosanjh](https://github.com/dal-dos)
+    -   Home, Stats, Playlists, Settings, Spotify API
 - [Daven Chohan](https://github.com/davenchohan)
+    -   Home, Playlists, Spotify API, Weather API
 - [Arjun Shokar](https://github.com/ashokar19)
+    -   Home, Stats, Weather API
 - [Keene Upathamp](https://github.com/kupa-fp3)
+    -   Playlists, Research
