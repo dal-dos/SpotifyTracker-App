@@ -52,9 +52,6 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var apiHandler: SpotifyApiHandler
-
-    private lateinit var weatherApiHandler: WeatherApiHandler
-
     private var username = ""
     private var recentlyPlayed : List<PlayHistory> = arrayListOf()
     private var suggested : List<Track> = arrayListOf()
