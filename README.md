@@ -10,6 +10,7 @@
   </a>
   <h2></h2>
  <h3 align="center">Track all of your spotify stats and more!</h3>
+ <h6 align="center"><a href="https://davenchohan.github.io/spotify_tracker/home.html">Website</a></h6>
 </p>
 
 
