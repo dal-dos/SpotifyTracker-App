@@ -35,8 +35,11 @@ class WeatherApiHandler(val context: Context) {
         val temp = fusedLocationProviderClient.lastLocation
             .addOnSuccessListener { currLocation: Location? ->
                 //get the latitude and longitude
-                //println("debug: location is lat ${currLocation?.latitude} and long ${currLocation?.longitude}")
+                println("debug: location is lat ${currLocation?.latitude} and long ${currLocation?.longitude}")
                 location = currLocation!!
+                if (currLocation == null){
+                    println("DEBUG: LAST LOCATION NULL ")
+                }
                 val geocoder: Geocoder = Geocoder(context, Locale.getDefault())
                 val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
                 cityName = addresses[0].locality
