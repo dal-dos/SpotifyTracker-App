@@ -12,10 +12,10 @@
   <a href="https://developer.spotify.com/">
   <img width="25px" src="https://user-images.githubusercontent.com/32851308/205781496-51cab538-e5b4-46f5-ab23-ca6c0fbb1d20.png" align="center"/>
   </a>
-  <a href="https://developer.spotify.com/">
+  <a href="https://openweathermap.org/guide">
   <img width="25px" src="https://user-images.githubusercontent.com/32851308/205768613-8eb78961-14ec-42ee-a579-e63b0828bcbf.png" align="center"/>
   </a>
-  <a href="https://developer.spotify.com/">
+  <a href="https://developers.google.com/maps">
   <img width="25px" src="https://user-images.githubusercontent.com/32851308/205768600-ecccca3e-d1e7-478e-a6e0-805f523ce9c0.png" align="center"/>
   </a>
 </p>
