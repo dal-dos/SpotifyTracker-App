@@ -407,7 +407,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
     private fun scrollOnChangeListener() {
         scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY + 4 <= oldScrollY ){
-                println("debug: Oldscrolly is $oldScrollY and scrolly is $scrollY")
+                //println("debug: Oldscrolly is $oldScrollY and scrolly is $scrollY")
                 //scroll up
                 //println("debug: Showing the tool bar")
                 (activity as AppCompatActivity?)!!.supportActionBar!!.show()
