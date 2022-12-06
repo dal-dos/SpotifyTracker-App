@@ -30,16 +30,10 @@ class WeatherApiHandler(val context: Context) {
     private var counter: Int = 0
 
     @SuppressLint("MissingPermission")
-    suspend fun startApi(): Boolean{
-        val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
-        val temp = fusedLocationProviderClient.lastLocation
-            .addOnSuccessListener { currLocation: Location? ->
-                //get the latitude and longitude
-                println("debug: location is lat ${currLocation?.latitude} and long ${currLocation?.longitude}")
-                location = currLocation!!
-                if (currLocation == null){
-                    println("DEBUG: LAST LOCATION NULL ")
-                }
+    suspend fun startApi(location: Location?): Boolean{
+        try {
+            println("debug: In the start api for weather handler")
+            if (location != null){
                 val geocoder: Geocoder = Geocoder(context, Locale.getDefault())
                 val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
                 cityName = addresses[0].locality
@@ -51,10 +45,10 @@ class WeatherApiHandler(val context: Context) {
                 // Instantiate the RequestQueue.
                 queue = Volley.newRequestQueue(context)
             }
-        while (!temp.isComplete){
-            delay(500)
+        } catch (e: Exception) {
+            println("ERROR FOR LOCATION: $e")
         }
-        return temp.isComplete
+        return this::cityName.isInitialized
     }
 
 
