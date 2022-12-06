@@ -1,6 +1,6 @@
 
 <p align="center">
- <a href="https://developer.spotify.com/"><img width="100px" src="https://user-images.githubusercontent.com/32851308/205771027-c520d818-bbfd-4ebe-88c5-9b2c91000e1c.png" align="center"/> </a>
+ <img width="100px" src="https://user-images.githubusercontent.com/32851308/205771027-c520d818-bbfd-4ebe-88c5-9b2c91000e1c.png" align="center"/> 
 </p>
 <p align="center">
  <img width="500px" src="https://user-images.githubusercontent.com/36864092/205780211-90ad85f9-199f-4803-a64b-9811622fd392.png" align="center"/>
@@ -9,9 +9,15 @@
 
 <h2></h2>
 <p align="center">
-<img width="25px" src="https://user-images.githubusercontent.com/32851308/205781496-51cab538-e5b4-46f5-ab23-ca6c0fbb1d20.png" align="center"/>
-<img width="25px" src="https://user-images.githubusercontent.com/32851308/205768613-8eb78961-14ec-42ee-a579-e63b0828bcbf.png" align="center"/>
-<img width="25px" src="https://user-images.githubusercontent.com/32851308/205768600-ecccca3e-d1e7-478e-a6e0-805f523ce9c0.png" align="center"/>
+  <a href="https://developer.spotify.com/">
+  <img width="25px" src="https://user-images.githubusercontent.com/32851308/205781496-51cab538-e5b4-46f5-ab23-ca6c0fbb1d20.png" align="center"/>
+  </a>
+  <a href="https://developer.spotify.com/">
+  <img width="25px" src="https://user-images.githubusercontent.com/32851308/205768613-8eb78961-14ec-42ee-a579-e63b0828bcbf.png" align="center"/>
+  </a>
+  <a href="https://developer.spotify.com/">
+  <img width="25px" src="https://user-images.githubusercontent.com/32851308/205768600-ecccca3e-d1e7-478e-a6e0-805f523ce9c0.png" align="center"/>
+  </a>
 </p>
 
 # Table of Contents
