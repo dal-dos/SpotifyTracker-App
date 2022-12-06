@@ -13,7 +13,8 @@
 </p>
 
 
-<p align="center">
+
+<p  align="center">
   <a href="https://developer.spotify.com/">
   <img width="25px" src="https://user-images.githubusercontent.com/32851308/205781496-51cab538-e5b4-46f5-ab23-ca6c0fbb1d20.png" align="center"/>
   </a>
@@ -24,6 +25,8 @@
   <img width="25px" src="https://user-images.githubusercontent.com/32851308/205768600-ecccca3e-d1e7-478e-a6e0-805f523ce9c0.png" align="center"/>
   </a>
 </p>
+
+<h6 align="center"> For best viewing experience please use github dark mode </h6>
 
 # Table of Contents
 -   [About](#about)
