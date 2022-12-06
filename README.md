@@ -14,13 +14,13 @@
 </p>
 
 # Table of Contents
--   [Features](#features)
 -   [About](#about)
 -   [Releases](#releases)
 -   [Project Videos](#project-videos)
 -   [Diagrams](#diagrams)
 -   [Build](#build)
 -   [Run](#run)
+-   [Features](#features)
 -   [Contributors](#contributors)
 
 # Features
