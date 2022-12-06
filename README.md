@@ -32,9 +32,9 @@ We used Spotify Api to create SpotifyTracker! This app tracks user statistics an
 [APK](#releases) WILL GO HERE
 
 # Project Videos
-- [Project Pitch]()
-- [Show & Tell 1]()
-- [Show & Tell 2]()
+- [Project Pitch](https://youtu.be/zigB7aDhHVg)
+- [Show & Tell 1](https://youtu.be/xBSlSaaJBiE)
+- [Show & Tell 2](https://youtu.be/yAzpF4IPh28)
 - [Final Presentation]()
 
 # Diagrams
