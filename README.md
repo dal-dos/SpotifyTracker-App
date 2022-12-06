@@ -2,9 +2,8 @@
 <p align="center">
  <img width="100px" src="https://user-images.githubusercontent.com/32851308/205771027-c520d818-bbfd-4ebe-88c5-9b2c91000e1c.png" align="center"/>
 </p>
-
 <p align="center">
- <img width="500px" src="https://user-images.githubusercontent.com/32851308/205770120-0311a4da-e0d3-4935-9b61-e9cc022bf81f.png" align="center"/>
+ <img width="500px" src="https://user-images.githubusercontent.com/36864092/205780211-90ad85f9-199f-4803-a64b-9811622fd392.png" align="center"/>
  <h3 align="center">Track all of your spotify stats and more!</h3>
 </p>
 
