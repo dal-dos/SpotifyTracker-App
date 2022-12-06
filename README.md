@@ -8,10 +8,11 @@
   <a href="https://github.com/dal-dos/SpotifyTracker-App">
   <img width="500px" src="https://user-images.githubusercontent.com/36864092/205780211-90ad85f9-199f-4803-a64b-9811622fd392.png" align="center"/>
   </a>
+  <h2></h2>
  <h3 align="center">Track all of your spotify stats and more!</h3>
 </p>
 
-<h2></h2>
+
 <p align="center">
   <a href="https://developer.spotify.com/">
   <img width="25px" src="https://user-images.githubusercontent.com/32851308/205781496-51cab538-e5b4-46f5-ab23-ca6c0fbb1d20.png" align="center"/>
