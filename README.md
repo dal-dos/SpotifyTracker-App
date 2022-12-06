@@ -18,7 +18,7 @@
 -   [About](#about)
 -   [Releases](#releases)
 -   [Project Videos](#project-videos)
--   [Diagrams]
+-   [Diagrams](#diagrams)
 -   [Build](#build)
 -   [Run](#run)
 -   [Contributors](#contributors)
