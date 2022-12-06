@@ -322,7 +322,18 @@
                                 android:id="@+id/all_playlists_list"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:scrollbars="none"
                                 android:text="@string/none_found" />
+                            <Button
+                                android:id="@+id/load_more"
+                                android:layout_width="wrap_content"
+                                android:paddingHorizontal="30dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:fontFamily="@font/comfortaasemibold"
+                                android:background="@drawable/custom_button"
+                                android:foreground="?attr/selectableItemBackground"
+                                android:text="@string/load_more" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>

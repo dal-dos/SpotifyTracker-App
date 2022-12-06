@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.view.LayoutInflater
@@ -91,6 +92,16 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         playlistsObservers()
         applySettings()
         swipeRefresh()
+
+        val button = root.findViewById<Button>(R.id.load_more)
+        button.setOnClickListener{
+            loadedPlaylistsCounter += 5
+            setListViewHeightAllPlaylists(allPlaylistsList)
+            if (loadedPlaylistsCounter == allPlaylistsList.count){
+                button.isVisible = false
+            }
+        }
+
         return root
     }
 
@@ -158,7 +169,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         allPlaylistsList = binding.allPlaylistsList
         val playlistListAdapter: PlaylistListAdapter = PlaylistListAdapter(requireActivity(), playlistArrayList)
         allPlaylistsList.adapter = playlistListAdapter
-        setListViewHeightBasedOnChildren(allPlaylistsList)
+        setListViewHeightAllPlaylists(allPlaylistsList)
 
         recommendedTodayArrayList = ArrayList()
         val recommendedTodayList = binding.recommendedTodayPlaylistList
@@ -206,6 +217,9 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
             ?: // pre-condition
             return
         var totalHeight = listView.paddingTop + listView.paddingBottom
+        if (loadedPlaylistsCounter > listAdapter.count){
+            loadedPlaylistsCounter = listAdapter.count
+        }
         for (i in 0 until loadedPlaylistsCounter) {
             val listItem = listAdapter.getView(i, null, listView)
             (listItem as? ViewGroup)?.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -214,7 +228,7 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
             totalHeight += listItem.measuredHeight
         }
         val params = listView.layoutParams
-        params.height = totalHeight + listView.dividerHeight * (listAdapter.count - 1)
+        params.height = totalHeight + listView.dividerHeight * (loadedPlaylistsCounter - 1)
         listView.layoutParams = params
         listView.isFocusable = false
     }

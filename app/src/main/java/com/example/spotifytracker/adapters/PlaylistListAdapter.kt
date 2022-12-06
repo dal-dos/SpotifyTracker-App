@@ -54,9 +54,9 @@ class PlaylistListAdapter(private val context: Context, private var spotifyPlayl
 
     private fun setSubText(view: View, position: Int) {
         val itemSubText =  view.findViewById<TextView>(R.id.itemSubText)
-        val author = spotifyPlaylists[position].author
+        val weatherType = spotifyPlaylists[position].weatherType
 
-        itemSubText.text = "$author"
+        itemSubText.text = "Weather: $weatherType"
         itemSubText.isSelected = true
     }
 
