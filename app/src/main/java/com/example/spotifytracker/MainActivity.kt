@@ -2,28 +2,22 @@ package com.example.spotifytracker
 
 // Spotify API
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.location.Criteria
+import android.location.Location
 import android.location.LocationManager
-import android.location.LocationRequest
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.provider.Settings
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -39,23 +33,23 @@ import com.example.spotifytracker.databinding.ActivityMainBinding
 import com.example.spotifytracker.login.LoginActivity
 import com.example.spotifytracker.settings.SettingsActivity
 import com.example.spotifytracker.ui.LoadingDialog
+import com.example.spotifytracker.ui.LoadingDialogWeather
 import com.example.spotifytracker.ui.home.HomeViewModel
 import com.example.spotifytracker.ui.home.HomeViewModelFactory
 import com.example.spotifytracker.ui.playlists.PlaylistsData
 import com.example.spotifytracker.ui.playlists.SpotifyPlaylist
 import com.github.mikephil.charting.animation.Easing
+import android.location.LocationListener
+import androidx.lifecycle.MutableLiveData
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
-import com.google.android.gms.location.*
-import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
-import com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
 @Suppress("RedundantExplicitType")
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var apiHandler: SpotifyApiHandler
     private var username = ""
@@ -77,7 +71,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mToolbar : androidx.appcompat.widget.Toolbar
     private lateinit var sharedSettings : SharedPreferences
 
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var initLocation: Location
+    private lateinit var locationManager: LocationManager
+    private lateinit var weatherCoroutine: Job
+
+/*    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     val callback = object : LocationCallback() {
         override fun onLocationAvailability(p0: LocationAvailability) {
@@ -91,21 +89,25 @@ class MainActivity : AppCompatActivity() {
 
             super.onLocationResult(result)
         }
-    }
+    }*/
 
 
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedSettings = PreferenceManager.getDefaultSharedPreferences(this)
+
         if(savedInstanceState == null) {
             firstTimeStart()
 //            checkPermission()
-            Log.d("location", "ONCREATE BEFORE LOCATION")
-            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-            onGPS()
+            //Log.d("location", "ONCREATE BEFORE LOCATION")
+           // fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+            //onGPS()
+            initLocation = Location("init")
+            initLocation.longitude = 0.0
+            initLocation.latitude = 0.0
         }
-//gg
+        initLocationManager()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -151,7 +153,7 @@ class MainActivity : AppCompatActivity() {
         //setActionBarTitle()
         //this.supportActionBar?.setShowHideAnimationEnabled(true)
 
-
+        println("Location is: ${initLocation.latitude} and ${initLocation.longitude}")
         onClickListeners()
     }
 
@@ -185,6 +187,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("MissingPermission")
+    private fun initLocationManager() {
+        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+        val criteria = Criteria()
+        criteria.accuracy = Criteria.ACCURACY_FINE
+        val provider: String? = locationManager.getBestProvider(criteria, true)
+        if(provider != null) {
+            val location = locationManager.getLastKnownLocation(provider)
+            if (location != null) {
+                initLocation = location
+            }
+            locationManager.requestLocationUpdates(provider, 0, 0f, this)
+        }
+    }
+
     private fun firstTimeStart() {
         apiBuilder()
     }
@@ -214,6 +231,14 @@ class MainActivity : AppCompatActivity() {
         dialog.isCancelable = false
         dialog.show(supportFragmentManager, "tag")
     }
+
+     fun openWeatherDialog(futureWeather: MutableLiveData<ArrayList<WeatherObject>>) {
+         val myOrientation = requestedOrientation
+         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+         val dialog = LoadingDialogWeather(futureWeather,this, myOrientation)
+         dialog.isCancelable = false
+         dialog.show(supportFragmentManager, "tag")
+     }
 
 //    @Suppress("UNUSED_PARAMETER")
 //    fun onClickLogout(view: View) {
@@ -291,8 +316,6 @@ class MainActivity : AppCompatActivity() {
         myViewModel.futureWeather.value = future
         myViewModel.city.value = myCity
     }
-
-
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -475,28 +498,34 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getWeatherData(){
+    private fun getWeatherData(location: Location){
         val weatherThread = Thread(){
             val handler = Handler(Looper.getMainLooper())
             val runnable = Runnable {
                 val weatherApiHandler = WeatherApiHandler(this)
-                lifecycleScope.launch(){
-                    weatherApiHandler.startApi()
-                    val city = weatherApiHandler.getCity()
-                    weatherApiHandler.setCurrWeather()
-                    val currWeather = weatherApiHandler.getCurrentWeather()
-                    weatherApiHandler.setFutureWeather()
-                    val futureWeather = weatherApiHandler.getFutureWeather()
-                    println("Got all the weather data")
-                    insertWeather(currWeather, futureWeather, city)
+                weatherCoroutine = lifecycleScope.launch(){
+                    val temp = weatherApiHandler.startApi(location)
+                    println("the coroutine returns city bool: $temp")
+                    if (temp){
+                        val city = weatherApiHandler.getCity()
+                        weatherApiHandler.setCurrWeather()
+                        val currWeather = weatherApiHandler.getCurrentWeather()
+                        weatherApiHandler.setFutureWeather()
+                        val futureWeather = weatherApiHandler.getFutureWeather()
+                        println("Got all the weather data")
+                        insertWeather(currWeather, futureWeather, city)
+                    }
                 }
+               // if (supportFragmentManager.findFragmentById(R.id.navigation_notifications)?.isVisible == true){
+               //     openWeatherDialog(weatherCoroutine)
+              //  }
             }
             handler.post(runnable)
         }
         weatherThread.start()
     }
 
-    fun onGPS() {
+    /*fun onGPS() {
         if(!isLocationEnabled()) {
             startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
         } else {
@@ -517,9 +546,9 @@ class MainActivity : AppCompatActivity() {
             Manifest.permission.ACCESS_FINE_LOCATION), 0)
         else
             requestLocation()
-    }
+    }*/
 
-    @SuppressLint("MissingPermission")
+/*    @SuppressLint("MissingPermission")
     private fun requestLocation() {
         val requestLocation = LocationRequest()
         requestLocation.priority = LocationRequest.QUALITY_HIGH_ACCURACY
@@ -529,25 +558,26 @@ class MainActivity : AppCompatActivity() {
         fusedLocationProviderClient.requestLocationUpdates(requestLocation, callback, Looper.myLooper())
         Log.d("location", "REQUESTED LOCATION WORKS")
 
+    }*/
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                initLocationManager()
+            }
+            else {
+                println("debug: Permission not granted")
+            }
+        }
     }
 
-
-//    private fun checkPermission() {
-//        if (Build.VERSION.SDK_INT < 23) return
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-//            PackageManager.PERMISSION_GRANTED) ActivityCompat.requestPermissions(this, arrayOf(
-//            Manifest.permission.ACCESS_FINE_LOCATION), 0)
-//        else
-//            getWeatherData()
-//    }
-//
-//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        if (requestCode == 0) {
-//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) getWeatherData()
-//        }
-//    }
-
-
+    override fun onLocationChanged(location: Location) {
+        println("the location is: ${location.longitude} and ${location.latitude}")
+        initLocation = location
+        locationManager.removeUpdates(this)
+        getWeatherData(location)
+    }
 
 }

@@ -1,14 +1,19 @@
 package com.example.spotifytracker.login
 
+import android.Manifest
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.spotifytracker.MainActivity
@@ -59,6 +64,7 @@ class LoginActivity : AppCompatActivity() {
 
         mySharedPreferences = applicationContext.getSharedPreferences(spotifyKey, 0)
         println("debug: shared preferences string is: " + mySharedPreferences.getString(tokenKey, null))
+        checkPermission()
         if (mySharedPreferences.getString(tokenKey, null) != null){
             loginButton.isVisible = false
             loginAttempt()
@@ -122,6 +128,15 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun checkPermission() {
+        if (Build.VERSION.SDK_INT < 23) return
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+            PackageManager.PERMISSION_GRANTED) ActivityCompat.requestPermissions(this, arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION), 0)
+    }
+
+
 
 
 }

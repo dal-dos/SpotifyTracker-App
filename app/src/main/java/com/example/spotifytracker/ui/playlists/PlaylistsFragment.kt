@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.os.SystemClock
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.view.LayoutInflater
@@ -129,6 +128,13 @@ class PlaylistsFragment : Fragment(), AdapterView.OnItemClickListener {
         myActivity = requireActivity() as MainActivity
         sharedSettings = PreferenceManager.getDefaultSharedPreferences(myActivity)
         initViewModel()
+/*        println("debug: location: ${myActivity.initLocation.latitude}")
+        if (myActivity.initLocation.latitude == 0.0){
+            myActivity.openWeatherDialog(myActivity.initLocation)
+        }*/
+        if (myViewModel.futureWeather.value.isNullOrEmpty()) {
+            myActivity.openWeatherDialog(myViewModel.futureWeather)
+        }
         val root: View = binding.root
         return root
     }
