@@ -28,20 +28,7 @@ class LoadingDialog(
         dialog.setOnShowListener {
             CoroutineScope(Dispatchers.Default).launch {
                 while(apiBuilderLoad.isActive){
-                    if (counter == 5){
-                        textView.text = "Loading Weather Data…"
-                        progressBar.indeterminateDrawable.setColorFilter(ContextCompat.getColor(requireActivity(), R.color.weather_blue), PorterDuff.Mode.SRC_IN )
-                    }
-                    if (counter == 10) {
-                        textView.text = "Loading Settings…"
-                        progressBar.indeterminateDrawable.setColorFilter(ContextCompat.getColor(requireActivity(), R.color.white), PorterDuff.Mode.SRC_IN )
-                    }
-                    if (counter == 15) {
-                        textView.text = "Refreshing Spotify Data…"
-                        progressBar.indeterminateDrawable.setColorFilter(ContextCompat.getColor(requireActivity(), R.color.dark_green), PorterDuff.Mode.SRC_IN )
-                    }
                     delay(500)
-                    counter += 1
                 }
                 dialog.dismiss()
                 delay(500)
