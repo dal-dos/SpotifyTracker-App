@@ -32,9 +32,9 @@
 # Table of Contents
 -   [About](#about)
 -   [Releases](#releases)
+-   [Special Instructions](#special-instructions)
 -   [Project Videos](#project-videos)
 -   [Diagrams](#diagrams)
--   [Special Instructions](#special-instructions)
 -   [Run](#run)
 -   [Features](#features)
 -   [Contributors](#contributors)
@@ -55,6 +55,19 @@ Downloads:
 - [SpotifyTracker_v1_00.apk](https://github.com/dal-dos/SpotifyTracker-App/releases/download/APK/SpotifyTracker_v1_00.apk)
 - [Source Code](https://github.com/dal-dos/SpotifyTracker-App/archive/refs/tags/APK.zip)
 
+# Special Instructions
+**A spotify account is _required_ to use any functionality of the app.** Google Play Services is required to use the playlists feature of the app.
+
+Spotify api requires app approval in order for any spotify user to be able to login to our app, due to this please follow the steps below for the meantime:
+
+Send an email to dsd6@sfu.ca which contains your spotify email address
+
+**_NOTE: SPOTIFY WILL NOT LET YOU LOGIN UNLESS YOU PROVIDE US YOUR EMAIL OR JUST USE THE ACCOUNT BELOW!_**
+
+Username: **_Hidden_** (Only on canvas readme)
+
+Password: **_Hidden_** (Only on canvas readme)
+
 # Project Videos
 - [Project Pitch](https://youtu.be/zigB7aDhHVg)
 - [Show & Tell 1](https://youtu.be/xBSlSaaJBiE)
@@ -71,19 +84,6 @@ Downloads:
 ![Thread3](https://user-images.githubusercontent.com/32851308/205789495-b86144e5-6d21-48ff-a5f0-f2b6a842db03.png)
 
 
-
-# Special Instructions
-**A spotify account is _required_ to use any functionality of the app.** Google Play Services is required to use the playlists feature of the app.
-
-Spotify api requires app approval in order for any spotify user to be able to login to our app, due to this please follow the steps below for the meantime:
-
-Send an email to dsd6@sfu.ca which contains your spotify email address
-
-**_NOTE: SPOTIFY WILL NOT LET YOU LOGIN UNLESS YOU PROVIDE US YOUR EMAIL OR JUST USE THE ACCOUNT BELOW!_**
-
-Username: **_Hidden_** (Only on canvas readme)
-
-Password: **_Hidden_** (Only on canvas readme)
 
 # Run
 **A spotify account is _required_ to use any functionality of the app.** Google Play Services is required to use the playlists feature of the app.
