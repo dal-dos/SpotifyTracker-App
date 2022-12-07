@@ -34,7 +34,7 @@
 -   [Releases](#releases)
 -   [Project Videos](#project-videos)
 -   [Diagrams](#diagrams)
--   [Build](#build)
+-   [Special Instructions](#special-instructions)
 -   [Run](#run)
 -   [Features](#features)
 -   [Contributors](#contributors)
@@ -43,6 +43,11 @@
 
 # About
 We used Spotify Api to create SpotifyTracker! This app tracks user statistics and more. It is able to login securely using spotify authentication. It allows analyzing and viewing of Spotify user data and statistics which Spotify does not show easily or often directly to the user, some these are: Listening time, Recently played, Favorite genre, Favorite artists. Music will be suggested based on local weather, and songs that are recommended and tailored to the user's interests by Spotify. 
+
+Settings we used to build the app:
+- Kotlin version: 1.6.10
+- App Version: 1.00
+- Android Studio Version: Chipmunk
 
 # Releases
 Downloads:
@@ -67,11 +72,18 @@ Downloads:
 
 
 
-# Build
-Settings used to build the app:
-- Kotlin version: 1.6.10
-- App Version: 1.00
-- Android Studio Version: Chipmunk
+# Special Instructions
+**A spotify account is _required_ to use any functionality of the app.** Google Play Services is required to use the playlists feature of the app.
+
+Spotify api requires app approval in order for any spotify user to be able to login to our app, due to this please follow the steps below for the meantime:
+
+Send an email to dsd6@sfu.ca which contains your spotify email address
+
+**_NOTE: SPOTIFY WILL NOT LET YOU LOGIN UNLESS YOU PROVIDE US YOUR EMAIL OR JUST USE THE ACCOUNT BELOW!_**
+
+Username: **_Hidden_** (Only on canvas readme)
+
+Password: **_Hidden_** (Only on canvas readme)
 
 # Run
 **A spotify account is _required_ to use any functionality of the app.** Google Play Services is required to use the playlists feature of the app.
@@ -175,7 +187,7 @@ Displays all suggested playlists based on the weather and history. Users are abl
     -   Home, Stats, Playlists, Settings, Spotify API
 - [Daven Chohan](https://github.com/davenchohan)
     -   Home, Playlists, Spotify API, Weather API
-- [Arjun Shokar](https://github.com/ashokar19)
+- [Arjun Singh](https://github.com/ashokar19)
     -   Home, Stats, Weather API
 - [Keene Upathamp](https://github.com/kupa-fp3)
     -   Playlists, Research
