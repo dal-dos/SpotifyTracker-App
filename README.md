@@ -75,7 +75,7 @@ Password: **_Hidden_** (Only on canvas readme)
 - [Project Pitch](https://youtu.be/zigB7aDhHVg)
 - [Show & Tell 1](https://youtu.be/xBSlSaaJBiE)
 - [Show & Tell 2](https://youtu.be/yAzpF4IPh28)
-- [Final Presentation]()
+- [Final Presentation](https://youtu.be/3x_FC1wfgG8)
 
 # Diagrams
 ## MVVM Diagram
