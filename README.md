@@ -32,10 +32,10 @@
 # Table of Contents
 -   [About](#about)
 -   [Releases](#releases)
+-   [Run](#run)
 -   [Special Instructions](#special-instructions)
 -   [Project Videos](#project-videos)
 -   [Diagrams](#diagrams)
--   [Run](#run)
 -   [Features](#features)
 -   [Contributors](#contributors)
 
@@ -54,6 +54,9 @@ Downloads:
 - [Release Page](https://github.com/dal-dos/SpotifyTracker-App/releases/tag/APK)
 - [SpotifyTracker_v1_00.apk](https://github.com/dal-dos/SpotifyTracker-App/releases/download/APK/SpotifyTracker_v1_00.apk)
 - [Source Code](https://github.com/dal-dos/SpotifyTracker-App/archive/refs/tags/APK.zip)
+
+# Run
+**A spotify account is _required_ to use any functionality of the app.** Google Play Services is required to use the playlists feature of the app.
 
 # Special Instructions
 **A spotify account is _required_ to use any functionality of the app.** Google Play Services is required to use the playlists feature of the app.
@@ -84,9 +87,6 @@ Password: **_Hidden_** (Only on canvas readme)
 ![Thread3](https://user-images.githubusercontent.com/32851308/205789495-b86144e5-6d21-48ff-a5f0-f2b6a842db03.png)
 
 
-
-# Run
-**A spotify account is _required_ to use any functionality of the app.** Google Play Services is required to use the playlists feature of the app.
 
 # Features
 -   [Home](#home)
