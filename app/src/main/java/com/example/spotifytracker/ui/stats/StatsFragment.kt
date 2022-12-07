@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
+import android.icu.util.TimeZone
 import android.os.Bundle
 import android.transition.AutoTransition
 import android.transition.TransitionManager
@@ -272,7 +273,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         //Fake data to temporarily display chart
         val timePlayHistory : ArrayList<Float> = arrayListOf(0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F)
         val sdf : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-
+        sdf.timeZone = TimeZone.getTimeZone("UTC")
         var timeType = 60000
 //        if(sharedSettings.getString(SettingsActivity.hoursPlayedWeekTimeType, "hours") != "hours"){
 //            timeType = 60000
@@ -282,11 +283,10 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
             val calendar : Calendar = Calendar.getInstance()
             val playedAtTime = rp[i].playedAt
             calendar.time = sdf.parse(playedAtTime)
+            calendar.timeZone = TimeZone.getDefault()
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
-            println("time: " + hour)
             val trackLengthMilliseconds = rp[i].track.length.toFloat()
             val trackLengthMinutes = trackLengthMilliseconds/timeType
-            println(hour)
             timePlayHistory[hour] = trackLengthMinutes + timePlayHistory[hour]
         }
 
@@ -332,7 +332,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         //Fake data to temporarily display chart
         val timePlayHistory : ArrayList<Float> = arrayListOf(0F,0F,0F,0F,0F,0F,0F)
         val sdf : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-
+        sdf.timeZone = TimeZone.getTimeZone("UTC")
         var timeType = 3600000
         if(sharedSettings.getString(SettingsActivity.hoursPlayedWeekTimeType, "hours") != "hours"){
             timeType = 60000
@@ -342,6 +342,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
             val calendar : Calendar = Calendar.getInstance()
             val playedAtDate = rp[i].playedAt
             calendar.time = sdf.parse(playedAtDate)
+            calendar.timeZone = TimeZone.getDefault()
             val day = calendar.get(Calendar.DAY_OF_WEEK)
             val trackLengthMilliseconds = rp[i].track.length.toFloat()
             val trackLengthMinutes = trackLengthMilliseconds/timeType
