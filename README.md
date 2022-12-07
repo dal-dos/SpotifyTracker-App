@@ -51,9 +51,9 @@ Settings we used to build the app:
 
 # Releases
 Downloads:
-- [Release Page](https://github.com/dal-dos/SpotifyTracker-App/releases/tag/APK)
-- [SpotifyTracker_v1_00.apk](https://github.com/dal-dos/SpotifyTracker-App/releases/download/APK/SpotifyTracker_v1_00.apk)
-- [Source Code](https://github.com/dal-dos/SpotifyTracker-App/archive/refs/tags/APK.zip)
+- [Release Page](https://github.com/dal-dos/SpotifyTracker-App/releases/tag/v1.00)
+- [SpotifyTracker_v1_00.apk](https://github.com/dal-dos/SpotifyTracker-App/releases/download/v1.00/SpotifyTracker_v1_00.apk)
+- [Source Code](https://github.com/dal-dos/SpotifyTracker-App/archive/refs/tags/v1.00.zip)
 
 # Run
 **A spotify account is _required_ to use any functionality of the app.** Google Play Services is required to use the playlists feature of the app.
