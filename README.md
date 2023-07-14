@@ -1,4 +1,6 @@
 
+<h1>DISCONTINUED</h1>
+<h2>This application is no longer being maintained.</h2>
 <p align="center">
   <a href="https://github.com/dal-dos/SpotifyTracker-App">
   <img width="100px" src="https://user-images.githubusercontent.com/32851308/205771027-c520d818-bbfd-4ebe-88c5-9b2c91000e1c.png" align="center"/> 
